@@ -62,6 +62,7 @@ $route['api/get_frontend_settings/(:any)'] = 'api/get_frontend_settings/$1';
 $route['api/get_cities/(:any)'] = 'api/get_cities/$1';
 
 
+
 //custom URL
 $route['general/(:any)/(:any)'] = 'home/listing/$1/$2';
 $route['hotel/(:any)/(:any)'] = 'home/listing/$1/$2';
