@@ -705,5 +705,8 @@
     "test_public_key": "Test public key",
     "live_secret_key": "Live secret key",
     "live_public_key": "Live public key",
-    "update_stripe_keys": "Update stripe keys"
+    "update_stripe_keys": "Update stripe keys",
+    "provided_credentials_are_invalid": "Provided credentials are invalid",
+    "update_user": "Update user",
+    "invoice": "Invoice"
 }

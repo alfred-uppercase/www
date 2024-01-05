@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import axios from 'axios';
-import listings from './Listing.vue';
-//example components
-import DefaultNavbar from "../..//examples/navbars/NavbarDefault.vue";
-import DefaultFooter from "../..//examples/footers/FooterDefault.vue";
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 
 //image
 import bg0 from "@/assets/img/bg9.jpg";
@@ -21,22 +20,41 @@ const categories  = ref([]);
 const cities  = ref([]);
 const bannerTitle = ref('');
 const slogan = ref('');
-// const searchResults = ref([]);
-// const showResults = ref(false);
+const search_string = ref('');
+const selected_city_id = ref('');
+const selected_category_id = ref('');
+const results = ref([]);
+
 const body = document.getElementsByTagName("body")[0];
 //hooks
+const submitForm = async () => {
+  try {
+    const responsse = await axios.get('http://localhost/home/filter_listings', {
+      params: {
+        search_string: search_string.value,
+        selected_city_id: selected_city_id.value,
+        selected_category_id: selected_category_id.value,
+      },
+    });
+
+    // Handle the response and update results
+    results.value = responsse.data;
+  } catch (error) {
+    console.error('Error fetching results:', error);
+  }
+  router.push({
+    name: 'listings',
+    query: {
+      search_string: search_string.value,
+      selected_city_id: selected_city_id.value,
+      selected_category_id: selected_category_id.value,
+    },
+  });
+};
+
 onMounted(async () => {
   try {
-    // const responselisting = await axios.get('http://localhost/api/filter_listings', {
-    //       params: {
-    //         search_string: this.searchString,
-    //         selected_city_id: this.selectedCityId,
-    //         selected_category_id: this.selectedCategoryId,
-    //       },
-    //     });
 
-    //     searchResults.value = responselisting.data;
-    //     showResults.value = true;
     const response = await axios.get('http://localhost/api/get_categories');
     console.log('Response from get_categories:', response.data);
     categories.value = response.data;
@@ -54,18 +72,6 @@ onMounted(async () => {
 
   body.classList.add("about-us");
   body.classList.add("bg-gray-200");
-  if (document.getElementById("typed")) {
-    // eslint-disable-next-line no-unused-vars
-    var typed = new Typed("#typed", {
-      stringsElement: "#typed-strings",
-      typeSpeed: 90,
-      backSpeed: 90,
-      backDelay: 200,
-      startDelay: 500,
-      loop: true,
-    });
-  }
-
 });
 
 onUnmounted(() => {
@@ -75,11 +81,7 @@ onUnmounted(() => {
 
 </script>
 <template>
-  <DefaultNavbar :action="{
-    route: 'javascript:;',
-    label: 'Deposer une annonce',
-    color: 'btn-white',
-  }" transparent />
+
   <div class="container containerbanner" style="height:100%;display: flex;justify-content: center;z-index:2;position:relative;">
     <div class="row justify-content-center">
       <div class="col-lg-12 text-center mx-auto my-auto">
@@ -95,22 +97,22 @@ onUnmounted(() => {
         <p class="lead mb-4 text-dark opacity-8">
           {{ slogan }}
         </p>
-        <form action="" method="get">
+        <form @submit.prevent="submitForm">
           <div class="row no-gutters custom-search-input-2">
             <div class="col-lg-4">
               <div class="form-group">
-                <input class="form-control" type="text" name="search_string" placeholder="Votre recherche...">
+                <input class="form-control" type="text" :v-model="search_string" placeholder="Votre recherche...">
               </div>
             </div>
             <div class="col-lg-3">
-              <select class="wide" name="selected_city_id" style="display: ;">
+              <select class="wide" :v-model="selected_city_id" style="display: ;">
                 <option value="">Tous les villes</option>
                 <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}
                 </option>
               </select>
             </div>
             <div class="col-lg-3">
-              <select class="wide" name="selected_category_id" style="display: block;" >
+              <select class="wide" :v-model="selected_category_id" style="display: block;" >
                 <option value="">Tous les catégories</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}
                 </option>
@@ -125,7 +127,7 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <listings v-if="showResults" :results="searchResults" />
+  <!-- <listings v-if="showResults" :results="searchResults" /> -->
   <div class="hero" style="position: absolute;top: 0;">
     <div class="diagonal-hero-bg">
 
@@ -147,7 +149,6 @@ onUnmounted(() => {
     <Newsletter />
 
   </div>
-  <DefaultFooter />
 </template>
 <style scoped>
 .hero {

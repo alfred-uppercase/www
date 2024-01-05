@@ -1,19 +1,17 @@
-
 <template>
-  <div>
-    <h1>Résultats de la recherche</h1>
+  <div style="padding-top: 90px;">
+    <h1>Search Results</h1>
     <ul>
-      <li v-for="result in results" :key="result.id">{{ result.name }}</li>
+      <li v-for="result in results" :key="result.id">
+        {{ result.name }}
+        <!-- Display other result details as needed -->
+      </li>
     </ul>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['results'], // Propriété pour recevoir les résultats de la recherche
-};
-</script>
+<script setup>
+import { ref } from 'vue';
 
-<style scoped>
-/* Styles spécifiques au composant */
-</style>
+const results = ref([]);
+</script>

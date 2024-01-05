@@ -162,16 +162,15 @@ watch(
       >
         <ul class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
-            <a
-              role="button"
-              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-              :class="getTextColor()"
-              id="dropdownMenuPages"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+
+            <RouterLink
+            :to="{ name: 'annonces' }"
+            class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+            :class="getTextColor()"
             >
-              Immobilier
-            </a>
+            Annonces
+            </RouterLink>
+
             <div
               class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
               aria-labelledby="dropdownMenuPages"

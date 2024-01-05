@@ -53,6 +53,16 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($datas));
   }
+  function get_listing_url($listing_id = ""){
+    $CI =&  get_instance();
+    $CI->load->database();
+    $listing = $CI->db->get_where('listing', array('id' => $listing_id))->row_array();
+    $custom_url = site_url($listing['listing_type'].'/'.slugify($listing['name']).'/'.$listing_id);
+    // return $custom_url;
+    $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($custom_url));
+  }
     public function get_data() {
         // Logique pour récupérer les données depuis la base de données
         $data = array('1','2','3');
