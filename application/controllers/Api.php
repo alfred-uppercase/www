@@ -72,7 +72,23 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($data));
     }
+	function get_phrase($phrase = '') {
+		$CI	=&	get_instance();
+		$CI->load->database();
+		$language_code = $CI->db->get_where('settings' , array('type' => 'language'))->row()->description;
+		$key = strtolower(preg_replace('/\s+/', '_', $phrase));
 
+		$langArray = openJSONFile($language_code);
+		if (array_key_exists($key, $langArray)) {
+		} else {
+			$langArray[$key] = ucfirst(str_replace('_', ' ', $key));
+			$jsonData = json_encode($langArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+			file_put_contents(APPPATH.'language/'.$language_code.'.json', stripslashes($jsonData));
+		}
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($langArray[$key]));
+	}
     function get_frontend_settings($type = '') {
       $CI	=&	get_instance();
       $CI->load->database();
