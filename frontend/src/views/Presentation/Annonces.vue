@@ -117,7 +117,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import axios from 'axios';
 const title = ref('');
 const listings = ref([]);
-const get_phrase = ref([]);
+const get_phrase = ref([]); 
 const body = document.getElementsByTagName("body")[0];
 const getListingUrl = (listingId) => {
   // Assuming you have a method to generate the listing URL
