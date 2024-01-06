@@ -100,6 +100,17 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($result));
     }
+    function get_settings($type = '') {
+        $CI	=&	get_instance();
+        $CI->load->database();
+    
+        $CI->db->where('type', $type);
+        $result = $CI->db->get('settings')->row('description');
+        // return $result;
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+      }
     function filter_listings($page_number = 1)
     {
 
@@ -243,5 +254,29 @@ class Api extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($page_data));
     }
+    function get_country() {
+        $listingId = $this->input->post('listing_id');
+    
+        $city = $this->db->get_where('city', array('id' => $listingId))->row_array();
+        $state = $this->db->get_where('state', array('id' => $listingId))->row_array();
+        $country = $this->db->get_where('country', array('id' => $listingId))->row_array();
+    
+        // Debug information
+        echo "City: "; print_r($city);
+        echo "State: "; print_r($state);
+        echo "Country: "; print_r($country);
+    
+        $result = array(
+            'city' => $city['name'],
+            'state' => $state['name'],
+            'country' => $country['name']
+        );
+    
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+    
+    
   
 }

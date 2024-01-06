@@ -1,9 +1,11 @@
 <template>
     <div style="padding-top: 90px;">
       <h1>{{ title }}</h1>
-        <div v-for="listing in listings" :key="listing.id">
-          <!-- Display other listing details as needed -->
-          <div>
+      <div class="container-fluid margin_60_35" style="transform: none;">
+	<div class="row justify-content-md-center" style="transform: none;">
+    <FIlters />
+    <div class="col-lg-6 col-md-12 order-lg-1 order-2" id="listings">
+        <div class="row" v-for="listing in listings" :key="listing.id">
     <div
       class="col-lg-6 col-md-6 listing-div "
       :data-marker-id="listing.code"
@@ -46,7 +48,7 @@
             <div class="read_more"><span>{{ get_phrase.watch_details }}</span></div>
           </a>
           <small>
-            {{ listing.listing_type === '' ? 'General' : capitalizeFirst(get_phrase(listing.listing_type)) }}
+            {{ listing.listing_type === '' ? 'General' : capitalizeFirst(listing.listing_type) }}
           </small>
         </figure>
         <div
@@ -61,13 +63,14 @@
               v-if="isClaimed(listing.id)"
               class="claimed_icon"
               data-toggle="tooltip"
-              title="{{ get_phrase('this_listing_is_verified') }}"
+              title="{{ get_phrase.this_listing_is_verified }}"
             >
               <img src="assets/frontend/images/verified.png" width="23" />
             </span>
           </h3>
           <small>
-            {{ getCityStateCountry(listing.city_id, listing.state_id, listing.country_id) }}
+            <!-- {{ getCityStateCountry(listing.city_id, listing.state_id, listing.country_id) }} -->
+            {{ get_country.city_id }}
           </small>
           <p class="ellipsis">
             {{ listing.description }}
@@ -90,7 +93,7 @@
                 'loc_open': isOpenNow(listing.id),
               }"
             >
-              {{ get_phrase(getOpeningStatus(listing.id)) }}
+              <!-- {{ get_phrase.getOpeningStatus(listing.id) }} -->
             </span>
           </li>
           <li>
@@ -98,7 +101,7 @@
               <span>
                 {{ getRatingQuality(listing.id) }}
                 <em>
-                  {{ get_phrase('reviews', getListingWiseReviewCount(listing.id)) }}
+                  <!-- {{ get_phrase('reviews', getListingWiseReviewCount(listing.id)) }} -->
                 </em>
               </span>
               <strong>{{ getListingWiseRating(listing.id) }}</strong>
@@ -108,16 +111,24 @@
       </div>
     </div>
   </div>
+  </div>
+  <div class="col-lg-3 order-lg-2 order-1">
+			<div class="stiky-map mb-5 mb-lg-0">
         </div>
+    </div>
+        </div>
+    </div>
     </div>
   </template>
   
   <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import axios from 'axios';
+import FIlters from '/views/Presentation/annonces/filter.vue';
 const title = ref('');
 const listings = ref([]);
-const get_phrase = ref([]); 
+const get_country = ref([]);
+const get_phrase = ref([]);
 const body = document.getElementsByTagName("body")[0];
 const getListingUrl = (listingId) => {
   // Assuming you have a method to generate the listing URL
@@ -129,13 +140,18 @@ const capitalizeFirst = (str) => {
 onMounted(async () => {
   try {
 
-    const response = await axios.get('http://localhost/home/filter_listings');
+    const response = await axios.get('/home/filter_listings');
     console.log('Response from listings:', response.data);
     title.value = response.data.title;
     listings.value = response.data.listings;
-    const get_phrases = await axios.get('http://localhost/api/get_phrase');
+    const get_phrases = await axios.get('/api/get_phrase');
     console.log('Response from listings:', response.data);
     get_phrase.value = get_phrases.data;
+
+
+    const get_count = await axios.get('/api/get_country', { listing_id: 2 });
+    console.log('Response from country:', response.data);
+    get_country.value = `${response.data.city}, ${response.data.state}, ${response.data.country}`;
   } catch (error) {
     console.error('Error fetching listing:', error);
   }
@@ -161,10 +177,34 @@ const isClaimed = (listingId) => {
   return false;
 };
 
-const getCityStateCountry = (cityId, stateId, countryId) => {
-  // Assuming you have a method to get the city, state, and country names
-  // Replace this with your actual logic
-  return 'City, State, Country';
+const getCityStateCountry = async (cityId, stateId, countryId) => {
+  try {
+    const city = await fetchCity(cityId);
+    const state = await fetchState(stateId);
+    const country = await fetchCountry(countryId);
+
+    return `${city.name}, ${state.name}, ${country.name}`;
+  } catch (error) {
+    console.error('Error fetching city, state, and country:', error);
+    return 'City, State, Country';
+  }
+};
+const fetchCity = async (cityId) => {
+  // Implement logic to fetch city details based on cityId
+  // Replace this with your actual API call or data retrieval logic
+  return { name: 'CityName' };
+};
+
+const fetchState = async (stateId) => {
+  // Implement logic to fetch state details based on stateId
+  // Replace this with your actual API call or data retrieval logic
+  return { name: 'StateName' };
+};
+
+const fetchCountry = async (countryId) => {
+  // Implement logic to fetch country details based on countryId
+  // Replace this with your actual API call or data retrieval logic
+  return { name: 'CountryName' };
 };
 
 const isOpenNow = (listingId) => {

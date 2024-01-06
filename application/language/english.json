@@ -708,5 +708,7 @@
     "update_stripe_keys": "Update stripe keys",
     "provided_credentials_are_invalid": "Provided credentials are invalid",
     "update_user": "Update user",
-    "invoice": "Invoice"
+    "invoice": "Invoice",
+    "this_listing_is_verified": "This listing is verified",
+    "getopeningstatus": "Getopeningstatus"
 }
