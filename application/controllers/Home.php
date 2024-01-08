@@ -354,7 +354,10 @@ class Home extends CI_Controller
         $page_data['listing_id'] = $listing_id;
         $page_data['slug'] = $slug;
         $page_data['listing_details'] = $listing_details;
-        $this->load->view('frontend/index', $page_data);
+        // $this->load->view('frontend/index', $page_data);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($listing_details));
     }
     
     function category()

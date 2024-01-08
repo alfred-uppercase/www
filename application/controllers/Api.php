@@ -53,15 +53,22 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($datas));
   }
-  function get_listing_url($listing_id = ""){
+  function get_listing_id($listing_id = ""){
+    $CI =&  get_instance();
+    $CI->load->database();
+    $listing = $listing_id;
+    $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($listing));
+  }
+  function get_slug_name($listing_id = ""){
     $CI =&  get_instance();
     $CI->load->database();
     $listing = $CI->db->get_where('listing', array('id' => $listing_id))->row_array();
-    $custom_url = site_url($listing['listing_type'].'/'.slugify($listing['name']).'/'.$listing_id);
-    // return $custom_url;
+    $slug = slugify($listing['name']);
     $this->output
             ->set_content_type('application/json')
-            ->set_output(json_encode($custom_url));
+            ->set_output(json_encode($slug));
   }
     public function get_data() {
         // Logique pour récupérer les données depuis la base de données
@@ -254,17 +261,31 @@ class Api extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($page_data));
     }
-    function get_country() {
-        $listingId = $this->input->post('listing_id');
+    function get_country($listing_id = "") {
+        if (empty($listing_id)) {
+            $listing_id = $this->input->post('listing_id');
+        }
     
-        $city = $this->db->get_where('city', array('id' => $listingId))->row_array();
-        $state = $this->db->get_where('state', array('id' => $listingId))->row_array();
-        $country = $this->db->get_where('country', array('id' => $listingId))->row_array();
+        $city = $this->db->get_where('city', array('id' => $listing_id))->row_array();
+        if (!$city) {
+            // Handle the case where the city is not found
+            // You can return an error response or set default values
+            $city = array('name' => 'Unknown City', 'state_id' => null);
+        }
     
-        // Debug information
-        echo "City: "; print_r($city);
-        echo "State: "; print_r($state);
-        echo "Country: "; print_r($country);
+        $state = $this->db->get_where('state', array('id' => $city['state_id']))->row_array();
+        if (!$state) {
+            // Handle the case where the state is not found
+            // You can return an error response or set default values
+            $state = array('name' => 'Unknown State', 'country_id' => null);
+        }
+    
+        $country = $this->db->get_where('country', array('id' => $state['country_id']))->row_array();
+        if (!$country) {
+            // Handle the case where the country is not found
+            // You can return an error response or set default values
+            $country = array('name' => 'Unknown Country');
+        }
     
         $result = array(
             'city' => $city['name'],
@@ -276,7 +297,17 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($result));
     }
-    
+    function get_countries($country_id = 0)
+    {
+      if ($country_id > 0) {
+        $this->db->where('id', $country_id);
+      }
+      $result = $this->db->get('country');
+      $datas = $result->row_array();
+      $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($datas));
+    }
     
   
 }

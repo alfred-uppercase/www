@@ -710,5 +710,6 @@
     "update_user": "Update user",
     "invoice": "Invoice",
     "this_listing_is_verified": "This listing is verified",
-    "getopeningstatus": "Getopeningstatus"
+    "getopeningstatus": "Getopeningstatus",
+    "login_to_review": "Login to review"
 }

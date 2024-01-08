@@ -3,6 +3,7 @@ import PresentationView from "../views/Presentation/PresentationView.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import ResultPage from '../views/Presentation/Listing.vue';
 import Annonces from '../views/Presentation/Annonces.vue';
+import AnnoncesUnique from '../views/Presentation/AnnonceUnique.vue';
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
@@ -38,6 +39,12 @@ const router = createRouter({
       path: "/pages/landing-pages/about-us",
       name: "about",
       component: AboutView,
+    },
+    {
+      path: '/annonces/:id',
+      name: 'annoncesUnique',
+      component: AnnoncesUnique,
+      props: true,
     },
     {
       path: "/listings",

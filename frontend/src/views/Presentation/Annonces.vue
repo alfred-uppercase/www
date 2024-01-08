@@ -75,6 +75,12 @@
           <p class="ellipsis">
             {{ listing.description }}
           </p>
+              <router-link
+              :key="listing.id"
+              :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
+            >
+              {{ listing.name }}
+            </router-link>
           <a
             v-if="listing.latitude !== '' && listing.longitude !== ''"
             class="address"
