@@ -5,17 +5,47 @@
 	<div class="row justify-content-md-center" style="transform: none;">
     <FIlters />
     <div class="col-lg-6 col-md-12 order-lg-1 order-2" id="listings">
-        <div class="row" v-for="listing in listings" :key="listing.id">
     <div
-      class="col-lg-6 col-md-6 listing-div "
+      v-for="listing in listings" :key="listing.id"
+      class="strip map_view featured-tag-border "
       :data-marker-id="listing.code"
       :id="listing.code"
     >
       <div
-        class="strip grid"
+        class="row no-gutters"
         :class="{ 'featured-tag-border': listing.is_featured === '1' }"
       >
+      <div class="col-4">
         <figure>
+
+          <a
+            v-if="listing.is_featured === '1'"
+            href="javascript::"
+            class="featured-tag-grid"
+          >
+            {{ get_phrase_featured }}
+          </a>
+          <router-link
+              :key="listing.id"
+              :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
+            :id="'listing-banner-image-for-' + listing.code"
+            class="d-block h-100 img"
+            :style="{
+              'background-image': `url('uploads/listing_thumbnails/${listing.listing_thumbnail}')`,
+            }"
+          >
+            <div class="read_more"><span>{{ get_phrase_watch_details }}</span></div>
+        </router-link>
+          <small>
+            {{ listing.listing_type === '' ? 'General' : capitalizeFirst(listing.listing_type) }}
+          </small>
+        </figure>
+        </div>
+        <div class="col-8"
+        :class="{ 'featured-body': listing.is_featured == 1 }"
+        >
+        <div
+          class="wrapper">
           <a
             href="javascript::"
             class="wishlist-icon"
@@ -29,41 +59,18 @@
             ></i>
           </a>
 
-          <a
-            v-if="listing.is_featured === '1'"
-            href="javascript::"
-            class="featured-tag-grid"
-          >
-            {{ get_phrase.featured }}
-          </a>
-
-          <a
-            :href="getListingUrl(listing.id)"
-            :id="'listing-banner-image-for-' + listing.code"
-            class="d-block h-100 img"
-            :style="{
-              'background-image': `url('uploads/listing_thumbnails/${listing.listing_thumbnail}')`,
-            }"
-          >
-            <div class="read_more"><span>{{ get_phrase.watch_details }}</span></div>
-          </a>
-          <small>
-            {{ listing.listing_type === '' ? 'General' : capitalizeFirst(listing.listing_type) }}
-          </small>
-        </figure>
-        <div
-          class="wrapper"
-          :class="{ 'featured-body': listing.is_featured == 1 }"
-        >
           <h3 class="ellipsis">
-            <a :href="getListingUrl(listing.id)">
+            <router-link
+              :key="listing.id"
+              :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
+            >
               {{ listing.name }}
-            </a>
+            </router-link>
             <span
               v-if="isClaimed(listing.id)"
               class="claimed_icon"
               data-toggle="tooltip"
-              title="{{ get_phrase.this_listing_is_verified }}"
+              title="{{ get_phrase_this_listing_is_verified }}"
             >
               <!-- <img src="assets/frontend/images/verified.png" width="23" /> -->
             </span>
@@ -75,12 +82,6 @@
           <p class="ellipsis">
             {{ listing.description }}
           </p>
-              <router-link
-              :key="listing.id"
-              :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
-            >
-              {{ listing.name }}
-            </router-link>
           <a
             v-if="listing.latitude !== '' && listing.longitude !== ''"
             class="address"
@@ -88,7 +89,7 @@
             :button-direction-id="listing.code"
             target=""
           >
-            {{ get_phrase.show_on_map }}
+            {{ get_phrase_show_on_map }}
           </a>
         </div>
         <ul :class="{ 'featured-footer': listing.is_featured == 1 }" class="mb-0">
@@ -102,21 +103,10 @@
               <!-- {{ get_phrase.getOpeningStatus(listing.id) }} -->
             </span>
           </li>
-          <li>
-            <div class="score">
-              <span>
-                {{ getRatingQuality(listing.id) }}
-                <em>
-                  <!-- {{ get_phrase('reviews', getListingWiseReviewCount(listing.id)) }} -->
-                </em>
-              </span>
-              <strong>{{ getListingWiseRating(listing.id) }}</strong>
-            </div>
-          </li>
         </ul>
+        </div>
       </div>
     </div>
-  </div>
   </div>
   <div class="col-lg-3 order-lg-2 order-1">
 			<div class="stiky-map mb-5 mb-lg-0">
@@ -134,7 +124,10 @@ import FIlters from '/views/Presentation/annonces/filter.vue';
 const title = ref('');
 const listings = ref([]);
 const get_country = ref([]);
-const get_phrase = ref([]);
+const get_phrase_show_on_map = ref('');
+const get_phrase_watch_details = ref('');
+const get_phrase_featured = ref('');
+const get_phrase_this_listing_is_verified = ref('');
 const body = document.getElementsByTagName("body")[0];
 const getListingUrl = (listingId) => {
   // Assuming you have a method to generate the listing URL
@@ -150,9 +143,14 @@ onMounted(async () => {
     console.log('Response from listings:', response.data);
     title.value = response.data.title;
     listings.value = response.data.listings;
-    const get_phrases = await axios.get('/api/get_phrase');
-    console.log('Response from listings:', response.data);
-    get_phrase.value = get_phrases.data;
+    const get_phrases_show_on_map = await axios.get('/api/get_phrase/show_on_map');
+    get_phrase_show_on_map.value = get_phrases_show_on_map.data;
+    const get_phrase_watch_detail = await axios.get('/api/get_phrase/watch_details');
+    get_phrase_watch_details.value = get_phrase_watch_detail.data;
+    const get_phrase_feature = await axios.get('/api/get_phrase/featured');
+    get_phrase_featured.value = get_phrase_feature.data;
+    const this_listing_is_verifi = await axios.get('/api/get_phrase/this_listing_is_verified');
+    this_listing_is_verified.value = this_listing_is_verifi.data;
 
 
     const get_count = await axios.get('/api/get_country', { listing_id: 2 });
@@ -163,7 +161,6 @@ onMounted(async () => {
   }
 
   body.classList.add("annonces");
-  body.classList.add("bg-gray-200");
 });
 const isWishlisted = (listingId) => {
   // Assuming you have a method to check if the listing is wishlisted

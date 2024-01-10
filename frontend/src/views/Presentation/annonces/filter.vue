@@ -9,6 +9,7 @@
             id="filters_col_bt"
           >
             {{ get_phrase.filters }}
+            Filters
           </a>
           <!-- Filter form starts-->
           <form
@@ -20,7 +21,7 @@
             <div class="collapse show" id="collapseFilters">
               <!-- Category filter -->
               <div class="filter_type">
-                <h6>{{ get_phrase.category }}</h6>
+                <h6>{{ get_phrase.category }}Categories</h6>
                 <ul>
                   <li
                     v-for="(category, index) in categories"
@@ -70,7 +71,7 @@
                 >
                   {{ categories.length > number_of_visible_categories
                     ? get_phrase.show_more
-                    : '' }}
+                    : '' }}Show More
                 </a>
               </div>
   

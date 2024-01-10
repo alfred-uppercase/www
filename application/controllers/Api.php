@@ -106,8 +106,19 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($linkj));
     }
+    function get_amenities($amenity_id = "", $attribute = "")
+    {
+        $amenity_id = 1; // Remplacez par la valeur réelle de l'amenity_id
+        $attribute = 1; // Remplacez par la valeur réelle de l'attribut
+    
+        $amenity_data = $this->frontend_model->get_amenity($amenity_id, $attribute);
+    
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($amenity_data));
+    }
     public function get_user_detail($user_id = "") {
-        $user_details = $this->user_model->get_all_users($user_id)->row_array();
+        $user_details = $this->user_model->get_all_users($user_id)->row_array()->row()->name;
     
         $this->output
             ->set_content_type('application/json')

@@ -8262,6 +8262,8 @@ video {
 .text-15{
   font-size: 15px;
 }
-
+.annonces .mt-90{
+  padding-top: 90px;
+}
 
 </style>
