@@ -96,6 +96,24 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($langArray[$key]));
 	}
+    function get_user_thumbnail($user_id = "") {
+        if (file_exists('uploads/user_image/'.$user_id.'.jpg')) {
+            $linkj = base_url('uploads/user_image/'.$user_id.'.jpg');
+        }else {
+            $linkj = base_url('uploads/user_image/user.png');
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($linkj));
+    }
+    public function get_user_detail($user_id = "") {
+        $user_details = $this->user_model->get_all_users($user_id)->row_array();
+    
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($user_details));
+    }
+    
     function get_frontend_settings($type = '') {
       $CI	=&	get_instance();
       $CI->load->database();

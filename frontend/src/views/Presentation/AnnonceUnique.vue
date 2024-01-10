@@ -33,6 +33,26 @@
           </a>
         </span> -->
       </div>
+      <h5>{{ get_phrase.about }}</h5>
+      <p v-html="listingDetails.description"></p>
+
+      <div v-if="listingDetails.photos">
+          <h2>Photos {{ get_phrase.photo_gallery }}</h2>
+          <div class="gallery">
+            <div class="imgcontent"
+              v-for="(photo, index) in parsePhotos(listingDetails.photos)"
+              :key="index"
+              >
+                <img
+                  :src="'/uploads/listing_images/' + photo"
+                  :alt="'Photo ' + (index + 1)"
+                />
+            </div>
+          </div>
+
+        </div>
+        <Social />
+
     </section>
 
   </div>
@@ -66,6 +86,7 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { useRoute } from 'vue-router';
+  import Social from '/views/Presentation/annonces/social.vue';
   
   const listingDetails = ref({});
   const get_phrase = ref({});
@@ -104,7 +125,7 @@
       console.log('Response from single listing:', response.data);
       listingDetails.value = response.data;
       const get_phrases = await axios.get('/api/get_phrase');
-      console.log('Response from listings:', response.data);
+      console.log('Response from getphrase:', get_phrases.data);
       get_phrase.value = get_phrases.data;
       // claimingStatus.value = response.data.status;
     } catch (error) {
@@ -117,6 +138,19 @@
 
   
   <style>
-    /* Add your component styles here */
+    .gallery{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .gallery .imgcontent{
+      max-width: 200px;
+      width: 100%;
+      margin-right: 20px;
+    }
+    .gallery .imgcontent img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
   

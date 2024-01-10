@@ -65,7 +65,7 @@
               data-toggle="tooltip"
               title="{{ get_phrase.this_listing_is_verified }}"
             >
-              <img src="assets/frontend/images/verified.png" width="23" />
+              <!-- <img src="assets/frontend/images/verified.png" width="23" /> -->
             </span>
           </h3>
           <small>

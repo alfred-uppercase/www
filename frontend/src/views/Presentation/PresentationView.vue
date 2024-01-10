@@ -55,16 +55,16 @@ const submitForm = async () => {
 onMounted(async () => {
   try {
 
-    const response = await axios.get('http://localhost/api/get_categories');
+    const response = await axios.get('/api/get_categories');
     console.log('Response from get_categories:', response.data);
     categories.value = response.data;
-    const cityresponse = await axios.get('http://localhost/api/get_cities');
+    const cityresponse = await axios.get('/api/get_cities');
     console.log('Response from get_categories:', cityresponse.data);
     cities.value = cityresponse.data;
-    const bannerTitleResponse = await axios.get('http://localhost/api/get_frontend_settings/banner_title');
+    const bannerTitleResponse = await axios.get('/api/get_frontend_settings/banner_title');
     console.log('Response from get_frontend_settings:', bannerTitleResponse.data);
     bannerTitle.value = bannerTitleResponse.data;
-    const sloganResponse = await axios.get('http://localhost/api/get_frontend_settings/slogan');
+    const sloganResponse = await axios.get('/api/get_frontend_settings/slogan');
     slogan.value = sloganResponse.data;
   } catch (error) {
     console.error('Error fetching categories:', error);
