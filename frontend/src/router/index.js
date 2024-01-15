@@ -6,7 +6,7 @@ import Annonces from '../views/Presentation/Annonces.vue';
 import AnnoncesUnique from '../views/Presentation/AnnonceUnique.vue';
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
-import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
+import SignInBasicView from "../views/LandingPages/SignIn/Login_basic.vue";
 import Register from "../views/LandingPages/SignIn/Register.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";

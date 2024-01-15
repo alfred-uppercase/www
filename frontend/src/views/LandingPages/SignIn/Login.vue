@@ -1,23 +1,4 @@
-<script setup>
-import { onMounted } from "vue";
 
-// example components
-import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
-import Header from "@/examples/Header.vue";
-
-//Vue Material Kit 2 components
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
-
-// material-input
-import setMaterialInput from "@/assets/js/material-input";
-onMounted(() => {
-  setMaterialInput();
-});
-
-
-</script>
 <template>
   <DefaultNavbar transparent />
   <Header>
@@ -165,15 +146,67 @@ onMounted(() => {
     </div>
   </Header>
 </template>
+
 <script>
+import { onMounted } from "vue";
+
+// example components
+import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
+import Header from "@/examples/Header.vue";
+
+//Vue Material Kit 2 components
+import MaterialInput from "@/components/MaterialInput.vue";
+import MaterialSwitch from "@/components/MaterialSwitch.vue";
+import MaterialButton from "@/components/MaterialButton.vue";
+
+// material-input
+import setMaterialInput from "@/assets/js/material-input";
+// onMounted(() => {
+//   setMaterialInput();
+// });
 export default {
+  name: 'LoginPage',
+  components: {
+    // LayoutDiv,
+  },
   data() {
     return {
-      data: {
-        email: '',
-        password:''
-      },
+        email:'',
+        password:'',
+        validationErrors:{},
+        isSubmitting:false,
+    };
+  },
+  created() {
+    if(localStorage.getItem('token') != "" && localStorage.getItem('token') != null){
+        this.$router.push('/dashboard')
     }
   },
-}
+  methods: {
+     loginAction(){
+        this.isSubmitting = true
+        let payload = {
+            email: this.email,
+            password: this.password,
+        }
+        axios.post('/api/login', payload)
+          .then(response => {
+            localStorage.setItem('token', response.data.token)
+            this.$router.push('/dashboard')
+            return response
+          })
+          .catch(error => {
+            this.isSubmitting = false
+           if (error.response.data.errors != undefined) {
+                this.validationErrors = error.response.data.errors
+            }
+            if (error.response.data.error != undefined) {
+                this.validationErrors = error.response.data.error
+            }
+            return error
+          });
+     }
+  },
+};
+
 </script>

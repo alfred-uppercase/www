@@ -18,6 +18,40 @@ class Api extends CI_Controller {
     $this->output->set_header('Pragma: no-cache');
     $this->load->helper("file");
   }
+  public function validate_login($from = "") {
+    if(!$this->crud_model->check_rechaptcha()  && get_settings('recaptcha_status') == 1){
+        $this->session->set_flashdata('error_message', get_phrase('recaptcha_validation_failed'));
+        redirect(site_url('home/login'), 'refresh');
+    }
+
+    $email = sanitizer($this->input->post('email'));
+    $password = sanitizer($this->input->post('password'));
+    $credential = array('email' => $email, 'password' => sha1($password), 'is_verified' => 1);
+
+    // Checking login credential for admin
+    $query = $this->db->get_where('user', $credential);
+
+    if ($query->num_rows() > 0) {
+        $row = $query->row();
+        $this->session->set_userdata('is_logged_in', 1);
+        $this->session->set_userdata('user_id', $row->id);
+        $this->session->set_userdata('role_id', $row->role_id);
+        $this->session->set_userdata('role', get_user_role('user_role', $row->id));
+        $this->session->set_userdata('name', $row->name);
+        if ($row->role_id == 1) {
+            $this->session->set_userdata('admin_login', '1');
+            redirect(site_url('admin/dashboard'), 'refresh');
+        }else if($row->role_id == 2){
+            $this->session->set_userdata('user_login', '1');
+            redirect(site_url('user/dashboard'), 'refresh');
+        }
+    }else {
+        $this->session->set_flashdata('error_message', get_phrase('provided_credentials_are_invalid'));
+        redirect(site_url('home/login'), 'refresh');
+
+    }
+
+   }
   public function get_categories()
   {
     log_message('debug', 'get_categories method called'); // Ajoutez cette ligne
@@ -117,6 +151,7 @@ class Api extends CI_Controller {
             ->set_content_type('application/json')
             ->set_output(json_encode($amenity_data));
     }
+
     public function get_user_detail($user_id = "") {
         $user_details = $this->user_model->get_all_users($user_id)->row_array()->row()->name;
     

@@ -26,9 +26,11 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "1.1.0",
     "@vitejs/plugin-vue": "2.3.3",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
     "@vue/eslint-config-prettier": "7.0.0",
     "eslint": "8.19.0",
     "eslint-plugin-vue": "9.0.0",
+    "leaflet": "^1.9.4",
     "prettier": "2.5.1",
     "sass": "1.52.3",
     "sass-loader": "13.0.0",

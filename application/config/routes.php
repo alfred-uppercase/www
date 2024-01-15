@@ -80,6 +80,8 @@ $route['home/filter_listings'] = 'home/filter_listings';
 $route['home/filter_listings/(:any)'] = 'home/filter_listings/$1';
 $route['api/get_frontend_settings/(:any)'] = 'api/get_frontend_settings/$1';
 $route['api/get_cities/(:any)'] = 'api/get_cities/$1';
+$route['api/validate_login']['POST'] = 'api/validate_login';
+$route['api/validate_login/(:any)']['POST'] = 'api/validate_login/$1';
 
 
 

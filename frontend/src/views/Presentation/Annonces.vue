@@ -109,9 +109,68 @@
     </div>
   </div>
   <div class="col-lg-3 order-lg-2 order-1">
-			<div class="stiky-map mb-5 mb-lg-0">
-        </div>
-    </div>
+			<!-- <div class="stiky-map mb-5 mb-lg-0"></div> -->
+      <!-- <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
+      <l-tile-layer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        layer-type="base"
+        name="OpenStreetMap"
+      ></l-tile-layer>
+    </l-map> -->
+    <l-map ref="map" :zoom="zoom" :center="[47.41322, -1.219482]">
+    <l-tile-layer
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      layer-type="base"
+      name="OpenStreetMap"
+    ></l-tile-layer>
+    <l-marker :lat-lng="[47.41322, -1.219482]">
+        <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
+      </l-marker>
+    <l-geo-json :geojson="geojson" :options-style="geojsonOptions"></l-geo-json>
+
+    <l-polyline
+        :lat-lngs="[
+          [47.334852, -1.509485],
+          [47.342596, -1.328731],
+          [47.241487, -1.190568],
+          [47.234787, -1.358337],
+        ]"
+        color="green"
+      ></l-polyline>
+      <l-polygon
+        :lat-lngs="[
+          [46.334852, -1.509485],
+          [46.342596, -1.328731],
+          [46.241487, -1.190568],
+          [46.234787, -1.358337],
+        ]"
+        color="#41b782"
+        :fill="true"
+        :fillOpacity="0.5"
+        fillColor="#41b782"
+      />
+      <l-rectangle
+        :lat-lngs="[
+          [46.334852, -1.509485],
+          [46.342596, -1.328731],
+          [46.241487, -1.190568],
+          [46.234787, -1.358337],
+        ]"
+        :fill="true"
+        color="#35495d"
+      />
+      <l-rectangle
+        :bounds="[
+          [46.334852, -1.190568],
+          [46.241487, -1.090357],
+        ]"
+      >
+        <l-popup>
+          lol
+        </l-popup>
+      </l-rectangle>
+  </l-map>
+  </div>
         </div>
     </div>
     </div>
@@ -120,6 +179,8 @@
   <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import axios from 'axios';
+import "leaflet/dist/leaflet.css";
+import { LMap, LTileLayer, LMarker, LPopup, LPolyline, LPolygon, LRectangle, } from "@vue-leaflet/vue-leaflet";
 import FIlters from '/views/Presentation/annonces/filter.vue';
 const title = ref('');
 const listings = ref([]);
@@ -127,7 +188,19 @@ const get_country = ref([]);
 const get_phrase_show_on_map = ref('');
 const get_phrase_watch_details = ref('');
 const get_phrase_featured = ref('');
-const get_phrase_this_listing_is_verified = ref('');
+const geojson = ref(null);
+    const geojsonOptions = ref({
+      pointToLayer: (feature, latLng) => {
+        // Utilisez vos propres options pour personnaliser l'apparence des points sur la carte
+        return L.circleMarker(latLng, { radius: 8 });
+      },
+    });
+    const center = ref([47.413220, -1.219482]);
+    const zoom = ref(12); 
+    const iconSize = ref(12); 
+    const iconUrl = ref(12); 
+// const mapIsReady = ref(false);
+// const get_phrase_this_listing_is_verified = ref('');
 const body = document.getElementsByTagName("body")[0];
 const getListingUrl = (listingId) => {
   // Assuming you have a method to generate the listing URL
@@ -153,6 +226,13 @@ onMounted(async () => {
     this_listing_is_verified.value = this_listing_is_verifi.data;
 
 
+        const responsegeo = await fetch("/home/filter_listings");
+        const datas = await responsegeo.json();
+
+        if (datas && datas.geo_json) {
+          geojson.value = JSON.parse(datas.geo_json);
+        }
+
     const get_count = await axios.get('/api/get_country', { listing_id: 2 });
     console.log('Response from country:', response.data);
     get_country.value = `${response.data.city}, ${response.data.state}, ${response.data.country}`;
@@ -161,6 +241,8 @@ onMounted(async () => {
   }
 
   body.classList.add("annonces");
+// return { geojson, geojsonOptions };
+
 });
 const isWishlisted = (listingId) => {
   // Assuming you have a method to check if the listing is wishlisted
