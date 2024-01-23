@@ -1,15 +1,15 @@
 <template>
-    <div class="row mb-3">
+    <div class="row mb-3 ch">
   <div class="col-12">
-    <h5 class="mb-3">{{ getPhrase.agent_details }}</h5>
+    <h5 class="mb-3">{{ getPhrase.agent_details }}Agents details</h5>
 
     <div class="row mb-1">
       <div class="col-md-12">
         <a :href="`${siteUrl}/user_profile`">
-          <!-- <img :src="'get_user_thumbnail.id'" alt="" class="float-left mr-3" width="80"> -->
+          <img :src='get_user_thumbnail' alt="" class="float-left mr-3" width="80">
         </a>
 
-        <!-- <p class="m-0 pt-3"><a :href="`${siteUrl}/user_profile/${get_user_detail.id}`" class="">{{ get_user_detail.name }}</a></p> -->
+        <p class="m-0 pt-3"><a :href="`${siteUrl}/user_profile/${get_user_detail.id}`" class="">{{ get_users.name }}</a></p>
         <p>
           <!-- <small>{{ $t('total') }} {{ getUserListingsCount(get_user_detail.id) }} {{ $t('listings') }}</small> -->
         </p>
@@ -57,6 +57,7 @@
   const slugs = ref('');
   const get_user_thumbnail = ref('');
   const get_user_detail = ref('');
+  const get_users = ref('');
   const route = useRoute();
   const id = ref(null);
   // const claimingStatus = ref(0);
@@ -91,6 +92,9 @@
 
       listingDetails.value = response.data;
 
+      const get_user = await axios.get(`/api/get_all_users/${listingDetails.value.user_id}`);
+      console.log('Get user:', get_user.data);
+      get_users.value = get_user.data;
 
       const getPhrases = await axios.get('/api/get_phrase');
 
@@ -100,8 +104,8 @@
       get_user_detail.value = get_user_details.data;
 
 
-      const get_user_thumbnails = await axios.get('/api/get_user_thumbnail');
-
+      const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${listingDetails.value.user_id}`);
+      console.log('User thumbail:', get_user_thumbnails.data)
       get_user_thumbnail.value = get_user_thumbnails.data;
       // claimingStatus.value = response.data.status;
     } catch (error) {

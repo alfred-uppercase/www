@@ -74,6 +74,16 @@ class Api extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($datas));
   }
+  public function get_all_users($user_id = 0) {
+    if ($user_id > 0) {
+        $this->db->where('id', $user_id);
+    }
+    $user = $this->db->get('user')->row_array(); // Fetch a single row as an associative array
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($user));
+}
+
   function get_cities()
   {
     $CI	=&	get_instance();

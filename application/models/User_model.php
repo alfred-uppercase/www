@@ -17,7 +17,7 @@ class User_model extends CI_Model {
         }
         return $this->db->get('user');
     }
-
+    
     public function get_users() {
         $this->db->where('role_id', 2);
         return $this->db->get('user');

@@ -8,6 +8,7 @@
   const get_phrase = ref({});
   const get_amenity = ref({});
   const slugs = ref('');
+  // const get_user = ref('');
   const route = useRoute();
   const id = ref(null);
   // const claimingStatus = ref(0);
@@ -49,6 +50,7 @@
       console.log('Response from getphrase:', get_phrases.data);
       get_phrase.value = get_phrases.data;
       // claimingStatus.value = response.data.status;
+
     } catch (error) {
       console.error('Error fetching single listing:', error);
     }
