@@ -5,6 +5,7 @@ import DefaultFooter from "/examples/footers/FooterDefault.vue";
 
 </script>
 
+
 <template>
   <DefaultNavbar :action="{
     route: 'javascript:;',
