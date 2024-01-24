@@ -4,6 +4,7 @@ import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import ResultPage from '../views/Presentation/Listing.vue';
 import Annonces from '../views/Presentation/Annonces.vue';
 import AnnoncesUnique from '../views/Presentation/AnnonceUnique.vue';
+import UserUnique from '../views/Presentation/UserUnique.vue';
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/Login_basic.vue";
@@ -44,6 +45,12 @@ const router = createRouter({
       path: '/annonces/:id',
       name: 'annoncesUnique',
       component: AnnoncesUnique,
+      props: true,
+    },
+    {
+      path: '/user/:user_id',
+      name: 'usersUnique',
+      component: UserUnique,
       props: true,
     },
     {

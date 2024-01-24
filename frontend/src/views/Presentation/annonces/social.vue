@@ -5,11 +5,21 @@
 
     <div class="row mb-1">
       <div class="col-md-12">
-        <a :href="`${siteUrl}/user_profile`">
-          <img :src='get_user_thumbnail' alt="" class="float-left mr-3" width="80">
-        </a>
+        <router-link
+              :key="listingDetails.user_id"
+              :to="{ name: 'usersUnique', params: { user_id: listingDetails.user_id } }"
+            >
+            <img :src='get_user_thumbnail' alt="" class="float-left mr-3" width="80">
+            </router-link>
 
-        <p class="m-0 pt-3"><a :href="`${siteUrl}/user_profile/${get_user_detail.id}`" class="">{{ get_users.name }}</a></p>
+        <p class="m-0 pt-3">
+          <router-link
+              :key="listingDetails.user_id"
+              :to="{ name: 'usersUnique', params: { user_id: listingDetails.user_id } }"
+            >
+            {{ get_users.name }}
+            </router-link>
+        </p>
         <p>
           <!-- <small>{{ $t('total') }} {{ getUserListingsCount(get_user_detail.id) }} {{ $t('listings') }}</small> -->
         </p>
@@ -60,6 +70,7 @@
   const get_users = ref('');
   const route = useRoute();
   const id = ref(null);
+  // const user_id = ref(null);
   // const claimingStatus = ref(0);
   const parsePhotos = (photosString) => {
   try {
@@ -71,11 +82,13 @@
 };
   // Fetch the ID from the route params
   id.value = route.params.id;
+  // user_id.value = route.params.user_id;
   
   onMounted(async () => {
     try {
       // Use the outer id variable, not the one defined in onMounted
       const currentId = id.value;
+      // const currentuserId = user_id.value;
       if (!currentId) {
         console.error('Error: Listing ID is undefined');
         return;
