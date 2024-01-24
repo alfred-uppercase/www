@@ -714,5 +714,6 @@
     "login_to_review": "Login to review",
     "currently_active_package_name": "Currently active package name",
     "expiry_date": "Expiry date",
-    "more_info": "More info"
+    "more_info": "More info",
+    "listing_by": "Listing by"
 }

@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h6 class="p-0 m-0">
                         {{get_phrase_listing_by}} : <a href="javascript:;">{{ get_users.name }}</a>
-                        <small class="float-right font-12 mt-2">{{get_phrase_total}} {{user_listings_num_rows}} {{get_phrase_listings}}</small>
+                        <small class="float-right font-12 mt-2">{{get_phrase_total}} {{get_listing_by_user_id}} {{get_phrase_listings}}</small>
                     </h6>
                 </div>
             </div>
@@ -39,9 +39,13 @@
   const get_phrase = ref({});
   const slugs = ref('');
   const get_users = ref('');
+  const get_phrase_listing_by = ref('');
+  const get_phrase_total = ref('');
+  const get_phrase_listings = ref('');
   const route = useRoute();
   const get_user_thumbnail = ref('');
-  const id = ref(null);
+  const get_listing_by_user_id = ref('');
+  const user_id = ref(null);
   // const claimingStatus = ref(0);
   const parsePhotos = (photosString) => {
   try {
@@ -80,10 +84,23 @@
       const get_phrases = await axios.get('/api/get_phrase');
       console.log('Response from getphrase:', get_phrases.data);
       get_phrase.value = get_phrases.data;
-      // claimingStatus.value = response.data.status;
+
       const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${currentId}`);
       console.log('User thumbail:', get_user_thumbnails.data)
       get_user_thumbnail.value = get_user_thumbnails.data;
+
+      const get_phrase_listing_bys = await axios.get('/api/get_phrase/listing_by');
+      get_phrase_listing_by.value = get_phrase_listing_bys.data;
+      const get_phrase_listing = await axios.get('/api/get_phrase/listings');
+      get_phrase_listings.value = get_phrase_listing.data;
+      const get_phrase_totals = await axios.get('/api/get_phrase/total');
+      get_phrase_total.value = get_phrase_totals.data;
+      const get_listing_by_user_ids = await axios.get(`/api/get_listing_by_user_id/${currentId}`);
+      get_listing_by_user_id.value = get_listing_by_user_ids.data;
+
+
+
+
     } catch (error) {
       console.error('Error fetching single listing:', error);
     }
@@ -94,19 +111,43 @@
 
   
   <style>
-    .gallery{
-      display: flex;
-      flex-wrap: wrap;
+
+.h-auto{
+        height: auto;
     }
-    .gallery .imgcontent{
-      max-width: 200px;
-      width: 100%;
-      margin-right: 20px;
+    .user-bg-img-card{
+        height: 200px;
     }
-    .gallery .imgcontent img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .user-bg-img{
+        box-shadow: 0px 0px 20px -8px #000;
+        margin-left: 20px;
+        margin-top: 145px;
+        border: 5px solid #fff;
+    }
+    .user-name-for-profile{
+        color: white;
+        margin-left: 120px;
+        margin-top: -85px;
+        font-size: 22px;
+    }
+    .user-bg-img-card{
+        /*background-color: rgba(255,255,255,0.6);
+        background-blend-mode: lighten;*/
+    }
+    @media screen and (min-width: 581px) {
+        .user-bg-img-card{
+            background-size: 100% 100%;
+        }
+    }
+
+    @media screen and (max-width: 580px) {
+        .user-bg-img-card{
+            background-size: auto 100%;
+        }
+    }
+
+    .font-12{
+        font-size: 12px;
     }
   </style>
   

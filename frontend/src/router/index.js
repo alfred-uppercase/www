@@ -49,7 +49,7 @@ const router = createRouter({
     },
     {
       path: '/user/:user_id',
-      name: 'usersUnique',
+      name: 'userUnique',
       component: UserUnique,
       props: true,
     },

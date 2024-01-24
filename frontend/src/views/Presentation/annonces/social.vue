@@ -7,7 +7,10 @@
       <div class="col-md-12">
         <router-link
               :key="listingDetails.user_id"
-              :to="{ name: 'usersUnique', params: { user_id: listingDetails.user_id } }"
+              :to="{ 
+              name: 'usersUnique', 
+              params: { user_id: listingDetails.user_id } 
+              }"
             >
             <img :src='get_user_thumbnail' alt="" class="float-left mr-3" width="80">
             </router-link>

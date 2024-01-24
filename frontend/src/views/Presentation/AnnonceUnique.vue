@@ -1,84 +1,4 @@
-<script setup>
-  import { ref, onMounted } from 'vue';
-  import axios from 'axios';
-  import { useRoute } from 'vue-router';
-  import Social from '/views/Presentation/annonces/social.vue';
-  
-  const listingDetails = ref({});
-  const get_phrase = ref({});
-  const get_amenity = ref({});
-  const slugs = ref('');
-  // const get_user = ref('');
-  const route = useRoute();
-  const id = ref(null);
-  // const claimingStatus = ref(0);
-  const parsePhotos = (photosString) => {
-  try {
-    return JSON.parse(photosString);
-  } catch (error) {
-    console.error('Error parsing photos:', error);
-    return [];
-  }
-};
-  // Fetch the ID from the route params
-  id.value = route.params.id;
-  
-  onMounted(async () => {
-    try {
-      // Use the outer id variable, not the one defined in onMounted
-      const currentId = id.value;
-      if (!currentId) {
-        console.error('Error: Listing ID is undefined');
-        return;
-      }
-  
-      const slug = await axios.get(`/api/get_slug_name/${currentId}`);
-      console.log('Slug name:', slug.data);
-      slugs.value = slug.data;
-  
-      const amnety = await axios.get(`/api/get_amenities/`);
-      console.log('Slug name:', amnety.data);
-      get_amenity.value = amnety.data;
 
-
-      const currentSlug = slugs.value;
-  
-      const response = await axios.get(`/home/listing/${currentSlug}/${currentId}`);
-      console.log('Response from single listing:', response.data);
-      listingDetails.value = response.data;
-      const get_phrases = await axios.get('/api/get_phrase');
-      console.log('Response from getphrase:', get_phrases.data);
-      get_phrase.value = get_phrases.data;
-      // claimingStatus.value = response.data.status;
-
-    } catch (error) {
-      console.error('Error fetching single listing:', error);
-    }
-  });
-  </script>
-  
-
-
-  
-  <style>
-    .gallery{
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .gallery .imgcontent{
-      max-width: 200px;
-      width: 100%;
-      margin-right: 20px;
-    }
-    .gallery .imgcontent img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  </style>
-  
-
-<!-- ListingSingle.vue -->
 <template>
 <div class="container mt-90">
 	<div class="row">
@@ -133,7 +53,70 @@
 
         </div>
             
-        <Social />
+        <!-- <Social /> -->
+
+        <div class="row mb-3 ch">
+  <div class="col-12">
+    <h5 class="mb-3">Agents details</h5>
+
+    <div class="row mb-1">
+      <div class="col-md-12">
+        <!-- <router-link
+              :key="listingDetails.user_id"
+              :to="{ 
+              name: 'userUnique', 
+              params: { user_id: listingDetails.user_id } 
+              }"
+            >
+            <img :src='get_user_thumbnail' alt="" class="float-left mr-3" width="80">
+            </router-link> -->
+            <router-link v-if="listingDetails.user_id !== undefined" :key="listingDetails.user_id" :to="{ name: 'userUnique', params: { user_id: listingDetails.user_id } }">
+              <img :src="get_user_thumbnail" alt="" class="float-left mr-3" width="80">
+            </router-link>
+
+
+        <p class="m-0 pt-3">
+          <!-- <router-link
+              :key="listingDetails.user_id"
+              :to="{ name: 'userUnique', params: { user_id: listingDetails.user_id } }"
+            >
+            {{ get_users.name }}
+            </router-link> -->
+        </p>
+        <p>
+          <!-- <small>{{ $t('total') }} {{ getUserListingsCount(get_user_detail.id) }} {{ $t('listings') }}</small> -->
+        </p>
+      </div>
+    </div>
+
+    <!-- <a v-if="listingDetails.website" :href="listingDetails.website" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
+      <i class="icon-globe-6 mr-2"></i>{{ $t('website') }}
+    </a>
+
+    <a v-if="listingDetails.email" :href="`mailto:${listingDetails.email}`" target="" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
+      <i class="icon-email mr-2"></i>{{ $t('email_us') }}
+    </a>
+
+    <a v-if="listingDetails.phone" :href="`tel:${listingDetails.phone}`" target="" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
+      <i class="icon-phone mr-2"></i>{{ $t('call_now') }}
+    </a>
+
+    <template v-if="listingDetails.social">
+      <a v-if="listingDetails.social.facebook" :href="listingDetails.social.facebook" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
+        <i class="icon-facebook-6 mr-2"></i>{{ $t('facebook') }}
+      </a>
+
+      <a v-if="listingDetails.social.twitter" :href="listingDetails.social.twitter" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
+        <i class="icon-twitter mr-2"></i>{{ $t('twitter') }}
+      </a>
+
+      <a v-if="listingDetails.social.linkedin" :href="listingDetails.social.linkedin" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
+        <i class="fab fa-linkedin mr-2"></i>{{ $t('linkedin') }}
+      </a>
+    </template> -->
+  </div>
+</div>
+
 
 
         <!-- <h5 class="add_bottom_15">{{ getPhrase.amenities }}</h5> -->
@@ -274,4 +257,93 @@
 
   </template>
   
+  <script setup>
+  import { ref, onMounted } from 'vue';
+  import axios from 'axios';
+  import { useRoute } from 'vue-router';
+  // import Social from '/views/Presentation/annonces/social.vue';
   
+  const listingDetails = ref({});
+  const get_phrase = ref({});
+  const get_amenity = ref({});
+  const slugs = ref('');
+  const get_user_thumbnail = ref('');
+  const get_user_detail = ref('');
+  const get_users = ref('');
+  // const get_user = ref('');
+  const route = useRoute();
+  const id = ref(null);
+  // const claimingStatus = ref(0);
+  const parsePhotos = (photosString) => {
+  try {
+    return JSON.parse(photosString);
+  } catch (error) {
+    console.error('Error parsing photos:', error);
+    return [];
+  }
+};
+  // Fetch the ID from the route params
+  id.value = route.params.id;
+  
+  onMounted(async () => {
+    try {
+      // Use the outer id variable, not the one defined in onMounted
+      const currentId = id.value;
+      if (!currentId) {
+        console.error('Error: Listing ID is undefined');
+        return;
+      }
+  
+      const slug = await axios.get(`/api/get_slug_name/${currentId}`);
+      console.log('Slug name:', slug.data);
+      slugs.value = slug.data;
+  
+      const amnety = await axios.get(`/api/get_amenities/`);
+      console.log('Slug name:', amnety.data);
+      get_amenity.value = amnety.data;
+
+
+      const currentSlug = slugs.value;
+  
+      const response = await axios.get(`/home/listing/${currentSlug}/${currentId}`);
+      console.log('Response from single listing:', response.data);
+      listingDetails.value = response.data;
+      const get_phrases = await axios.get('/api/get_phrase');
+      console.log('Response from getphrase:', get_phrases.data);
+      get_phrase.value = get_phrases.data;
+      // claimingStatus.value = response.data.status;
+      const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${listingDetails.value.user_id}`);
+      console.log('User thumbail:', get_user_thumbnails.data)
+      get_user_thumbnail.value = get_user_thumbnails.data;
+      const get_user = await axios.get(`/api/get_all_users/${listingDetails.value.user_id}`);
+      console.log('Get user:', get_user.data);
+      get_users.value = get_user.data;
+
+    } catch (error) {
+      console.error('Error fetching single listing:', error);
+    }
+  });
+  </script>
+  
+
+
+  
+  <style>
+    .gallery{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .gallery .imgcontent{
+      max-width: 200px;
+      width: 100%;
+      margin-right: 20px;
+    }
+    .gallery .imgcontent img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+  
+
+<!-- ListingSingle.vue -->
