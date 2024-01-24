@@ -91,6 +91,40 @@ public function get_listing_by_user_id($user_id = ""){
         ->set_content_type('application/json')
         ->set_output(json_encode($conts));
 }
+public function get_listing_by_user_id_result($user_id = ""){
+    $this->db->where('user_id', $user_id);
+    $this->db->where('status', 'active');
+    $conts = $this->db->get('listing')->result_array();
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($conts));
+}
+function now_open($listing_id = '') {
+    $CI	=&	get_instance();
+    $CI->load->database();
+    $time_configurations = $CI->db->get_where('time_configuration', array('listing_id' => $listing_id))->row_array();
+    $today = strtolower(date('l'));
+    $current_hour = date('H');
+    $time_configuration_for_today = explode('-', $time_configurations[$today]);
+    if ($time_configuration_for_today[0] == 'closed' || $time_configuration_for_today[1] == 'closed') {
+      $closed = get_phrase('closed');
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($closed));
+    }else {
+      if( $time_configuration_for_today[0] <= $current_hour && $time_configuration_for_today[1] >= $current_hour ){
+        $now_open = get_phrase('now_open');
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($now_open));
+      }else{
+        $closed = get_phrase('closed');
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($closed));
+      }
+    }
+  }
 
   function get_cities()
   {

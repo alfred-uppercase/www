@@ -23,6 +23,110 @@
                     </h6>
                 </div>
             </div>
+            <div class="row">
+                <div
+      v-for="listing in get_listing_by_user_id_result" :key="listing.id"
+      class="strip map_view featured-tag-border "
+      :data-marker-id="listing.code"
+      :id="listing.code"
+    >
+      <div
+        class="row no-gutters"
+        :class="{ 'featured-tag-border': listing.is_featured === '1' }"
+      >
+      <div class="col-4">
+        <figure>
+
+          <a
+            v-if="listing.is_featured === '1'"
+            href="javascript::"
+            class="featured-tag-grid"
+          >
+            {{ get_phrase_featured }}
+          </a>
+          <router-link
+              :key="listing.id"
+              :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
+            :id="'listing-banner-image-for-' + listing.code"
+            class="d-block h-100 img"
+            :style="{
+              'background-image': `url('uploads/listing_thumbnails/${listing.listing_thumbnail}')`,
+            }"
+          >
+            <div class="read_more"><span>{{ get_phrase_watch_details }}</span></div>
+        </router-link>
+          <small>
+            <!-- {{ listing.listing_type === '' ? 'General' : capitalizeFirst(listing.listing_type) }} -->
+          </small>
+        </figure>
+        </div>
+        <div class="col-8"
+        :class="{ 'featured-body': listing.is_featured == 1 }"
+        >
+        <div
+          class="wrapper">
+          <a
+            href="javascript::"
+            class="wishlist-icon"
+            @click="addToWishList(listing.id)"
+          >
+            <i
+              :class="{
+                'fas fa-heart': isWishlisted(listing.id),
+                'far fa-heart': !isWishlisted(listing.id),
+              }"
+            ></i>
+          </a>
+
+          <h3 class="ellipsis">
+            <router-link
+              :key="listing.id"
+              :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
+            >
+              {{ listing.name }}
+            </router-link>
+            <span
+              v-if="isClaimed(listing.id)"
+              class="claimed_icon"
+              data-toggle="tooltip"
+              title="{{ get_phrase_this_listing_is_verified }}"
+            >
+              <!-- <img src="assets/frontend/images/verified.png" width="23" /> -->
+            </span>
+          </h3>
+          <small>
+            <!-- {{ getCityStateCountry(listing.city_id, listing.state_id, listing.country_id) }} -->
+            <!-- {{ get_country.city_id }} -->
+          </small>
+          <p class="ellipsis">
+            {{ listing.description }}
+          </p>
+          <a
+            v-if="listing.latitude !== '' && listing.longitude !== ''"
+            class="address"
+            href="javascript:"
+            :button-direction-id="listing.code"
+            target=""
+          >
+            {{ get_phrase_show_on_map }}
+          </a>
+        </div>
+        <ul :class="{ 'featured-footer': listing.is_featured == 1 }" class="mb-0">
+          <li>
+            <span
+              :class="{
+                'loc_closed': isClosedNow(listing.id),
+                'loc_open': isOpenNow(listing.id),
+              }"
+            >
+              {{ now_open }}
+            </span>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+            </div>
 
         </div>
     </div>
@@ -35,7 +139,6 @@
   import axios from 'axios';
   import { useRoute } from 'vue-router';
   
-  const listingDetails = ref({});
   const get_phrase = ref({});
   const slugs = ref('');
   const get_users = ref('');
@@ -45,6 +148,11 @@
   const route = useRoute();
   const get_user_thumbnail = ref('');
   const get_listing_by_user_id = ref('');
+  const get_phrase_this_listing_is_verified = ref('');
+  const get_listing_by_user_id_result = ref({});
+  const now_open = ref({});
+  const get_phrase_watch_details = ref('');
+const get_phrase_featured = ref('');
   const user_id = ref(null);
   // const claimingStatus = ref(0);
   const parsePhotos = (photosString) => {
@@ -78,9 +186,6 @@
 
       const currentSlug = slugs.value;
   
-      const response = await axios.get(`/home/listing/${currentSlug}/${currentId}`);
-      console.log('Response from single listing:', response.data);
-      listingDetails.value = response.data;
       const get_phrases = await axios.get('/api/get_phrase');
       console.log('Response from getphrase:', get_phrases.data);
       get_phrase.value = get_phrases.data;
@@ -97,7 +202,14 @@
       get_phrase_total.value = get_phrase_totals.data;
       const get_listing_by_user_ids = await axios.get(`/api/get_listing_by_user_id/${currentId}`);
       get_listing_by_user_id.value = get_listing_by_user_ids.data;
-
+      const get_listing_by_user_id_results = await axios.get(`/api/get_listing_by_user_id_result/${currentId}`);
+      get_listing_by_user_id_result.value = get_listing_by_user_id_results.data;
+      const get_phrase_watch_detail = await axios.get('/api/get_phrase/watch_details');
+        get_phrase_watch_details.value = get_phrase_watch_detail.data;
+        const get_phrase_this_listing_is_verifieds = await axios.get('/api/get_phrase/this_listing_is_verified');
+        get_phrase_this_listing_is_verified.value = get_phrase_this_listing_is_verifieds.data;
+        const n_open = await axios.get(`/api/now_open/${get_listing_by_user_id_result.value.id}`);
+        now_open.value = n_open.data;
 
 
 
@@ -105,6 +217,92 @@
       console.error('Error fetching single listing:', error);
     }
   });
+
+  const isWishlisted = (listingId) => {
+  // Assuming you have a method to check if the listing is wishlisted
+  // Replace this with your actual logic
+  return false;
+};
+
+const addToWishList = (listingId) => {
+  // Assuming you have a method to add to the wishlist
+  // Replace this with your actual logic
+  console.log('Add to wishlist:', listingId);
+};
+
+const isClaimed = (listingId) => {
+  // Assuming you have a method to check if the listing is claimed
+  // Replace this with your actual logic
+  return false;
+};
+
+const getCityStateCountry = async (cityId, stateId, countryId) => {
+  try {
+    const city = await fetchCity(cityId);
+    const state = await fetchState(stateId);
+    const country = await fetchCountry(countryId);
+
+    return `${city.name}, ${state.name}, ${country.name}`;
+  } catch (error) {
+    console.error('Error fetching city, state, and country:', error);
+    return 'City, State, Country';
+  }
+};
+const fetchCity = async (cityId) => {
+  // Implement logic to fetch city details based on cityId
+  // Replace this with your actual API call or data retrieval logic
+  return { name: 'CityName' };
+};
+
+const fetchState = async (stateId) => {
+  // Implement logic to fetch state details based on stateId
+  // Replace this with your actual API call or data retrieval logic
+  return { name: 'StateName' };
+};
+
+const fetchCountry = async (countryId) => {
+  // Implement logic to fetch country details based on countryId
+  // Replace this with your actual API call or data retrieval logic
+  return { name: 'CountryName' };
+};
+
+const isOpenNow = (listingId) => {
+  // Assuming you have a method to check if the listing is open now
+  // Replace this with your actual logic
+  return true;
+};
+
+const isClosedNow = (listingId) => {
+  // Assuming you have a method to check if the listing is closed now
+  // Replace this with your actual logic
+  return false;
+};
+
+const getOpeningStatus = (listingId) => {
+  // Assuming you have a method to get the opening status
+  // Replace this with your actual logic
+  return 'open';
+};
+
+const getRatingQuality = (listingId) => {
+  // Assuming you have a method to get the quality rating
+  // Replace this with your actual logic
+  return '5.0'; // Sample rating
+};
+
+const getListingWiseReviewCount = (listingId) => {
+  // Assuming you have a method to get the review count for the listing
+  // Replace this with your actual logic
+  return 10; // Sample count
+};
+
+const getListingWiseRating = (listingId) => {
+  // Assuming you have a method to get the rating for the listing
+  // Replace this with your actual logic
+  return '4.5'; // Sample rating
+};
+
+
   </script>
   
 
