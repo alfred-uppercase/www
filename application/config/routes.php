@@ -90,6 +90,11 @@ $route['api/now_open/(:any)'] = 'api/now_open/$1';
 $route['api/get_cities/(:any)'] = 'api/get_cities/$1';
 $route['api/validate_login']['POST'] = 'api/validate_login';
 $route['api/validate_login/(:any)']['POST'] = 'api/validate_login/$1';
+$route['chat'] = 's/Chat/index';
+$route['send-message'] = 's/Chat/send_text_message';
+$route['chat-attachment/upload'] = 's/Chat/send_text_message';
+$route['get-chat-history-vendor'] = 's/Chat/get_chat_history_by_vendor';
+$route['chat-clear'] = 's/Chat/chat_clear_client_cs';
 
 
 

@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class ChatController extends CI_Controller {
+class Chat extends CI_Controller {
  	public function __construct()
         {
                 parent::__construct();
-				$this->load->model(['Chat_model','OuthModel','UserModel']);
+				$this->load->model(['Chat_model','OuthModel','User_model']);
                 $this->SeesionModel->not_logged_in();
 				$this->load->helper('string');
         }
@@ -14,12 +14,12 @@ class ChatController extends CI_Controller {
 		$data['strsubTitle']='';
 		$list=[];
 		if($this->session->userdata['Admin']['role'] == 'Client_cs'){
-			$list = $this->UserModel->VendorsList();
+			$list = $this->User_model->VendorsList();
 			$data['strTitle']='All Vendors';
 			$data['strsubTitle']='Vendors';
 			$data['chatTitle']='Select Vendor with Chat';
 		}else{
-			$list = $this->UserModel->ClientsListCs();
+			$list = $this->User_model->ClientsListCs();
 			$data['strTitle']='All Connected Clients';
 			$data['strsubTitle']='Clients';
 			$data['chatTitle']='Select Client with Chat';
@@ -31,13 +31,13 @@ class ChatController extends CI_Controller {
 			[
 				'id' => $this->OuthModel->Encryptor('encrypt', $u['id']),
 				'name' => $u['name'],
-				'picture_url' => $this->UserModel->PictureUrlById($u['id']),
+				'picture_url' => $this->User_model->PictureUrlById($u['id']),
 			];
 		}
 		$data['vendorslist']=$vendorslist;
 		 
 		 
- 		$this->parser->parse('construction_services/chat_template',$data);
+ 		$this->load->view('construction_services/chat_template',$data);
     }
 	
 	
@@ -117,8 +117,8 @@ class ChatController extends CI_Controller {
 			
 			$message_id = $this->OuthModel->Encryptor('encrypt', $chat['id']);
 			$sender_id = $chat['sender_id'];
-			$userName = $this->UserModel->GetName($chat['sender_id']);
-			$userPic = $this->UserModel->PictureUrlById($chat['sender_id']);
+			$userName = $this->User_model->GetName($chat['sender_id']);
+			$userPic = $this->User_model->PictureUrlById($chat['sender_id']);
 			
 			$message = $chat['message'];
 			$messagedatetime = date('d M H:i A',strtotime($chat['message_date_time']));
