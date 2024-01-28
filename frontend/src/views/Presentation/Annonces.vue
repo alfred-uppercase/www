@@ -212,7 +212,7 @@ const capitalizeFirst = (str) => {
 onMounted(async () => {
   try {
 
-    const response = await axios.get('/home/filter_listings');
+    const response = await axios.get('/home/listings');
     console.log('Response from listings:', response.data);
     title.value = response.data.title;
     listings.value = response.data.listings;

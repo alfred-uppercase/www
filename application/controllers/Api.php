@@ -54,22 +54,13 @@ class Api extends CI_Controller {
    }
   public function get_categories()
   {
-    log_message('debug', 'get_categories method called'); // Ajoutez cette ligne
     $CI	=&	get_instance();
     $CI->load->database();
 
-    // $CI->db->where('id', $category_id);
     $result = $CI->db->get('category');
 
-    // if ($category_id > 0) {
-    //     $this->db->where('id', $category_id);
-    // }
-    
-    // $query = $this->db->get('category');
     $datas = $result->result_array();
-    
-    log_message('debug', 'Data from database: ' . json_encode($data)); // Ajoutez cette ligne
-    
+
     $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($datas));

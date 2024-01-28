@@ -362,7 +362,7 @@ class Admin extends CI_Controller {
 			$this->session->set_flashdata('flash_message', get_phrase('listing_deleted'));
 			redirect(site_url('admin/listings'), 'refresh');
 		}elseif ($param1 == 'make_active'){
-			$this->crud_model->update_listings_single_column($param2, 'status', 'active');
+			$this->crud_model->update_listings_single_column('status', 'active', $param2);
 			$this->session->set_flashdata('flash_message', get_phrase('listing_updated'));
 			redirect(site_url('admin/listings'), 'refresh');
 		}elseif ($param1 == 'make_pending'){

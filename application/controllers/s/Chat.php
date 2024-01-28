@@ -1,43 +1,63 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class ChatController extends CI_Controller {
+class Chat extends CI_Controller {
  	public function __construct()
         {
-                parent::__construct();
-				$this->load->model(['Chat_model','OuthModel','UserModel']);
-                $this->SeesionModel->not_logged_in();
-				$this->load->helper('string');
+			parent::__construct();
+			$this->load->database();
+			$this->load->library('session');
+			$this->load->model(['Chat_model','user_model']);
+			/*cache control*/
+			$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+			$this->output->set_header('Pragma: no-cache');
+	
+			// Set the timezone
+			date_default_timezone_set(get_settings('timezone'));
+                // parent::__construct();
+				// $this->load->model(['Chat_model','OuthModel','user_model']);
+                // $this->SeesionModel->not_logged_in();
+				// $this->load->helper('string');
         }
 	public function index(){
 		
-		$data['strTitle']='';
-		$data['strsubTitle']='';
-		$list=[];
-		if($this->session->userdata['Admin']['role'] == 'Client_cs'){
-			$list = $this->UserModel->VendorsList();
-			$data['strTitle']='All Vendors';
-			$data['strsubTitle']='Vendors';
-			$data['chatTitle']='Select Vendor with Chat';
-		}else{
-			$list = $this->UserModel->ClientsListCs();
-			$data['strTitle']='All Connected Clients';
-			$data['strsubTitle']='Clients';
-			$data['chatTitle']='Select Client with Chat';
+		// $data['strTitle']='';
+		// $data['strsubTitle']='';
+		// $list=[];
+		// if($this->session->userdata['Admin']['role'] == 'Client_cs'){
+		// 	$list = $this->user_model->VendorsList();
+		// 	$data['strTitle']='All Vendors';
+		// 	$data['strsubTitle']='Vendors';
+		// 	$data['chatTitle']='Select Vendor with Chat';
+		// }else{
+		// 	$list = $this->user_model->ClientsListCs();
+		// 	$data['strTitle']='All Connected Clients';
+		// 	$data['strsubTitle']='Clients';
+		// 	$data['chatTitle']='Select Client with Chat';
  
+		// }
+		// $vendorslist=[];
+		// foreach($list as $u){
+		// 	$vendorslist[]=
+		// 	[
+		// 		'id' => $this->OuthModel->Encryptor('encrypt', $u['id']),
+		// 		'name' => $u['name'],
+		// 		'picture_url' => $this->user_model->get_user_thumbnail($u['id']),
+		// 	];
+		// }
+
+		// $data['vendorslist']=$vendorslist;
+		$page_data['strTitle']='All Connected Clients';
+		$page_data['strsubTitle']='Clients';
+		$page_data['chatTitle']='Envoyer un message à';
+		$page_data['page_name'] = 'dashboard';
+		$page_data['page_title'] = get_phrase('dashboard');
+		if ($this->session->userdata('admin_login') == true) {
+			// $this->dashboard();
+			$this->load->view('frontend/message/chat_template.php',$page_data);
+		}else {
+			redirect(site_url('login'), 'refresh');
 		}
-		$vendorslist=[];
-		foreach($list as $u){
-			$vendorslist[]=
-			[
-				'id' => $this->OuthModel->Encryptor('encrypt', $u['id']),
-				'name' => $u['name'],
-				'picture_url' => $this->UserModel->PictureUrlById($u['id']),
-			];
-		}
-		$data['vendorslist']=$vendorslist;
-		 
-		 
- 		$this->parser->parse('construction_services/chat_template',$data);
+ 		$this->load->view('frontend/message/chat_template.php',$page_data);
     }
 	
 	
@@ -117,8 +137,8 @@ class ChatController extends CI_Controller {
 			
 			$message_id = $this->OuthModel->Encryptor('encrypt', $chat['id']);
 			$sender_id = $chat['sender_id'];
-			$userName = $this->UserModel->GetName($chat['sender_id']);
-			$userPic = $this->UserModel->PictureUrlById($chat['sender_id']);
+			$userName = $this->user_model->GetName($chat['sender_id']);
+			$userPic = $this->user_model->PictureUrlById($chat['sender_id']);
 			
 			$message = $chat['message'];
 			$messagedatetime = date('d M H:i A',strtotime($chat['message_date_time']));
