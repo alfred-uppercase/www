@@ -11,7 +11,7 @@
                         <p class="font-12 m-0 p-0"><b>{{ get_users.address }}</b></p>
                     </div>
                 </div>
-                <a :href="'/message/?=' + get_users.id">Envoyer un message</a>
+                <a :href="'/message/?id=' + get_users.id">Envoyer un message</a>
 
 
                 <div class="card-body">

@@ -10,8 +10,9 @@ $(function() {
     });
     $('.selectVendor').click(function(){
         ChatSection(1);
-          var receiver_id = $(this).attr('id');
-          //alert(receiver_id);
+          var receiver_id = $('.selectVendor').attr('id');
+        //   var receiver_id = new URLSearchParams(window.location.search).get('id');
+        //   alert(receiver_id);
           $('#ReciverId_txt').val(receiver_id);
           $('#ReciverName_txt').html($(this).attr('title'));
           
