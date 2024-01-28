@@ -22,7 +22,44 @@ class User_model extends CI_Model {
         $this->db->where('role_id', 2);
         return $this->db->get('user');
     }
+    public function GetName($user_id)
 
+	{  
+
+ 		$this->db->select('id,name');
+
+		$this->db->from($this->User);
+
+		$this->db->where("id",$user_id);
+
+		$this->db->limit(1);
+
+  		$query = $this->db->get();
+
+		$res = $query->row_array();
+
+ 		return $res['name'];
+
+		 
+
+   	}
+	public function TrashByID($user_id)
+
+	{  
+
+ 
+
+ 		$res = $this->db->delete($this->User,['id' => $user_id ] ); 
+
+		if($res == 1)
+
+			return true;
+
+		else
+
+			return false;
+
+ 	}
     function add_user($param1 = "") {
         $data['email'] = sanitizer($this->input->post('email'));
         $data['name'] = sanitizer($this->input->post('name'));

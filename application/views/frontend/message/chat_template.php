@@ -63,160 +63,159 @@
 <div class="wrapper">
 
 
-<!-- Left side column. contains the logo and sidebar -->
+  <!-- Left side column. contains the logo and sidebar -->
 
 
-<!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
 
-<div class="content-wrapper"> 
-  
-  <!-- Content Header (Page header) -->
-  
-   
-  
-  <!-- Main content -->
-  
-  <section class="content">
-     <div class="row">
-     <?php 
-                      $clientID = isset($_GET['id']) ? $_GET['id'] : null;
-        						$obj=&get_instance();
-                    $obj->load->model('user_model');
-        ?>   
+  <div class="content-wrapper"> 
+    
+    <!-- Content Header (Page header) -->
+    
+    
+    
+    <!-- Main content -->
+    
+    <section class="content">
+      <div class="row">
+      <?php 
+                        $clientID = isset($_GET['id']) ? $_GET['id'] : null;
+                      $obj=&get_instance();
+                      $obj->load->model('user_model');
+          ?>   
 
-            
-            <div class="col-md-8" id="chatSection">
-              <!-- DIRECT CHAT -->
-              <div class="box box-warning direct-chat direct-chat-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
+              
+              <div class="col-md-8" id="chatSection">
+                <!-- DIRECT CHAT -->
+                <div class="box box-warning direct-chat direct-chat-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
 
-                  <div class="box-tools pull-right">
-                    <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
-                    <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>-->
-                   <!-- <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Clear Chat"
-                            data-widget="chat-pane-toggle">
-                      <i class="fa fa-comments"></i></button>-->
-                   <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                    </button>-->
-                  </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  <!-- Conversations are loaded here -->
-                  <div class="direct-chat-messages" id="content">
-                     <!-- /.direct-chat-msg -->
-
-                     <div id="dumppy"></div>
-
-                  </div>
-                  <!--/.direct-chat-messages-->
- 
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                  <!--<form action="#" method="post">-->
-                    <div class="input-group">
-                     <?php
-
-						// $profile_url = $obj->user_model->PictureUrl();
-						$user=$obj->user_model->get_users(['user_id']);
- 					?>
-                    	
-                        <input type="hidden" id="Sender_Name" value="<?= $user->row('name');?>">
-                        <!-- <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>"> -->
-                    	
-                    	<input type="hidden" id="ReciverId_txt">
-                        <input type="text" name="message" placeholder="Type Message ..." class="form-control message">
-                      		<span class="input-group-btn">
-                             <button type="button" class="btn btn-success btn-flat btnSend" id="nav_down">Send</button>
-                             <div class="fileDiv btn btn-info btn-flat"> <i class="fa fa-upload"></i> 
-                             <input type="file" name="file" class="upload_attachmentfile"/></div>
-                          </span>
+                    <div class="box-tools pull-right">
+                      <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
+                      <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>-->
+                    <!-- <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Clear Chat"
+                              data-widget="chat-pane-toggle">
+                        <i class="fa fa-comments"></i></button>-->
+                    <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                      </button>-->
                     </div>
-                  <!--</form>-->
-                </div>
-                <!-- /.box-footer-->
-              </div>
-              <!--/.direct-chat -->
-            </div>
-
-
-
-
-            <div class="col-md-4">
-              <!-- USERS LIST -->
-              <div class="box box-danger">
-                <div class="box-header with-border">
-                  <h3 class="box-title"><?=$strTitle;?></h3>
-
-                  <div class="box-tools pull-right">
-                    <span class="label label-danger"></span>
-
                   </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <ul class="users-list clearfix">
-                  
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" id="content">
+                      <!-- /.direct-chat-msg -->
 
-                        <li class="selectVendor" id="<?= $clientID; ?>">
-                        <?= $obj->user_model->get_users($clientID)->row('name'); ?>
-                        </li>               
-                    
-                  </ul>
-                  <!-- /.users-list -->
+                      <div id="dumppy"></div>
+
+                    </div>
+                    <!--/.direct-chat-messages-->
+  
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="box-footer">
+                    <!--<form action="#" method="post">-->
+                      <div class="input-group">
+                      <?php
+
+              // $profile_url = $obj->user_model->PictureUrl();
+              $user=$obj->user_model->get_users(['user_id']);
+            ?>
+                        
+                          <input type="hidden" id="Sender_Name" value="<?= $user->row('name');?>">
+                          <!-- <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>"> -->
+                        
+                        <input type="hidden" id="ReciverId_txt">
+                          <input type="text" name="message" placeholder="Type Message ..." class="form-control message">
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-success btn-flat btnSend" id="nav_down">Send</button>
+                              <div class="fileDiv btn btn-info btn-flat"> <i class="fa fa-upload"></i> 
+                              <input type="file" name="file" class="upload_attachmentfile"/></div>
+                            </span>
+                      </div>
+                    <!--</form>-->
+                  </div>
+                  <!-- /.box-footer-->
                 </div>
-                <!-- /.box-body -->
-               <!-- <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">View All Users</a>
-                </div>-->
-                <!-- /.box-footer -->
+                <!--/.direct-chat -->
               </div>
-              <!--/.box -->
+
+
+
+
+              <div class="col-md-4">
+                <!-- USERS LIST -->
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title"><?=$strTitle;?></h3>
+
+                    <div class="box-tools pull-right">
+                      <span class="label label-danger"></span>
+
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    <ul class="users-list clearfix">
+                    
+
+                          <li class="selectVendor" id="<?= $clientID; ?>">
+                          <?= $obj->user_model->get_users($clientID)->row('name'); ?>
+                          </li>               
+                      
+                    </ul>
+                    <!-- /.users-list -->
+                  </div>
+                  <!-- /.box-body -->
+                <!-- <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                  </div>-->
+                  <!-- /.box-footer -->
+                </div>
+                <!--/.box -->
+              </div>
+              <!-- /.col -->            
             </div>
-            <!-- /.col -->            
-          </div>
-    
-    <!-- /.row --> 
-    
-    
-    
-  </section>
-  
-  <!-- /.content --> 
-  
-</div>
-
-<!-- /.content-wrapper --> 
-
-<!-- Modal -->
-<div class="modal fade" id="myModalImg">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
       
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title" id="modelTitle">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          <img id="modalImgs" src="uploads/attachment/21_preview.png" class="img-thumbnail" alt="Cinque Terre">
-        </div>
-        
-        <!-- Modal footer -->
-         
-        
-      </div>
-    </div>
+      <!-- /.row --> 
+      
+      
+      
+    </section>
+    
+    <!-- /.content --> 
+    
   </div>
-<!-- Modal -->
+
+  <!-- /.content-wrapper --> 
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModalImg">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title" id="modelTitle">Modal Heading</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <img id="modalImgs" src="uploads/attachment/21_preview.png" class="img-thumbnail" alt="Cinque Terre">
+          </div>
+          
+          <!-- Modal footer -->
+          
+          
+        </div>
+      </div>
+  </div>
+
 </div>
 <!-- ./wrapper -->
-</div>
   <!-- jQuery 3 -->
   <script src="<?=base_url('assets')?>/components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

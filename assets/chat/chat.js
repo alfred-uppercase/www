@@ -8,7 +8,7 @@ $(function() {
     $('.btnSend').click(function(){
            sendTxtMessage($('.message').val());
     });
-    $('.selectVendor').click(function(){
+    // $('.selectVendor').click(function(){
         ChatSection(1);
           var receiver_id = $('.selectVendor').attr('id');
         //   var receiver_id = new URLSearchParams(window.location.search).get('id');
@@ -18,7 +18,7 @@ $(function() {
           
           GetChatHistory(receiver_id);
                      
-    });
+    // });
     $('.upload_attachmentfile').change(function(){
         
         DisplayMessage('<div class="spiner"><i class="fa fa-circle-o-notch fa-spin"></i></div>');
@@ -128,7 +128,7 @@ $(function() {
             //console.log(message);
              DisplayMessage(messageTxt);
             
-                    var receiver_id = $('#ReciverId_txt').val();
+                    var receiver_id = $('.selectVendor').attr('id');
                     $.ajax({
                               dataType : "json",
                               type : 'post',

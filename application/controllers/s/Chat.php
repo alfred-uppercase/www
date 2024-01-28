@@ -46,12 +46,12 @@ class Chat extends CI_Controller {
 		// }
 
 		// $data['vendorslist']=$vendorslist;
-		$page_data['strTitle']='All Connected Clients';
+		$page_data['strTitle']='Apropos du ';
 		$page_data['strsubTitle']='Clients';
 		$page_data['chatTitle']='Envoyer un message à';
 		$page_data['page_name'] = 'dashboard';
 		$page_data['page_title'] = get_phrase('dashboard');
-		if ($this->session->userdata('admin_login') == true) {
+		if ($this->session->userdata('role')) {
 			// $this->dashboard();
 			$this->load->view('frontend/message/chat_template.php',$page_data);
 		}else {
@@ -81,7 +81,7 @@ class Chat extends CI_Controller {
 		 
 				$data=[
  					'sender_id' => $this->session->userdata('user_id'),
-					'receiver_id' => $this->outh_model->Encryptor('decrypt', $post['receiver_id']),
+					'receiver_id' => $post['receiver_id'],
 					'message' =>   $messageTxt,
 					'attachment_name' => $attachment_name,
 					'file_ext' => $file_ext,
@@ -93,7 +93,7 @@ class Chat extends CI_Controller {
  				$query = $this->chat_model->SendTxtMessage($this->outh_model->xss_clean($data)); 
  				$response='';
 				if($query == true){
-					$response = ['status' => 1 ,'message' => '' ];
+					$response = ['status' => 1 ,'message' => '' , 'receiver_id' => $post['receiver_id']];
 				}else{
 					$response = ['status' => 0 ,'message' => 'sorry we re having some technical problems. please try again !' 						];
 				}
@@ -127,7 +127,7 @@ class Chat extends CI_Controller {
 	}
 	
 	public function get_chat_history_by_vendor(){
-		$receiver_id = $this->outh_model->Encryptor('decrypt', $this->input->get('receiver_id') );
+		$receiver_id = $this->input->get('receiver_id');
 		
 		$Logged_sender_id = $this->session->userdata('user_id');
 		 
@@ -137,8 +137,9 @@ class Chat extends CI_Controller {
 			
 			$message_id = $this->outh_model->Encryptor('encrypt', $chat['id']);
 			$sender_id = $chat['sender_id'];
-			// $userName = $this->user_model->GetName($chat['sender_id']);
-			// $userPic = $this->user_model->PictureUrlById($chat['sender_id']);
+			$userName = $this->user_model->get_users($chat['sender_id'])->row('name');
+			
+			$userPic = 2;
 			
 			$message = $chat['message'];
 			$messagedatetime = date('d M H:i A',strtotime($chat['message_date_time']));
