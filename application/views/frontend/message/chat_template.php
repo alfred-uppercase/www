@@ -83,14 +83,45 @@
                       $obj=&get_instance();
                       $obj->load->model('user_model');
           ?>   
+<div class="col-md-2">
+                <!-- USERS LIST -->
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Messages</h3>
 
+                    <div class="box-tools pull-right">
+                      <span class="label label-danger"></span>
+
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    <ul class="users-list clearfix">
+                    
+
+                          <li class="selectVendor" id="<?= $clientID; ?>">
+                          <?= $obj->user_model->get_users($clientID)->row('name'); ?>
+                          </li>               
+                      
+                    </ul>
+                    <!-- /.users-list -->
+                  </div>
+                  <!-- /.box-body -->
+                <!-- <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                  </div>-->
+                  <!-- /.box-footer -->
+                </div>
+                <!--/.box -->
+              </div>
+              <!-- /.col --> 
               
-              <div class="col-md-8" id="chatSection">
+              <div class="col-md-6" id="chatSection">
                 <!-- DIRECT CHAT -->
                 <div class="box box-warning direct-chat direct-chat-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
-
+                    <h3 class="box-title" style="display: none;" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
+                    <h3 class="box-title" id=""><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
                     <div class="box-tools pull-right">
                       <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
                       <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
