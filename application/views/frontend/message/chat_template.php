@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | Dashboard</title>
+  <title>Messages</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -38,7 +38,9 @@
       right: 0;
       top: 0;
     }
-
+    .users-list>li{
+      width: 100%;
+    }
     .btnFileOpen {margin-top: -50px; }
 
     .direct-chat-warning .right>.direct-chat-text {
@@ -62,12 +64,6 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-
-  <!-- Left side column. contains the logo and sidebar -->
-
-
-  <!-- Content Wrapper. Contains page content -->
-
   <div class="content-wrapper"> 
     
     <!-- Content Header (Page header) -->
@@ -83,11 +79,11 @@
                       $obj=&get_instance();
                       $obj->load->model('user_model');
           ?>   
-<div class="col-md-2">
+            <div class="col-md-3">
                 <!-- USERS LIST -->
                 <div class="box box-danger">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Messages</h3>
+                    <h3 class="box-title">Mes messages</h3>
 
                     <div class="box-tools pull-right">
                       <span class="label label-danger"></span>
@@ -100,6 +96,7 @@
                     
 
                           <li class="selectVendor" id="<?= $clientID; ?>">
+                          <?= $obj->chat_model->GetReciverMessageList($clientID) ?>
                           <?= $obj->user_model->get_users($clientID)->row('name'); ?>
                           </li>               
                       
@@ -116,12 +113,12 @@
               </div>
               <!-- /.col --> 
               
-              <div class="col-md-6" id="chatSection">
+              <div class="col-md-7" id="chatSection">
                 <!-- DIRECT CHAT -->
                 <div class="box box-warning direct-chat direct-chat-primary">
                   <div class="box-header with-border">
                     <h3 class="box-title" style="display: none;" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
-                    <h3 class="box-title" id=""><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
+                    <h3 class="box-title" id=""><?=$chatTitle;?> <?= $obj->user_model->get_all_users($clientID)->row('name'); ?></h3>
                     <div class="box-tools pull-right">
                       <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
                       <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -150,13 +147,13 @@
                     <!--<form action="#" method="post">-->
                       <div class="input-group">
                       <?php
-
-              // $profile_url = $obj->user_model->PictureUrl();
               $user=$obj->user_model->get_users(['user_id']);
+
+              $profile_url = $this->user_model->get_user_thumbnail($user->row('id'));
             ?>
                         
-                          <input type="hidden" id="Sender_Name" value="<?= $user->row('name');?>">
-                          <!-- <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>"> -->
+                          <input type="hidden" id="Sender_Name" value="fffffff">
+                          <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>">
                         
                         <input type="hidden" id="ReciverId_txt">
                           <input type="text" name="message" placeholder="Type Message ..." class="form-control message">
@@ -176,7 +173,7 @@
 
 
 
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <!-- USERS LIST -->
                 <div class="box box-danger">
                   <div class="box-header with-border">
@@ -192,8 +189,12 @@
                     <ul class="users-list clearfix">
                     
 
-                          <li class="selectVendor" id="<?= $clientID; ?>">
-                          <?= $obj->user_model->get_users($clientID)->row('name'); ?>
+                          <li class="" id="<?= $clientID; ?>">
+                          <img src="<?= $obj->user_model->get_user_thumbnail($clientID)?>" alt="">
+                          <?= $obj->user_model->get_all_users($clientID)->row('name'); ?>
+                          <?= $obj->user_model->get_all_users($clientID)->row('address'); ?>
+                          <?= $obj->user_model->get_all_users($clientID)->row('email'); ?>
+                          <?= $obj->user_model->get_all_users($clientID)->row('phone'); ?>
                           </li>               
                       
                     </ul>
@@ -248,7 +249,7 @@
 </div>
 <!-- ./wrapper -->
   <!-- jQuery 3 -->
-  <script src="<?=base_url('assets')?>/components/jquery/dist/jquery.min.js"></script>
+<script src="<?=base_url('assets')?>/components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=base_url('assets')?>/components/bootstrap/dist/js/bootstrap.min.js"></script>
  <?php if($this->uri->segment(1) != 'chat'){?>

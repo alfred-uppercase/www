@@ -47,6 +47,19 @@
 		 }
 		 
 	}
+	public function liste_des_message(){
+		$receiver_id = $this->outh_model->Encryptor('decrypt', $this->input->get('receiver_id') );
+		
+		$messagelist = $this->chat_model->GetReciverMessageList($receiver_id);
+		
+		foreach($messagelist as $row){
+			
+			if($row['message']=='NULL'){
+				$attachment_name = unlink('uploads/attachment/'.$row['attachment_name']);
+			}
+ 		}
+ 		
+	}
 	
 	
 	public function TrashById($receiver_id)

@@ -57,7 +57,7 @@ class Chat extends CI_Controller {
 		}else {
 			redirect(site_url('login'), 'refresh');
 		}
- 		$this->load->view('frontend/message/chat_template.php',$page_data);
+ 		// $this->load->view('frontend/message/chat_template.php',$page_data);
     }
 	
 	
@@ -137,9 +137,9 @@ class Chat extends CI_Controller {
 			
 			$message_id = $this->outh_model->Encryptor('encrypt', $chat['id']);
 			$sender_id = $chat['sender_id'];
-			$userName = $this->user_model->get_users($chat['sender_id'])->row('name');
+			$userName = $this->user_model->get_all_users($chat['sender_id'])->row('name');
 			
-			$userPic = 2;
+			$userPic = $this->user_model->get_user_thumbnail($chat['sender_id']);
 			
 			$message = $chat['message'];
 			$messagedatetime = date('d M H:i A',strtotime($chat['message_date_time']));
@@ -240,5 +240,6 @@ class Chat extends CI_Controller {
  
  		
 	}
+
 	
 }

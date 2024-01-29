@@ -6,24 +6,24 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    "-74.066874",
-                    "40.715842"
+                    "-73.9351",
+                    "40.697195"
                 ]
             },
             "properties": {
-                "id": "d2a5250dbfaea911dd80e681afa8b7c1",
+                "id": "524f5cfbcc1b6168b5eae0e3435b192f",
                 "index": 0,
                 "isActive": true,
-                "logo": "4d6f4b0b521bc978317f72ade877cba1.jpg",
-                "image": "4d6f4b0b521bc978317f72ade877cba1.jpg",
-                "link": "http://localhost/general/voiture/1",
+                "logo": "f89c4289473b0c04612d22c36b0b7fbf.jpg",
+                "image": "f89c4289473b0c04612d22c36b0b7fbf.jpg",
+                "link": "http://localhost/hotel/grand-hotel/1",
                 "url": "www.err.Fr",
-                "name": "Voiture",
-                "category": "general",
+                "name": "Grand Hotel",
+                "category": "hotel",
                 "email": "alfreddjpro@gmail.com",
                 "stars": "0.0",
                 "phone": "0325300003",
-                "address": "",
+                "address": "Logt 255 cité des 67 HA COrnRue Augostino Netto",
                 "about": "about",
                 "tags": [
                     ""
