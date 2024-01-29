@@ -3,28 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Chat extends CI_Controller {
  	public function __construct()
         {
-<<<<<<< HEAD
-                parent::__construct();
-				$this->load->model(['Chat_model','OuthModel','User_model']);
-                $this->SeesionModel->not_logged_in();
-				$this->load->helper('string');
-        }
-	public function index(){
-		
-		$data['strTitle']='';
-		$data['strsubTitle']='';
-		$list=[];
-		if($this->session->userdata['Admin']['role'] == 'Client_cs'){
-			$list = $this->User_model->VendorsList();
-			$data['strTitle']='All Vendors';
-			$data['strsubTitle']='Vendors';
-			$data['chatTitle']='Select Vendor with Chat';
-		}else{
-			$list = $this->User_model->ClientsListCs();
-			$data['strTitle']='All Connected Clients';
-			$data['strsubTitle']='Clients';
-			$data['chatTitle']='Select Client with Chat';
-=======
 			parent::__construct();
 			$this->load->database();
 			$this->load->library('session');
@@ -55,7 +33,6 @@ class Chat extends CI_Controller {
 		// 	$data['strTitle']='All Connected Clients';
 		// 	$data['strsubTitle']='Clients';
 		// 	$data['chatTitle']='Select Client with Chat';
->>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
  
 		// }
 		// $vendorslist=[];
@@ -80,23 +57,7 @@ class Chat extends CI_Controller {
 		}else {
 			redirect(site_url('login'), 'refresh');
 		}
-<<<<<<< HEAD
-		$vendorslist=[];
-		foreach($list as $u){
-			$vendorslist[]=
-			[
-				'id' => $this->OuthModel->Encryptor('encrypt', $u['id']),
-				'name' => $u['name'],
-				'picture_url' => $this->User_model->PictureUrlById($u['id']),
-			];
-		}
-		$data['vendorslist']=$vendorslist;
-		 
-		 
- 		$this->load->view('construction_services/chat_template',$data);
-=======
  		$this->load->view('frontend/message/chat_template.php',$page_data);
->>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
     }
 	
 	
@@ -176,14 +137,9 @@ class Chat extends CI_Controller {
 			
 			$message_id = $this->outh_model->Encryptor('encrypt', $chat['id']);
 			$sender_id = $chat['sender_id'];
-<<<<<<< HEAD
-			$userName = $this->User_model->GetName($chat['sender_id']);
-			$userPic = $this->User_model->PictureUrlById($chat['sender_id']);
-=======
 			$userName = $this->user_model->get_users($chat['sender_id'])->row('name');
 			
 			$userPic = 2;
->>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
 			
 			$message = $chat['message'];
 			$messagedatetime = date('d M H:i A',strtotime($chat['message_date_time']));
@@ -193,7 +149,8 @@ class Chat extends CI_Controller {
 				$messageBody='';
             	if($message=='NULL'){ //fetach media objects like images,pdf,documents etc
 					$classBtn = 'right';
-					if($Logged_sender_id==$sender_id){$classBtn = 'left';}
+					if($Logged_sender_id==$sender_id){$classBtn = 'left';
+					}
 					
 					$attachment_name = $chat['attachment_name'];
 					$file_ext = $chat['file_ext'];
