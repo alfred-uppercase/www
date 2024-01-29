@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Chat extends CI_Controller {
  	public function __construct()
         {
+<<<<<<< HEAD
                 parent::__construct();
 				$this->load->model(['Chat_model','OuthModel','User_model']);
                 $this->SeesionModel->not_logged_in();
@@ -23,8 +24,63 @@ class Chat extends CI_Controller {
 			$data['strTitle']='All Connected Clients';
 			$data['strsubTitle']='Clients';
 			$data['chatTitle']='Select Client with Chat';
+=======
+			parent::__construct();
+			$this->load->database();
+			$this->load->library('session');
+			$this->load->model(['chat_model','user_model']);
+			/*cache control*/
+			$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+			$this->output->set_header('Pragma: no-cache');
+	
+			// Set the timezone
+			date_default_timezone_set(get_settings('timezone'));
+                // parent::__construct();
+				// $this->load->model(['chat_model','outh_model','user_model']);
+                // $this->SeesionModel->not_logged_in();
+				// $this->load->helper('string');
+        }
+	public function index(){
+		
+		// $data['strTitle']='';
+		// $data['strsubTitle']='';
+		// $list=[];
+		// if($this->session->userdata['Admin']['role'] == 'Client_cs'){
+		// 	$list = $this->user_model->VendorsList();
+		// 	$data['strTitle']='All Vendors';
+		// 	$data['strsubTitle']='Vendors';
+		// 	$data['chatTitle']='Select Vendor with Chat';
+		// }else{
+		// 	$list = $this->user_model->ClientsListCs();
+		// 	$data['strTitle']='All Connected Clients';
+		// 	$data['strsubTitle']='Clients';
+		// 	$data['chatTitle']='Select Client with Chat';
+>>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
  
+		// }
+		// $vendorslist=[];
+		// foreach($list as $u){
+		// 	$vendorslist[]=
+		// 	[
+		// 		'id' => $this->outh_model->Encryptor('encrypt', $u['id']),
+		// 		'name' => $u['name'],
+		// 		'picture_url' => $this->user_model->get_user_thumbnail($u['id']),
+		// 	];
+		// }
+
+		// $data['vendorslist']=$vendorslist;
+		$page_data['strTitle']='Apropos du ';
+		$page_data['strsubTitle']='Clients';
+		$page_data['chatTitle']='Envoyer un message à';
+		$page_data['page_name'] = 'dashboard';
+		$page_data['page_title'] = get_phrase('dashboard');
+		if ($this->session->userdata('role')) {
+			// $this->dashboard();
+			$this->load->view('frontend/message/chat_template.php',$page_data);
+		}else {
+			redirect(site_url('login'), 'refresh');
 		}
+<<<<<<< HEAD
 		$vendorslist=[];
 		foreach($list as $u){
 			$vendorslist[]=
@@ -38,6 +94,9 @@ class Chat extends CI_Controller {
 		 
 		 
  		$this->load->view('construction_services/chat_template',$data);
+=======
+ 		$this->load->view('frontend/message/chat_template.php',$page_data);
+>>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
     }
 	
 	
@@ -60,8 +119,8 @@ class Chat extends CI_Controller {
 		}	
 		 
 				$data=[
- 					'sender_id' => $this->session->userdata['Admin']['id'],
-					'receiver_id' => $this->OuthModel->Encryptor('decrypt', $post['receiver_id']),
+ 					'sender_id' => $this->session->userdata('user_id'),
+					'receiver_id' => $post['receiver_id'],
 					'message' =>   $messageTxt,
 					'attachment_name' => $attachment_name,
 					'file_ext' => $file_ext,
@@ -70,10 +129,10 @@ class Chat extends CI_Controller {
 					'ip_address' => $this->input->ip_address(),
 				];
 		  
- 				$query = $this->Chat_model->SendTxtMessage($this->OuthModel->xss_clean($data)); 
+ 				$query = $this->chat_model->SendTxtMessage($this->outh_model->xss_clean($data)); 
  				$response='';
 				if($query == true){
-					$response = ['status' => 1 ,'message' => '' ];
+					$response = ['status' => 1 ,'message' => '' , 'receiver_id' => $post['receiver_id']];
 				}else{
 					$response = ['status' => 0 ,'message' => 'sorry we re having some technical problems. please try again !' 						];
 				}
@@ -107,18 +166,24 @@ class Chat extends CI_Controller {
 	}
 	
 	public function get_chat_history_by_vendor(){
-		$receiver_id = $this->OuthModel->Encryptor('decrypt', $this->input->get('receiver_id') );
+		$receiver_id = $this->input->get('receiver_id');
 		
-		$Logged_sender_id = $this->session->userdata['Admin']['id'];
+		$Logged_sender_id = $this->session->userdata('user_id');
 		 
-		$history = $this->Chat_model->GetReciverChatHistory($receiver_id);
+		$history = $this->chat_model->GetReciverChatHistory($receiver_id);
 		//print_r($history);
 		foreach($history as $chat):
 			
-			$message_id = $this->OuthModel->Encryptor('encrypt', $chat['id']);
+			$message_id = $this->outh_model->Encryptor('encrypt', $chat['id']);
 			$sender_id = $chat['sender_id'];
+<<<<<<< HEAD
 			$userName = $this->User_model->GetName($chat['sender_id']);
 			$userPic = $this->User_model->PictureUrlById($chat['sender_id']);
+=======
+			$userName = $this->user_model->get_users($chat['sender_id'])->row('name');
+			
+			$userPic = 2;
+>>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
 			
 			$message = $chat['message'];
 			$messagedatetime = date('d M H:i A',strtotime($chat['message_date_time']));
@@ -203,9 +268,9 @@ class Chat extends CI_Controller {
  		
 	}
 	public function chat_clear_client_cs(){
-		$receiver_id = $this->OuthModel->Encryptor('decrypt', $this->input->get('receiver_id') );
+		$receiver_id = $this->outh_model->Encryptor('decrypt', $this->input->get('receiver_id') );
 		
-		$messagelist = $this->Chat_model->GetReciverMessageList($receiver_id);
+		$messagelist = $this->chat_model->GetReciverMessageList($receiver_id);
 		
 		foreach($messagelist as $row){
 			
@@ -214,7 +279,7 @@ class Chat extends CI_Controller {
 			}
  		}
 		
-		$this->Chat_model->TrashById($receiver_id); 
+		$this->chat_model->TrashById($receiver_id); 
  
  		
 	}

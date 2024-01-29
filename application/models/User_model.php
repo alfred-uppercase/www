@@ -22,7 +22,44 @@ class User_model extends CI_Model {
         $this->db->where('role_id', 2);
         return $this->db->get('user');
     }
+    public function GetName($user_id)
 
+	{  
+
+ 		$this->db->select('id,name');
+
+		$this->db->from($this->User);
+
+		$this->db->where("id",$user_id);
+
+		$this->db->limit(1);
+
+  		$query = $this->db->get();
+
+		$res = $query->row_array();
+
+ 		return $res['name'];
+
+		 
+
+   	}
+	public function TrashByID($user_id)
+
+	{  
+
+ 
+
+ 		$res = $this->db->delete($this->User,['id' => $user_id ] ); 
+
+		if($res == 1)
+
+			return true;
+
+		else
+
+			return false;
+
+ 	}
     function add_user($param1 = "") {
         $data['email'] = sanitizer($this->input->post('email'));
         $data['name'] = sanitizer($this->input->post('name'));
@@ -111,6 +148,58 @@ class User_model extends CI_Model {
             move_uploaded_file($_FILES['user_image']['tmp_name'], 'uploads/user_image/'.$user_id.'.jpg');
         }
     }
+    public function PictureUrl()
+
+	{  
+
+ 		$this->db->select('id,picture_url');
+
+		$this->db->from($this->user_model);
+
+		$this->db->where("user_id",$this->session->userdata('user_id'));
+
+		$this->db->limit(1);
+
+  		$query = $this->db->get();
+
+		$res = $query->row_array();
+
+		if(!empty($res['picture_url'])){
+
+			return base_url('uploads/profiles/'.$res['picture_url']);
+
+		}else{
+
+			return base_url('public/images/user-icon.jpg');
+
+		}
+
+   	}
+       public function GetUserData()
+
+       {  
+   
+            $this->db->select('id,name,email,address');
+   
+           $this->db->from($this->user_model);
+   
+           $this->db->where("id",$this->session->userdata('user_id'));
+   
+           $this->db->limit(1);
+   
+             $query = $this->db->get();
+   
+            if ($query) {
+   
+                return $query->row_array();
+   
+            } else {
+   
+                return false;
+   
+            }
+   
+          }
 
      public function upload_user_background_image($user_id) {
         if (isset($_FILES['user_background']) && $_FILES['user_background']['name'] != "") {

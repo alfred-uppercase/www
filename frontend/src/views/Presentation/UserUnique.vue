@@ -11,7 +11,11 @@
                         <p class="font-12 m-0 p-0"><b>{{ get_users.address }}</b></p>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <a :href="'/chat/' + get_users.id">Envoyer un message</a>
+=======
+                <a :href="'/message/?id=' + get_users.id">Envoyer un message</a>
+>>>>>>> 8bf8cf7b47725b8202764431e5757bafe254b418
 
 
                 <div class="card-body">
