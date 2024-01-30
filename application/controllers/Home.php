@@ -654,7 +654,10 @@ class Home extends CI_Controller
         if ($search_string != "") {
             $page_data['search_string'] = $search_string;
         }
-        $this->load->view('frontend/index', $page_data);
+        // $this->load->view('frontend/index', $page_data);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($page_data));
     }
 
 

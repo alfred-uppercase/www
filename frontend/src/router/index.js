@@ -54,9 +54,10 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/listings",
-      name: "listings",
+      path: "/recherche",
+      name: "recherche",
       component: ResultPage,
+      props: route => ({ results: route.query.results })
     },
     {
       path: "/annonces",

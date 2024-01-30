@@ -29,7 +29,7 @@ const body = document.getElementsByTagName("body")[0];
 //hooks
 const submitForm = async () => {
   try {
-    const responsse = await axios.get('http://localhost/home/filter_listings', {
+    const responsse = await axios.get('http://localhost/recherche', {
       params: {
         search_string: search_string.value,
         selected_city_id: selected_city_id.value,
@@ -43,7 +43,7 @@ const submitForm = async () => {
     console.error('Error fetching results:', error);
   }
   router.push({
-    name: 'listings',
+    name: 'recherche',
     query: {
       search_string: search_string.value,
       selected_city_id: selected_city_id.value,
@@ -100,18 +100,18 @@ onUnmounted(() => {
           <div class="row no-gutters custom-search-input-2">
             <div class="col-lg-4">
               <div class="form-group">
-                <input class="form-control" type="text" :v-model="search_string" placeholder="Votre recherche...">
+                <input class="form-control" type="text" v-model="search_string" placeholder="Votre recherche...">
               </div>
             </div>
             <div class="col-lg-3">
-              <select class="wide" :v-model="selected_city_id" style="display: ;">
+              <select class="wide" v-model="selected_city_id" style="display: ;">
                 <option value="">Tous les villes</option>
                 <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}
                 </option>
               </select>
             </div>
             <div class="col-lg-3">
-              <select class="wide" :v-model="selected_category_id" style="display: block;" >
+              <select class="wide" v-model="selected_category_id" style="display: block;" >
                 <option value="">Tous les catégories</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}
                 </option>
