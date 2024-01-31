@@ -57,7 +57,15 @@ const router = createRouter({
       path: "/recherche",
       name: "recherche",
       component: ResultPage,
-      props: route => ({ results: route.query.results })
+      // props: route => ({ results: route.query.results }),
+      // props: route => ({
+      //   search_string: route.query.search_string || '',
+      //   selected_city_id: route.query.selected_city_id || '',
+      //   selected_category_id: route.query.selected_category_id || '',
+      // }),
+      props: route => ({
+        results: JSON.parse(route.query.results) // Utilisez route.query.results
+      }),
     },
     {
       path: "/annonces",

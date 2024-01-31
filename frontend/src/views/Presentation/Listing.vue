@@ -178,7 +178,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
 import axios from 'axios';
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup, LPolyline, LPolygon, LRectangle, } from "@vue-leaflet/vue-leaflet";
@@ -191,6 +191,9 @@ const get_phrase_watch_details = ref('');
 const get_phrase_featured = ref('');
 const geojson = ref(null);
 const results = ref([]);
+// const search_string = ref();
+// const selected_city_id = ref();
+// const selected_category_id = ref();
   const geojsonOptions = ref({
     pointToLayer: (feature, latLng) => {
       // Utilisez vos propres options pour personnaliser l'apparence des points sur la carte
@@ -204,20 +207,23 @@ const results = ref([]);
 // const mapIsReady = ref(false);
 // const get_phrase_this_listing_is_verified = ref('');
 
-// Déclarez vos props ici
+
 const props = defineProps(['results']);
 
 
 const body = document.getElementsByTagName("body")[0];
 const getListingUrl = (listingId) => {
-// Assuming you have a method to generate the listing URL
+
 return `/api/get_listing_url/${listingId}`;
 };
 const capitalizeFirst = (str) => {
 return str.charAt(0).toUpperCase() + str.slice(1);
 };
 onMounted(async () => {
-  console.log('Response from resultdata:', props.results)
+  // props.results
+  console.log('Response from results:', props.results)
+  // console.log('Response from selected_city_id:', props.selected_city_id)
+  // console.log('Response from selected_category_id:', props.selected_category_id)
 try {
 
   const response = await axios.get('/home/listings');
@@ -253,20 +259,17 @@ body.classList.add("annonces");
 
 });
 const isWishlisted = (listingId) => {
-// Assuming you have a method to check if the listing is wishlisted
-// Replace this with your actual logic
+
 return false;
 };
 
 const addToWishList = (listingId) => {
-// Assuming you have a method to add to the wishlist
-// Replace this with your actual logic
+
 console.log('Add to wishlist:', listingId);
 };
 
 const isClaimed = (listingId) => {
-// Assuming you have a method to check if the listing is claimed
-// Replace this with your actual logic
+
 return false;
 };
 
@@ -283,56 +286,47 @@ try {
 }
 };
 const fetchCity = async (cityId) => {
-// Implement logic to fetch city details based on cityId
-// Replace this with your actual API call or data retrieval logic
+
 return { name: 'CityName' };
 };
 
 const fetchState = async (stateId) => {
-// Implement logic to fetch state details based on stateId
-// Replace this with your actual API call or data retrieval logic
+
 return { name: 'StateName' };
 };
 
 const fetchCountry = async (countryId) => {
-// Implement logic to fetch country details based on countryId
-// Replace this with your actual API call or data retrieval logic
+
 return { name: 'CountryName' };
 };
 
 const isOpenNow = (listingId) => {
-// Assuming you have a method to check if the listing is open now
-// Replace this with your actual logic
+
 return true;
 };
 
 const isClosedNow = (listingId) => {
-// Assuming you have a method to check if the listing is closed now
-// Replace this with your actual logic
+
 return false;
 };
 
 const getOpeningStatus = (listingId) => {
-// Assuming you have a method to get the opening status
-// Replace this with your actual logic
+
 return 'open';
 };
 
 const getRatingQuality = (listingId) => {
-// Assuming you have a method to get the quality rating
-// Replace this with your actual logic
+
 return '5.0'; // Sample rating
 };
 
 const getListingWiseReviewCount = (listingId) => {
-// Assuming you have a method to get the review count for the listing
-// Replace this with your actual logic
+
 return 10; // Sample count
 };
 
 const getListingWiseRating = (listingId) => {
-// Assuming you have a method to get the rating for the listing
-// Replace this with your actual logic
+
 return '4.5'; // Sample rating
 };
 

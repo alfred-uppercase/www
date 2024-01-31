@@ -24,32 +24,42 @@ const search_string = ref('');
 const selected_city_id = ref('');
 const selected_category_id = ref('');
 const results = ref([]);
+// const results = ref([]);
 
 const body = document.getElementsByTagName("body")[0];
 //hooks
 const submitForm = async () => {
   try {
-    const responsse = await axios.get('http://localhost/recherche', {
-      params: {
-        search_string: search_string.value,
-        selected_city_id: selected_city_id.value,
-        selected_category_id: selected_category_id.value,
-      },
-    });
+    const response = await axios.get('/recherche', {
+    params: {
+      search_string: search_string.value,
+      selected_city_id: selected_city_id.value,
+      selected_category_id: selected_category_id.value,
+    },
+  });
 
-    // Handle the response and update results
-    results.value = responsse.data;
-  } catch (error) {
-    console.error('Error fetching results:', error);
-  }
+  results.value = response.data;
+  console.log('Get response value:', response.value);
+  
   router.push({
     name: 'recherche',
     query: {
       search_string: search_string.value,
       selected_city_id: selected_city_id.value,
       selected_category_id: selected_category_id.value,
+      // results: JSON.stringify(response.data),
     },
+    state: {
+        results: JSON.stringify(response.data),
+      },
   });
+  console.log('Get value:', results.value);
+
+  } catch (error) {
+    console.error('Error fetching results:', error);
+  }
+
+
 };
 onMounted(async () => {
   try {
