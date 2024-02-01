@@ -75,7 +75,8 @@
     <section class="content">
       <div class="row">
       <?php 
-                        $clientID = isset($_GET['id']) ? $_GET['id'] : null;
+                      $user_details = $this->user_model->get_all_users($this->session->userdata('user_id'))->row_array();
+                      $clientID = isset($_GET['id']) ? $_GET['id'] : null;
                       $obj=&get_instance();
                       $obj->load->model('user_model');
           ?>   
@@ -93,11 +94,26 @@
                   <!-- /.box-header -->
                   <div class="box-body no-padding">
                     <ul class="users-list clearfix">
-                    
+                    <?php 
+                    $datauser = $obj->chat_model->GetReciverMessageList($user_details['id']); 
+                    ?>
 
-                          <li class="selectVendor" id="<?= $clientID; ?>">
-                          <?= $obj->chat_model->GetReciverMessageList($clientID) ?>
-                          <?= $obj->user_model->get_users($clientID)->row('name'); ?>
+                          <li>
+                          <?php foreach ($datauser as $message): 
+                                    $otherUserId = ($message['sender_id'] == $user_details['id']) ? $message['receiver_id'] : $message['sender_id'];
+                            
+                            ?>
+                              <div class="selectVendor" id="<?= $otherUserId ?>">
+                                  <span><?= $otherUserId ?></span>
+                                  <p><strong>Nom:</strong> 
+                                  <?php
+                                    echo $obj->user_model->get_all_users($otherUserId)->row('name');
+                                    ?>
+                                  <p><strong>Date:</strong> <?php echo date('Y-m-d H:i:s', strtotime($message['message_date_time'])); ?></p>
+                                  <hr>
+                              </div>
+                          <?php endforeach; ?>
+                          
                           </li>               
                       
                     </ul>
@@ -114,39 +130,7 @@
               <!-- /.col --> 
               
               <div class="col-md-7" id="chatSection">
-                <!-- DIRECT CHAT -->
-                <div class="box box-warning direct-chat direct-chat-primary">
-                  <div class="box-header with-border">
-                    <h3 class="box-title" style="display: none;" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
-                    <h3 class="box-title" id=""><?=$chatTitle;?> <?= $obj->user_model->get_all_users($clientID)->row('name'); ?></h3>
-                    <div class="box-tools pull-right">
-                      <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
-                      <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                      </button>-->
-                    <!-- <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Clear Chat"
-                              data-widget="chat-pane-toggle">
-                        <i class="fa fa-comments"></i></button>-->
-                    <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                      </button>-->
-                    </div>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                    <!-- Conversations are loaded here -->
-                    <div class="direct-chat-messages" id="content">
-                      <!-- /.direct-chat-msg -->
-
-                      <div id="dumppy"></div>
-
-                    </div>
-                    <!--/.direct-chat-messages-->
-  
-                  </div>
-                  <!-- /.box-body -->
-                  <div class="box-footer">
-                    <!--<form action="#" method="post">-->
-                      <div class="input-group">
-                      <?php
+              <?php
               $user=$obj->user_model->get_users(['user_id']);
 
               $profile_url = $this->user_model->get_user_thumbnail($user->row('id'));
@@ -154,7 +138,27 @@
                         
                           <input type="hidden" id="Sender_Name" value="fffffff">
                           <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>">
+                    <h3 class="box-title" style="display: none;" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
+                    <h3 class="box-title" style="display: none;" id="bannertitle"><?=$chatTitle;?> <?= $obj->user_model->get_all_users($clientID)->row('name'); ?></h3>
                         
+                <!-- DIRECT CHAT -->
+                <?php
+                  if(isset($_GET['id'])){?>
+                <div class="box box-warning direct-chat direct-chat-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title" id=""><?=$chatTitle;?> <?= $obj->user_model->get_all_users($clientID)->row('name'); ?></h3>
+                    <div class="box-tools pull-right">
+                      <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
+                    </div>
+                  </div>
+                  <div class="box-body">
+                    <div class="direct-chat-messages" id="content">
+                      <div id="dumppy"></div>
+                    </div>
+                  </div>
+                  <div class="box-footer">
+                      <div class="input-group">
+
                         <input type="hidden" id="ReciverId_txt">
                           <input type="text" name="message" placeholder="Type Message ..." class="form-control message">
                             <span class="input-group-btn">
@@ -167,6 +171,25 @@
                   </div>
                   <!-- /.box-footer-->
                 </div>
+                    <?php
+                    }else{?>
+                <div class="box box-warning direct-chat direct-chat-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title" style="display: none;" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
+                    <h3 class="box-title" id="">Message</h3>
+                    <div class="box-tools pull-right">
+                      <span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>
+                    </div>
+                  </div>
+                  <div class="box-body">
+                    <div class="direct-chat-messages" id="content">
+                      <div id="">Votre message ici</div>
+                    </div>
+                  </div>
+                </div>
+                      <?php }
+                ?>
+
                 <!--/.direct-chat -->
               </div>
 
@@ -175,6 +198,8 @@
 
               <div class="col-md-2">
                 <!-- USERS LIST -->
+                <?php
+                  if(isset($_GET['id'])){ ?>
                 <div class="box box-danger">
                   <div class="box-header with-border">
                     <h3 class="box-title"><?=$strTitle;?></h3>
@@ -206,6 +231,40 @@
                   </div>-->
                   <!-- /.box-footer -->
                 </div>
+                <?php  }else{ ?>
+                  <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Votre compte</h3>
+
+                    <div class="box-tools pull-right">
+                      <span class="label label-danger"></span>
+
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body no-padding">
+                    <ul class="users-list clearfix">
+                    
+
+                          <li class="" id="<?= $user_details['id']; ?>">
+                          <img src="<?= $obj->user_model->get_user_thumbnail($user_details['id'])?>" alt="">
+                          <?= $obj->user_model->get_all_users($user_details['id'])->row('name'); ?>
+                          <?= $obj->user_model->get_all_users($user_details['id'])->row('address'); ?>
+                          <?= $obj->user_model->get_all_users($user_details['id'])->row('email'); ?>
+                          <?= $obj->user_model->get_all_users($user_details['id'])->row('phone'); ?>
+                          </li>               
+                      
+                    </ul>
+                    <!-- /.users-list -->
+                  </div>
+                  <!-- /.box-body -->
+                <!-- <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                  </div>-->
+                  <!-- /.box-footer -->
+                </div>
+                  <?php  }?>
+
                 <!--/.box -->
               </div>
               <!-- /.col -->            

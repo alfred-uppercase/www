@@ -166,7 +166,7 @@ class Email_model extends CI_Model {
 		$this->email->message($htmlContent);
 
 		//Send email
-		$this->email->send();
+		// $this->email->send();
 	}
 
 	public function sent_smtp_mail_with_php_mailer_library($msg=NULL, $sub=NULL, $to=NULL, $from=NULL) {

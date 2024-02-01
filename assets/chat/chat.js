@@ -8,7 +8,7 @@ $(function() {
     $('.btnSend').click(function(){
            sendTxtMessage($('.message').val());
     });
-    // $('.selectVendor').click(function(){
+    $('.selectVendor').click(function(){
         ChatSection(1);
           var receiver_id = $('.selectVendor').attr('id');
         //   var receiver_id = new URLSearchParams(window.location.search).get('id');
@@ -18,7 +18,69 @@ $(function() {
           
           GetChatHistory(receiver_id);
                      
-    // });
+    });
+    ChatSection(1);
+    var receiver_id = $('.selectVendor').attr('id');
+
+    GetChatHistory(receiver_id);
+
+  
+//     var urlParams = new URLSearchParams(window.location.search);
+// var receiver_id = urlParams.get('id');
+
+// // Vérifier si l'ID est présent dans la requête
+// if (!receiver_id) {
+//     ChatSection(1);
+//     var firstVendor = $('.selectVendor').first();
+//     receiver_id = firstVendor.attr('id');
+//     urlParams.set('id', receiver_id);
+//     var newUrl = window.location.pathname + '?' + urlParams.toString();
+//     window.history.pushState({ path: newUrl }, '', newUrl);
+// }
+
+// $('.selectVendor').click(function () {
+//     var Sender_Name = $('#Sender_Name').val();
+//     var Sender_ProfilePic = $('#Sender_ProfilePic').val();
+//     var chatBox = '<div class="box box-warning direct-chat direct-chat-primary">';
+//         chatBox += '<div class="box-header with-border">';
+//         chatBox += '<h3 class="box-title" style="display: none;" id="ReciverName_txt"></h3>';
+//         chatBox += '<h3 class="box-title" id="appendTitle"></h3>';
+//         chatBox += '<div class="box-tools pull-right">';
+//         chatBox += '<span data-toggle="tooltip" title="Clear Chat" class="ClearChat"><i class="fa fa-comments"></i></span>';
+//         chatBox += '</div></div>';
+//         chatBox += '<div class="box-body">';
+//         chatBox += '<div class="direct-chat-messages" id="content">';
+//         chatBox += '<div id="dumppy"></div>';
+//         chatBox += '</div></div>';
+//         chatBox += '<div class="box-footer">';
+//         chatBox += '<div class="input-group">';
+//         chatBox += '<input type="hidden" id="Sender_Name" value="' + Sender_Name + '">';
+//         chatBox += '<input type="hidden" id="Sender_ProfilePic" value="' + Sender_ProfilePic + '">';
+//         chatBox += '<input type="hidden" id="ReciverId_txt">';
+//         chatBox += '<input type="text" name="message" placeholder="Type Message ..." class="form-control message">';
+//         chatBox += '<span class="input-group-btn">';
+//         chatBox += '<button type="button" class="btn btn-success btn-flat btnSend" id="nav_down">Send</button>';
+//         chatBox += '<div class="fileDiv btn btn-info btn-flat"> <i class="fa fa-upload"></i>';
+//         chatBox += '<input type="file" name="file" class="upload_attachmentfile"/></div>';
+//         chatBox += '</span></div></div></div>';
+//     $('#chatSection').html(chatBox);
+//     $('#bannertitle').append('#appendTitle');
+//     receiver_id = $(this).attr('id');
+//     $('#ReciverId_txt').val(receiver_id);
+//     $('#ReciverName_txt').html($(this).attr('title'));
+//     urlParams.set('id', receiver_id);
+//     var newUrl = window.location.pathname + '?' + urlParams.toString();
+//     window.history.pushState({ path: newUrl }, '', newUrl);
+//     GetChatHistory(receiver_id);
+// });
+
+// ChatSection(1);
+// $('#ReciverId_txt').val(receiver_id);
+// $('#ReciverName_txt').html($('.selectVendor[id="' + receiver_id + '"]').attr('title'));
+// GetChatHistory(receiver_id);
+
+
+    
     $('.upload_attachmentfile').change(function(){
         
         DisplayMessage('<div class="spiner"><i class="fa fa-circle-o-notch fa-spin"></i></div>');

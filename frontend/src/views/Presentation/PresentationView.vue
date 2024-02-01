@@ -47,11 +47,13 @@ const submitForm = async () => {
       search_string: search_string.value,
       selected_city_id: selected_city_id.value,
       selected_category_id: selected_category_id.value,
+      results: JSON.stringify(response.data),
+
       // results: JSON.stringify(response.data),
     },
-    state: {
-        results: JSON.stringify(response.data),
-      },
+    // state: {
+    //     results: JSON.stringify(response.data),
+    //   },
   });
   console.log('Get value:', results.value);
 

@@ -190,7 +190,7 @@ const get_phrase_show_on_map = ref('');
 const get_phrase_watch_details = ref('');
 const get_phrase_featured = ref('');
 const geojson = ref(null);
-const results = ref([]);
+// const results = ref([]);
 // const search_string = ref();
 // const selected_city_id = ref();
 // const selected_category_id = ref();
@@ -220,7 +220,7 @@ const capitalizeFirst = (str) => {
 return str.charAt(0).toUpperCase() + str.slice(1);
 };
 onMounted(async () => {
-  // props.results
+  props.results
   console.log('Response from results:', props.results)
   // console.log('Response from selected_city_id:', props.selected_city_id)
   // console.log('Response from selected_category_id:', props.selected_category_id)

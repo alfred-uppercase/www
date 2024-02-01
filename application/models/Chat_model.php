@@ -34,18 +34,33 @@
 			 return false;
 		 }
 	}
- 	public function GetReciverMessageList($receiver_id){
-  		
+	public function GetReciverMessageList($currentUserId){
 		$this->db->select('*');
 		$this->db->from($this->Table);
-		$this->db->where('receiver_id',$receiver_id);
-   		$query = $this->db->get();
- 		if ($query) {
-			 return $query->result_array();
-		 } else {
-			 return false;
-		 }
-		 
+		$this->db->where("(sender_id = $currentUserId OR receiver_id = $currentUserId)");
+		$this->db->group_by('sender_id');
+		$query = $this->db->get();
+	
+		if ($query) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+	}
+	
+	public function getDistinctSenders($receiver_id) {
+		$this->db->select('sender_id, MAX(message_date_time) as last_message_time');
+		$this->db->from($this->Table);
+		$this->db->where('receiver_id', $receiver_id);
+		$this->db->group_by('sender_id');
+		$this->db->order_by('last_message_time', 'desc'); // Optionnel: trier par la date du dernier message
+		$query = $this->db->get();
+	
+		if ($query) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
 	}
 	public function liste_des_message(){
 		$receiver_id = $this->outh_model->Encryptor('decrypt', $this->input->get('receiver_id') );
