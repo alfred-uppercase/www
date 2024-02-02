@@ -93,12 +93,10 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body no-padding">
-                    <ul class="users-list clearfix">
+                    <div class="users-list clearfix">
                     <?php 
                     $datauser = $obj->chat_model->GetReciverMessageList($user_details['id']); 
                     ?>
-
-                          <li>
                           <?php foreach ($datauser as $message): 
                                     $otherUserId = ($message['sender_id'] == $user_details['id']) ? $message['receiver_id'] : $message['sender_id'];
                             
@@ -112,11 +110,9 @@
                                   <p><strong>Date:</strong> <?php echo date('Y-m-d H:i:s', strtotime($message['message_date_time'])); ?></p>
                                   <hr>
                               </div>
-                          <?php endforeach; ?>
-                          
-                          </li>               
+                          <?php endforeach; ?>            
                       
-                    </ul>
+                          </div>
                     <!-- /.users-list -->
                   </div>
                   <!-- /.box-body -->

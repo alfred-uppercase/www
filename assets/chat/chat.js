@@ -8,9 +8,9 @@ $(function() {
     $('.btnSend').click(function(){
            sendTxtMessage($('.message').val());
     });
-    $('.selectVendor').click(function(){
+    // $('.selectVendor').click(function(){
         ChatSection(1);
-          var receiver_id = $('.selectVendor').attr('id');
+          var receiver_id = $('.selectVendor').first().attr('id');
         //   var receiver_id = new URLSearchParams(window.location.search).get('id');
         //   alert(receiver_id);
           $('#ReciverId_txt').val(receiver_id);
@@ -18,11 +18,11 @@ $(function() {
           
           GetChatHistory(receiver_id);
                      
-    });
-    ChatSection(1);
-    var receiver_id = $('.selectVendor').attr('id');
+    // });
+    // ChatSection(1);
+    // var receiver_id = $('.selectVendor').attr('id');
 
-    GetChatHistory(receiver_id);
+    // GetChatHistory(receiver_id);
 
   
 //     var urlParams = new URLSearchParams(window.location.search);
