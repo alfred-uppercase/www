@@ -82,6 +82,36 @@ public function get_listing_by_user_id($user_id = ""){
         ->set_content_type('application/json')
         ->set_output(json_encode($conts));
 }
+function get_sub_categories($category_id = 0)
+{
+//   if ($category_id > 0) {
+//     $this->db->where('parent', $category_id);
+//   }
+//   $this->db->where('parent >', '0');
+//   $data = $this->db->get('category');
+//   $this->output
+//   ->set_content_type('application/json')
+//   ->set_output(json_encode($data));
+$data = array();  // Initialisez un tableau pour stocker les données des sous-catégories
+
+if ($category_id > 0) {
+    $this->db->where('parent', $category_id);
+}
+$this->db->where('parent >', '0');
+$query = $this->db->get('category');
+
+if ($query->num_rows() > 0) {
+    // Si des données sont trouvées, stockez-les dans le tableau $data
+    foreach ($query->result_array() as $row) {
+        $data[] = $row;
+    }
+}
+
+// Retournez les données encodées en JSON
+$this->output
+    ->set_content_type('application/json')
+    ->set_output(json_encode($data));
+}
 public function get_listing_by_user_id_result($user_id = ""){
     $this->db->where('user_id', $user_id);
     $this->db->where('status', 'active');
