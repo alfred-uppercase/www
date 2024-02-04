@@ -58,6 +58,47 @@
     .spiner{}
     .spiner .fa-spin { font-size:24px;}
     .attachmentImgCls{ width:450px; margin-left: -25px; cursor:pointer; }
+    .selectVendor{
+        cursor: pointer;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        margin: 20px 10px;
+        padding: 5px 15px;
+    }
+    .selectVendor:hover{
+        background: #6c6c6c40;
+    }
+        img.thumuser {
+        max-width: 50px;
+        border-radius: 50%;
+    }
+    .selectVendor {
+        display: flex;
+        align-items: center;
+    }
+    .datamessage{
+        margin-left: 10px;
+    }
+    .msgup {
+    display: flex;
+    justify-content: space-between;
+}
+.msgups {
+    font-style: italic;
+    font-weight: 600;
+    color: #737373;
+}
+.nmup{
+    font-size: 17px;
+    
+}
+.datamessage{
+    width: 100%;
+}
+.dtup{
+    font-size:12px;
+    color: #9e9e9e;
+}
   </style>
 </head>
 
@@ -102,13 +143,25 @@
                             
                             ?>
                               <div class="selectVendor" id="<?= $otherUserId ?>">
-                                  <span><?= $otherUserId ?></span>
-                                  <p><strong>Nom:</strong> 
+                                  <img class="thumuser" src="<?= $obj->user_model->get_user_thumbnail($otherUserId)?>" alt="">
+                                  <div class="datamessage">
+                                  <div class="msgup">
+                                  <span class="nmup">
                                   <?php
                                     echo $obj->user_model->get_all_users($otherUserId)->row('name');
                                     ?>
-                                  <p><strong>Date:</strong> <?php echo date('Y-m-d H:i:s', strtotime($message['message_date_time'])); ?></p>
-                                  <hr>
+                                    </span>
+                                    <span class="dtup">
+                                    <?php echo date('Y-m-d H:i:s', strtotime($message['message_date_time'])); ?>
+                                    </span>
+                                    </div>
+                                   
+                                    <span class="msgups">
+                                    <?php echo $message['message'];
+                                    ?>
+                                    </span>
+
+                                </div>
                               </div>
                           <?php endforeach; ?>            
                       
@@ -132,8 +185,8 @@
               $profile_url = $this->user_model->get_user_thumbnail($user->row('id'));
             ?>
                         
-                          <input type="hidden" id="Sender_Name" value="fffffff">
-                          <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>">
+                    <input type="hidden" id="Sender_Name" value="fffffff">
+                    <input type="hidden" id="Sender_ProfilePic" value="<?=$profile_url;?>">
                     <h3 class="box-title" style="display: none;" id="ReciverName_txt"><?=$chatTitle;?> <?= $obj->user_model->get_users($clientID)->row('name'); ?></h3>
                     <h3 class="box-title" style="display: none;" id="bannertitle"><?=$chatTitle;?> <?= $obj->user_model->get_all_users($clientID)->row('name'); ?></h3>
                         
@@ -156,9 +209,9 @@
                       <div class="input-group">
 
                         <input type="hidden" id="ReciverId_txt">
-                          <input type="text" name="message" placeholder="Type Message ..." class="form-control message">
+                          <input type="text" name="message" placeholder="Message ..." class="form-control message">
                             <span class="input-group-btn">
-                              <button type="button" class="btn btn-success btn-flat btnSend" id="nav_down">Send</button>
+                              <button type="button" class="btn btn-success btn-flat btnSend" id="nav_down">Envoyer</button>
                               <div class="fileDiv btn btn-info btn-flat"> <i class="fa fa-upload"></i> 
                               <input type="file" name="file" class="upload_attachmentfile"/></div>
                             </span>

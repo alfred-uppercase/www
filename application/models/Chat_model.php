@@ -35,10 +35,11 @@
 		 }
 	}
 	public function GetReciverMessageList($currentUserId){
-		$this->db->select('*');
+		$this->db->select('MAX(id) as id, sender_id, message, receiver_id, MAX(message_date_time) as message_date_time');
 		$this->db->from($this->Table);
 		$this->db->where("(sender_id = $currentUserId OR receiver_id = $currentUserId)");
-		$this->db->group_by('sender_id');
+		$this->db->group_by('CASE WHEN sender_id = ' . $this->db->escape($currentUserId) . ' THEN receiver_id ELSE sender_id END', FALSE);
+		$this->db->order_by('message_date_time', 'DESC');
 		$query = $this->db->get();
 	
 		if ($query) {
@@ -46,6 +47,18 @@
 		} else {
 			return false;
 		}
+		// $this->db->select('*');
+		// $this->db->from($this->Table);
+		// $this->db->where("(sender_id = $currentUserId OR receiver_id = $currentUserId)");
+		// $this->db->order_by('message_date_time', 'DESC'); // Ordonner par date décroissante
+		// $this->db->group_by('IF(sender_id = '.$currentUserId.', receiver_id, sender_id)'); // Grouper par l'autre utilisateur
+		// $query = $this->db->get();
+	
+		// if ($query) {
+		// 	return $query->result_array();
+		// } else {
+		// 	return false;
+		// }
 	}
 	
 	public function getDistinctSenders($receiver_id) {
