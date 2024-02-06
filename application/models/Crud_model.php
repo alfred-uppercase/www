@@ -1465,7 +1465,14 @@ return $this->db->get('listing');
       return $this->db->get('package_purchased_history');
     }
   }
-
+  function get_user_specific_package($user_id = 0)
+  {
+    if ($user_id > 0) {
+      return $this->db->get_where('package_purchased_history', array('user_id' => $user_id));
+    } else {
+      return $this->db->get('package_purchased_history');
+    }
+  }
   public function get_user_active_package($user_id = "")
   {
     $this->db->order_by('purchase_date', 'desc');

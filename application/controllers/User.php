@@ -283,6 +283,15 @@ class User extends CI_Controller {
 		$page_data['purchase_histories'] = $this->crud_model->get_user_specific_purchase_history($this->session->userdata('user_id'))->result_array();
 		$this->load->view('backend/index.php', $page_data);
 	}
+	function package() {
+		if ($this->session->userdata('user_login') != true) {
+			redirect(site_url('login'), 'refresh');
+		}
+		$page_data['page_name'] = 'package';
+		$page_data['page_title'] = get_phrase('package');
+		$page_data['purchase_histories'] = $this->crud_model->get_user_specific_package($this->session->userdata('user_id'))->result_array();
+		$this->load->view('backend/index.php', $page_data);
+	}
 
 	function package_invoice($package_purchase_history_id = "") {
 		if ($this->session->userdata('user_login') != true) {

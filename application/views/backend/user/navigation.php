@@ -132,6 +132,13 @@
 							</a>
 					</li>
 				<?php endif; ?>
+				<?php if (has_package() > 0): ?>
+					<li class = "<?php if($page_name == 'purchase_history' || $page_name == 'package_invoice') echo 'active'; ?>">
+						<a href="<?php echo site_url('user/package'); ?>">
+							<span><i class="entypo-dot"></i><?php echo get_phrase('packages'); ?>
+							</a>
+					</li>
+				<?php endif; ?>
 				</ul>
 			</li>
 
