@@ -1478,6 +1478,7 @@ return $this->db->get('listing');
     $this->db->order_by('purchase_date', 'desc');
     $this->db->where('user_id', $user_id);
     $this->db->where('expired_date >=', strtotime(date('d M Y')));
+    $this->db->where('active', 1);
     return $this->db->get('package_purchased_history');
   }
 

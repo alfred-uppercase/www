@@ -142,6 +142,21 @@ class User_model extends CI_Model {
         }
         return;
     }
+    function update_package($id, $user_id, $active_package)
+    {
+        // Met tous les enregistrements à 0 d'abord
+        $this->db->where('user_id', $user_id);
+        $this->db->update('package_purchased_history', array('active' => 0));
+    
+        // Met à jour le package sélectionné à 1 pour l'ID spécifié
+        $this->db->where('id', $id);
+        $this->db->where('user_id', $user_id);
+        // $this->db->where('package_id', $active_package);
+        $this->db->update('package_purchased_history', array('active' => 1));
+    }
+    
+    
+    
 
     public function upload_user_image($user_id) {
         if (isset($_FILES['user_image']) && $_FILES['user_image']['name'] != "") {

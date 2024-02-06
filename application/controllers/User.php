@@ -304,6 +304,26 @@ class User extends CI_Controller {
 	}
 
 	/******MANAGE OWN PROFILE AND CHANGE PASSWORD***/
+	function update_package()
+	{
+		$user_id = $this->session->userdata('user_id');
+		$active_package_id = $this->input->post('active_package');
+	
+		// Obtenez l'id associé au package sélectionné
+		$selected_id = $this->db->get_where('package_purchased_history', array('user_id' => $user_id, 'id' => $active_package_id))->row('id');
+	
+		if ($selected_id) {
+			$this->user_model->update_package($selected_id, $user_id, $active_package_id);
+		} else {
+			// Gérez le cas où l'id n'est pas trouvé
+			// Peut-être rediriger vers une page d'erreur ou effectuer une action appropriée
+		}
+	
+		redirect(site_url('user/purchase_history'), 'refresh');
+	}
+	
+	
+
     function manage_profile($param1 = '', $param2 = '', $param3 = '')
     {
         if ($this->session->userdata('user_login') != 1)
@@ -312,6 +332,10 @@ class User extends CI_Controller {
             $this->user_model->edit_user($param2);
             redirect(site_url('user/manage_profile'), 'refresh');
         }
+		// if ($param1 == 'update_package') {
+        //     $this->user_model->update_package($param2);
+        //     redirect(site_url('user/purchase_history'), 'refresh');
+        // }
         if ($param1 == 'change_password') {
             $this->user_model->change_password($param2);
             redirect(site_url('user/manage_profile'), 'refresh');
