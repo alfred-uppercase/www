@@ -6,24 +6,24 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    "-74.006309",
-                    "40.712754"
+                    "-74.033074",
+                    "40.706464"
                 ]
             },
             "properties": {
-                "id": "ca2e083a1bbd4ade9712402e28bdd156",
+                "id": "39ee3f7a26af9b54e168d59cc8b3d580",
                 "index": 0,
                 "isActive": true,
-                "logo": "d8684830fc5248dd44976c7f85f0f2f6.jpg",
-                "image": "d8684830fc5248dd44976c7f85f0f2f6.jpg",
-                "link": "http://localhost/hotel/rav-4/2",
-                "url": "rav.com",
-                "name": "RAV 4",
-                "category": "hotel",
-                "email": "proquoubovibro-6495@yopmail.com",
+                "logo": "82760147a16185456283fb05e22a82d4.jpg",
+                "image": "82760147a16185456283fb05e22a82d4.jpg",
+                "link": "http://localhost/general/teste-mis-en-avant-voiture/2",
+                "url": "ffff.com",
+                "name": "Teste Mis en avant Voiture",
+                "category": "general",
+                "email": "f203666@gmail.com",
                 "stars": "0.0",
-                "phone": "0321367951",
-                "address": "",
+                "phone": "+261325300003",
+                "address": "Logt III G 46 CABIS Ambatolampy Atehiroka",
                 "about": "about",
                 "tags": [
                     ""

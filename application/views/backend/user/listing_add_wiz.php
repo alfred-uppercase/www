@@ -13,6 +13,7 @@ $categories = $this->db->get('category')->result_array();
           <?php
           $user_id = $this->session->userdata('user_id');
           $this->db->where('user_id', $user_id);
+          $this->db->where('active', 1);
           $this->db->order_by('id', 'desc')->limit(1);
           $package_id = $this->db->get_where('package_purchased_history')->row('package_id');
           $total_listing = $this->db->get_where('package', array('id' => $package_id))->row('number_of_listings');

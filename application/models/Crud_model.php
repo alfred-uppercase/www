@@ -320,22 +320,62 @@ return $this->db->get('listing');
 
 
     if ($this->session->userdata('user_login') == '1' || $this->session->userdata('user_id') != $data['user_id']) {
+      // $package_id = has_package($this->session->userdata('user_id'), 'package_id');
+      // $featured_status = $this->db->get_where('package', array('id' => $package_id))->row('featured');
+      // // $featured_status = $this->db->get_where('package')->row('featured');
+      // if ($featured_status == 0) {
+      //   $data['is_featured'] = 0;
+      // } else {
+      //   $data['is_featured'] = $this->input->post('is_featured');
+      // }
       $package_id = has_package($this->session->userdata('user_id'), 'package_id');
-      $featured_status = $this->db->get_where('package')->row('featured');
-      if ($featured_status == 0) {
-        $data['is_featured'] = 0;
-      } else {
-        $data['is_featured'] = $this->input->post('is_featured');
+      if (is_array($package_id)) {
+          // Si $package_id est un tableau, choisissez l'élément approprié
+          $package_id = isset($package_id['package_id']) ? $package_id['package_id'] : null;
       }
-      $this->db->select_max('id');
-      $this->db->select('expired_date');
+      
+      // Vérifiez si $package_id est défini avant d'utiliser dans la requête
+      if ($package_id !== null) {
+          $featured_stat = $this->db->get_where('package', array('id' => $package_id))->row_array();
+      
+          if (!empty($featured_stat)) {
+              $featured_status = $featured_stat['featured'];
+      
+              if ($featured_status == 0) {
+                  $data['is_featured'] = 0;
+              } else {
+                  $data['is_featured'] = $this->input->post('is_featured');
+              }
+          } else {
+              // Gérez le cas où $featured_stat est vide
+              $data['is_featured'] = 0; // ou toute autre valeur par défaut
+          }
+      } else {
+          // Gérez le cas où $package_id n'est pas défini correctement
+          $data['is_featured'] = 0; // ou toute autre valeur par défaut
+      }
+      // $this->db->select_max('id');
+      // $this->db->select('expired_date');
+      // $this->db->where('user_id', $data['user_id']);
+      // $package_purchased_history = $this->db->get('package_purchased_history');
+      // if ($package_purchased_history->num_rows() > 0) {
+      //   $data['package_expiry_date'] = $package_purchased_history->row('expired_date');
+      // } else {
+      //   $data['package_expiry_date'] = '';
+      // }
+      $this->db->select('expired_date, package_id');
       $this->db->where('user_id', $data['user_id']);
+      $this->db->where('active', 1); // Ajoutez cette condition pour sélectionner le package actif
+      $this->db->order_by('id', 'desc'); // Assurez-vous de trier par ordre décroissant pour obtenir le plus récent
+      $this->db->limit(1); // Limitez aux résultats à 1 (le plus récent)
       $package_purchased_history = $this->db->get('package_purchased_history');
+      
       if ($package_purchased_history->num_rows() > 0) {
-        $data['package_expiry_date'] = $package_purchased_history->row('expired_date');
+          $data['package_expiry_date'] = $package_purchased_history->row('expired_date');
       } else {
-        $data['package_expiry_date'] = '';
+          $data['package_expiry_date'] = '';
       }
+
     } else {
       $data['package_expiry_date'] = 'admin';
       $data['is_featured'] = $this->input->post('is_featured');
@@ -570,12 +610,42 @@ return $this->db->get('listing');
     //   $data['is_featured'] = sanitizer(0);
     // }
     if ($this->session->userdata('user_login') == '1' || $this->session->userdata('user_id') != $data['user_id']) {
+
+      // $package_id = has_package($this->session->userdata('user_id'), 'package_id');
+      // $featured_stat = $this->db->get_where('package', array('id' => $package_id))->row_array();
+
+      // $featured_status = $featured_stat['featured'];
+      // // $featured_status = $this->db->get_where('package')->row('featured');
+      // if ($featured_status == 0) {
+      //   $data['is_featured'] = 0;
+      // } else {
+      //   $data['is_featured'] = $this->input->post('is_featured');
+      // }
       $package_id = has_package($this->session->userdata('user_id'), 'package_id');
-      $featured_status = $this->db->get_where('package')->row('featured');
-      if ($featured_status == 0) {
-        $data['is_featured'] = 0;
+      if (is_array($package_id)) {
+          // Si $package_id est un tableau, choisissez l'élément approprié
+          $package_id = isset($package_id['package_id']) ? $package_id['package_id'] : null;
+      }
+      
+      // Vérifiez si $package_id est défini avant d'utiliser dans la requête
+      if ($package_id !== null) {
+          $featured_stat = $this->db->get_where('package', array('id' => $package_id))->row_array();
+      
+          if (!empty($featured_stat)) {
+              $featured_status = $featured_stat['featured'];
+      
+              if ($featured_status == 0) {
+                  $data['is_featured'] = 0;
+              } else {
+                  $data['is_featured'] = $this->input->post('is_featured');
+              }
+          } else {
+              // Gérez le cas où $featured_stat est vide
+              $data['is_featured'] = 0; // ou toute autre valeur par défaut
+          }
       } else {
-        $data['is_featured'] = $this->input->post('is_featured');
+          // Gérez le cas où $package_id n'est pas défini correctement
+          $data['is_featured'] = 0; // ou toute autre valeur par défaut
       }
       $this->db->select_max('id');
       $this->db->select('expired_date');
@@ -1425,37 +1495,75 @@ return $this->db->get('listing');
       return array();
     }
   }
-
   function create_package_purchase_history($payment_method = "", $user_id = "", $package_id = "", $paid_amount = "", $session_id = "", $paymentToken = "", $payerID = "")
   {
-    $package_details = $this->db->get_where('package', array('id' => $package_id))->row_array();
-    $response = false;
-    if ($payment_method == 'stripe') {
-      $response = $this->payment_model->stripe_payment($session_id, $paid_amount);
-      $response = $response['payment_status'];
-    } elseif ($payment_method == 'paypal') {
-      $response = $this->payment_model->paypal_payment($session_id, $paymentToken, $payerID);
-    }
-
-
-    if ($response == true || $package_details['package_type'] == 0) {
-      $purchase_date          = strtotime(date('D, d-M-Y') . ' 00:00:00');
-      $data['purchase_date']  = $purchase_date;
-      $data['expired_date']   = strtotime("+" . $package_details['validity'] . " day", $purchase_date);
-      $data['package_id']     = $package_id;
-      $data['user_id']        = $user_id;
-      $data['amount_paid']    = $paid_amount;
-      $data['payment_method'] = $payment_method;
-      $this->db->insert('package_purchased_history', $data);
-
-      $this->db->limit($package_details['number_of_listings']);
-      $this->db->where('user_id', $user_id);
-      $this->db->update('listing', array('package_expiry_date' => $data['expired_date']));
-      return true;
-    } else {
-      return false;
-    }
+      $package_details = $this->db->get_where('package', array('id' => $package_id))->row_array();
+      $response = false;
+  
+      if ($payment_method == 'stripe') {
+          $response = $this->payment_model->stripe_payment($session_id, $paid_amount);
+          $response = $response['payment_status'];
+      } elseif ($payment_method == 'paypal') {
+          $response = $this->payment_model->paypal_payment($session_id, $paymentToken, $payerID);
+      }
+  
+      if ($response == true || $package_details['package_type'] == 0) {
+          $purchase_date          = strtotime(date('D, d-M-Y') . ' 00:00:00');
+          $data['purchase_date']  = $purchase_date;
+          $data['expired_date']   = strtotime("+" . $package_details['validity'] . " day", $purchase_date);
+          $data['package_id']     = $package_id;
+          $data['user_id']        = $user_id;
+          $data['amount_paid']    = $paid_amount;
+          $data['payment_method'] = $payment_method;
+  
+          // Mettez à jour toutes les lignes pour définir la colonne active à zéro sauf celle qui vient d'être achetée
+          $this->db->where('user_id', $user_id);
+          $this->db->update('package_purchased_history', array('active' => 0));
+  
+          // Insérez la nouvelle ligne avec la colonne active à 1
+          $data['active'] = 1;
+          $this->db->insert('package_purchased_history', $data);
+  
+          $this->db->limit($package_details['number_of_listings']);
+          $this->db->where('user_id', $user_id);
+          $this->db->update('listing', array('package_expiry_date' => $data['expired_date']));
+          return true;
+      } else {
+          return false;
+      }
   }
+  
+  
+  // function create_package_purchase_history($payment_method = "", $user_id = "", $package_id = "", $paid_amount = "", $session_id = "", $paymentToken = "", $payerID = "")
+  // {
+  //   $package_details = $this->db->get_where('package', array('id' => $package_id))->row_array();
+  //   $response = false;
+  //   if ($payment_method == 'stripe') {
+  //     $response = $this->payment_model->stripe_payment($session_id, $paid_amount);
+  //     $response = $response['payment_status'];
+  //   } elseif ($payment_method == 'paypal') {
+  //     $response = $this->payment_model->paypal_payment($session_id, $paymentToken, $payerID);
+  //   }
+
+
+  //   if ($response == true || $package_details['package_type'] == 0) {
+  //     $purchase_date          = strtotime(date('D, d-M-Y') . ' 00:00:00');
+  //     $data['purchase_date']  = $purchase_date;
+  //     $data['expired_date']   = strtotime("+" . $package_details['validity'] . " day", $purchase_date);
+  //     $data['package_id']     = $package_id;
+  //     $data['user_id']        = $user_id;
+  //     $data['amount_paid']    = $paid_amount;
+  //     $data['payment_method'] = $payment_method;
+  //     $this->db->insert('package_purchased_history', $data);
+
+  //     $this->db->limit($package_details['number_of_listings']);
+  //     $this->db->where('user_id', $user_id);
+  //     $this->db->update('listing', array('package_expiry_date' => $data['expired_date']));
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   function get_user_specific_purchase_history($user_id = 0)
   {

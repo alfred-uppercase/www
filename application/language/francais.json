@@ -437,5 +437,14 @@
     "current_password": "Current password",
     "new_password": "New password",
     "confirm_password": "Confirm password",
-    "package_active": "Package active"
+    "package_active": "Package active",
+    "wishlists": "Wishlists",
+    "cover": "Cover",
+    "uploaded_by": "Uploaded by",
+    "date_added": "Date added",
+    "listing_added_successfully": "Listing added successfully",
+    "mark_as_active": "Mark as active",
+    "listing_updated": "Listing updated",
+    "oops": "Oops",
+    "purchase_package": "Purchase package"
 }

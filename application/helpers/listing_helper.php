@@ -35,7 +35,7 @@ if (! function_exists('has_package')) {
       $CI->db->where('purchase_date <=', strtotime(date('Y-m-d')));
       $CI->db->where('active', 1);
       $result = $CI->db->get('package_purchased_history')->row_array();
-      $purchased_package = $CI->db->get_where('package_purchased_history', array('id' => $result['id']));
+      $purchased_package = $CI->db->get_where('package_purchased_history', array('active' => 1));
       if ($pacakge_details == false && $purchased_package->num_rows() > 0) {
         return $purchased_package->row('package_id');
       }elseif($purchased_package->num_rows() > 0){
