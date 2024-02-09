@@ -63,11 +63,18 @@ class User_model extends CI_Model {
     function add_user($param1 = "") {
         $data['email'] = sanitizer($this->input->post('email'));
         $data['name'] = sanitizer($this->input->post('name'));
+        $data['lastname'] = sanitizer($this->input->post('lastname'));
         $data['password'] = sha1(sanitizer($this->input->post('password')));
         $data['address'] = sanitizer($this->input->post('address'));
         $data['phone'] = sanitizer($this->input->post('phone'));
         $data['website'] = sanitizer($this->input->post('website'));
+        $data['civilite'] = sanitizer($this->input->post('selected_civilite'));
         $data['about'] = sanitizer($this->input->post('about'));
+        $datas['siret'] = sanitizer($this->input->post('siret'));
+        $datas['nomdesociete'] = sanitizer($this->input->post('nomdesociete'));
+        $datas['adresse'] = sanitizer($this->input->post('adresse'));
+        $datas['codepostal'] = sanitizer($this->input->post('codepostal'));
+        $datas['secteur'] = sanitizer($this->input->post('secteur'));
         $social_links = array(
             'facebook' => sanitizer($this->input->post('facebook')),
             'twitter' => sanitizer($this->input->post('twitter')),
@@ -78,19 +85,22 @@ class User_model extends CI_Model {
         $data['wishlists'] = '[]';
         $verification_code =  md5(rand(100000000, 200000000));
         $data['verification_code'] = $verification_code;
-
         $validity = $this->check_duplication('on_create', $data['email']);
         if($validity){
             if (strtolower($this->session->userdata('role')) == 'admin') {
                 $data['is_verified'] = 1;
                 $this->db->insert('user', $data);
                 $user_id = $this->db->insert_id();
+                $datas['user_id'] = $user_id;
+                $this->db->insert('company', $datas);
                 $this->upload_user_image($user_id);
                 $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
             }else {
                 $data['is_verified'] = 0;
                 $this->db->insert('user', $data);
                 $user_id = $this->db->insert_id();
+                $datas['user_id'] = $user_id;
+                $this->db->insert('company', $datas);
                 $this->upload_user_image($user_id);
                 $this->email_model->send_email_verification_mail($data['email'], $verification_code);
                 $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');

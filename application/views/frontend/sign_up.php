@@ -8,6 +8,21 @@
         <h3 class="new_client"><?php echo get_phrase('new_user'); ?></h3> <small class="float-right pt-2">* <?php echo get_phrase('required_fields'); ?></small>
         <form class="" action="<?php echo site_url('login/register_user') ?>" method="post">
           <div class="form_container">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="civilite" id="flexRadioDefault1" value="Mrs" onclick="updateCivilite('Mrs')">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Mrs
+              </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" name="civilite" id="flexRadioDefault2" value="Mm" onclick="updateCivilite('Mm')" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Mm
+              </label>
+          </div>
+          <!-- Add a hidden input field to store the selected value -->
+          <input type="hidden" name="selected_civilite" id="selected_civilite" value="Mm">
+
             <div class="form-group">
               <input type="email" class="form-control" name="email" id="email" placeholder="<?php echo get_phrase('email'); ?>*" required>
             </div>
@@ -22,6 +37,11 @@
                 </div>
               </div>
               <div class="col-md-12">
+              <div class="form-group">
+                  <input type="text" class="form-control" name="lastname" placeholder="<?php echo get_phrase('name'); ?> *" required>
+                </div>
+              </div>
+              <div class="col-md-12">
                 <div class="form-group">
                   <input type="text" class="form-control" name="address" placeholder="<?php echo get_phrase('address'); ?> *" required>
                 </div>
@@ -30,6 +50,21 @@
                 <div class="form-group">
                   <input type="number" class="form-control" name="phone" placeholder="<?php echo get_phrase('phone'); ?> *" required>
                 </div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="siret" placeholder="SIRET" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="nomdesociete" placeholder="Nom de la société" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="adresse" placeholder="Adresse de la société" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="codepostal" placeholder="Code postal" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="secteur" placeholder="Secteur d'activité" required>
               </div>
             </div>
             <hr>
@@ -69,3 +104,8 @@
     </div>
   </div>
 </div>
+<script>
+   function updateCivilite(value) {
+      document.getElementById('selected_civilite').value = value;
+   }
+</script>

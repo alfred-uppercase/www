@@ -68,16 +68,24 @@ class Login extends CI_Controller {
         }
         $email = sanitizer($this->input->post('email'));
         $name = sanitizer($this->input->post('name'));
+        $lastname = sanitizer($this->input->post('lastname'));
+        $civilite = sanitizer($this->input->post('selected_civilite'));
         $password = sha1(sanitizer($this->input->post('password')));
         $address = sanitizer($this->input->post('address'));
         $phone = sanitizer($this->input->post('phone'));
+        $siret = sanitizer($this->input->post('siret'));
+        $nomdesociete = sanitizer($this->input->post('nomdesociete'));
+        $adresse = sanitizer($this->input->post('adresse'));
+        $codepostal = sanitizer($this->input->post('codepostal'));
+        $secteur = sanitizer($this->input->post('secteur'));
 
-        if(empty($email) || empty($name) || empty($password) || empty($address) || empty($phone)){
+        if(empty($email) || empty($name) || empty($lastname) || empty($civilite) || empty($password) || empty($address) || empty($phone)){
             $this->session->set_flashdata('error_message', get_phrase('fill_in_all_the_fields'));
             redirect(site_url('home/login'), 'refresh');    
         }
 
 		$this->user_model->add_user('sign_up');
+        $this->user_model->add_user($siret, $nomdesociete, $adresse, $codepostal, $secteur);
 		redirect(site_url('home/login'), 'refresh');
 	}
 

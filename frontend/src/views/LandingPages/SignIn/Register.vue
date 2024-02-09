@@ -66,7 +66,7 @@ onMounted(() => {
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" method="post" action="/home/sign_up" @submit.prevent="register()">
+                <form role="form" class="text-start" method="post" action="/api/register_post" @submit.prevent="register()">
                   <MaterialInput
                     v-model="email"
                     id="email"
@@ -186,46 +186,47 @@ import axios from 'axios'
 export default {
   data() {
     return {
-        email: '',
-        password:'',
-        name:'',
-        address:'',
-        phone:'',
-        msg: null,
-        classAlert: null
+      email: '',
+      password: '',
+      name: '',
+      address: '',
+      phone: '',
+      msg: null,
+      classAlert: null,
     };
   },
   methods: {
-    register(){
-        const form = new FormData()
-        form.append('email', this.email)
-        form.append('password', this.password)
-        form.append('name', this.name)
-        form.append('address', this.address)
-        form.append('phone', this.phone)
+    register() {
+      // Prepare data for API request
+      const userData = {
+        email: this.email,
+        password: this.password,
+        name: this.name,
+        address: this.address,
+        phone: this.phone,
+        // Add other data as needed
+      };
 
-        this.$guest.post('/home/sign_up', form)
-        .then(() =>{
-            this.msg = "Inscription Reussie"
-            this.classAlert ="succes";
-        })
-        .catch(err =>{
-            this.msg = err.response.data.message.console.error();
-            // this.msg = "Inscription erreur"
-            this.classAlert ="danger";
-
-        })
+      // Make API request
+      axios.post('/api/register_post', userData)
+  .then(response => {
+    // Handle successful response
+    this.msg = 'User registered successfully';
+    this.classAlert = 'success';
+  })
+  .catch(error => {
+    // Handle error response
+    if (error.response.status === 400) {
+      this.msg = 'Please fill in all the fields';
+    } else if (error.response.status === 500) {
+      this.msg = 'Internal Server Error. Please try again later.';
+    } else {
+      this.msg = 'An unexpected error occurred.';
     }
+    this.classAlert = 'error';
+  });
+
+    },
   },
-  mounted() {
-    axios
-      .put('https://jsonplaceholder.typicode.com/posts/1', {
-        id: '1',
-        userId: '1',
-        title:  'Article title',
-        body:   'Article body content'
-      })
-      .then((response) => console.log(response))
-  }
-}
+};
 </script>
