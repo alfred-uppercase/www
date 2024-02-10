@@ -92,7 +92,9 @@ class User_model extends CI_Model {
                 $this->db->insert('user', $data);
                 $user_id = $this->db->insert_id();
                 $datas['user_id'] = $user_id;
-                $this->db->insert('company', $datas);
+                    if (!empty($datas['siret']) && !empty($datas['nomdesociete'])) {
+                        $this->db->insert('company', $datas);
+                    }
                 $this->upload_user_image($user_id);
                 $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
             }else {
@@ -100,7 +102,9 @@ class User_model extends CI_Model {
                 $this->db->insert('user', $data);
                 $user_id = $this->db->insert_id();
                 $datas['user_id'] = $user_id;
-                $this->db->insert('company', $datas);
+                    if (!empty($datas['siret']) && !empty($datas['nomdesociete'])) {
+                        $this->db->insert('company', $datas);
+                    }
                 $this->upload_user_image($user_id);
                 $this->email_model->send_email_verification_mail($data['email'], $verification_code);
                 $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
@@ -114,7 +118,7 @@ class User_model extends CI_Model {
                 if($unverified_user->num_rows() > 0){
                     $unverified_user_row = $unverified_user->row_array();
                     $this->email_model->send_email_verification_mail($unverified_user_row['email'], $unverified_user_row['verification_code']);
-                    $this->session->set_flashdata('flash_message', get_phrase('You have already registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+                    $this->session->set_flashdata('flash_message', get_phrase('you_have_already_registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
                     return;
                 }
             }
@@ -122,7 +126,6 @@ class User_model extends CI_Model {
         }
         return;
     }
-
     function edit_user($user_id) {
         $data['email'] = sanitizer($this->input->post('email'));
         $data['name'] = sanitizer($this->input->post('name'));

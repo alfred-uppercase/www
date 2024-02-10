@@ -1,5 +1,7 @@
 <?php
+use Restserver\Libraries\REST_Controller;
 defined('BASEPATH') OR exit('No direct script access allowed');
+require APPPATH . 'libraries/REST_Controller.php';
 
 class Api extends CI_Controller {
   function __construct()
@@ -83,35 +85,66 @@ public function get_listing_by_user_id($user_id = ""){
         ->set_output(json_encode($conts));
 }
 public function register_post() {
-    // Retrieve data from the request
     $data = $this->input->post();
-
-
-    // if (!$this->crud_model->check_rechaptcha() && get_settings('recaptcha_status') == 1) {
-    //     $this->response(['error_message' => get_phrase('recaptcha_validation_failed')], REST_Controller::HTTP_BAD_REQUEST);
-    // }
 
     $email = sanitizer($this->input->post('email'));
     $name = sanitizer($this->input->post('name'));
-    // $lastname = sanitizer($this->input->post('lastname'));
+    $lastname = sanitizer($this->input->post('lastname'));
     $civilite = sanitizer($this->input->post('selected_civilite'));
-    $password = password_hash(sanitizer($this->input->post('password')), PASSWORD_BCRYPT); // Use bcrypt for password hashing
+    $password = sha1(sanitizer($this->input->post('password'))); // Use bcrypt for password hashing
     $address = sanitizer($this->input->post('address'));
     $phone = sanitizer($this->input->post('phone'));
+    $siret = sanitizer($this->input->post('siret'));
+    $nomdesociete = sanitizer($this->input->post('nomdesociete'));
+    $adresse = sanitizer($this->input->post('adresse'));
+    $codepostal = sanitizer($this->input->post('codepostal'));
+    $secteur = sanitizer($this->input->post('secteur'));
 
 
-    // if (empty($email) || empty($name) || empty($lastname) || empty($civilite) || empty($password) || empty($address) || empty($phone)) {
-    //     $this->response(['error_message' => get_phrase('fill_in_all_the_fields')], REST_Controller::HTTP_BAD_REQUEST);
-    // }
+    if (empty($email) || empty($name) || empty($password) || empty($adresse) || empty($phone)) {
+        $this->response(['error_message' => get_phrase('fill_in_all_the_fields')], REST_Controller::HTTP_BAD_REQUEST);
+    }
+    $existing_user = $this->user_model->check_duplication('on_create', $email);
+    if (!$existing_user) {
+        $this->response(['error_message' => 'Email is already taken'], REST_Controller::HTTP_CONFLICT);
+    }
 
-    // Add logic to handle company data (if needed)
-    $user_id = $this->user_model->add_user($email, $name, $password, $address, $phone);
-
-    // Additional registration logic here
-
-    // Return a JSON response
+    // $user_id = $this->user_model->add_user($email, $name, $password, $address, $phone, $lastname, $civilite, $siret, $nomdesociete, $adresse, $codepostal, $secteur);
+    // $user_id = $this->user_model->add_user('sign_up');
+    $user_id = $this->user_model->add_user($siret, $nomdesociete, $adresse, $codepostal, $secteur);
     $this->response(['message' => 'User registered successfully', 'user_id' => $user_id], REST_Controller::HTTP_OK);
 }
+public function validate_login_api() {
+    $email = sanitizer($this->input->post('email'));
+    $password = sanitizer($this->input->post('password'));
+    $credential = array('email' => $email, 'password' => sha1($password), 'is_verified' => 1);
+
+    // Checking login credential for admin
+    $query = $this->db->get_where('user', $credential);
+    if ($query->num_rows() > 0) {
+        $row = $query->row();
+        $user_data = array(
+            'user_id' => $row->id,
+            'role_id' => $row->role_id,
+            'role' => get_user_role('user_role', $row->id),
+            'name' => $row->name,
+        );
+
+        $response = array(
+            'status' => 'success',
+            'message' => 'Login successful',
+            'user_data' => $user_data,
+        );
+        $this->response($response, REST_Controller::HTTP_OK);
+    } else {
+        $response = array(
+            'status' => 'error',
+            'message' => 'Invalid credentials',
+        );
+        $this->response($response, REST_Controller::HTTP_UNAUTHORIZED);
+    }
+}
+
 public function response($data, $status = 200) {
     $this->output
          ->set_status_header($status)
@@ -121,68 +154,68 @@ public function response($data, $status = 200) {
     exit;
 }
 
-function add_user($param1 = "") {
-    $data['email'] = sanitizer($this->input->post('email'));
-    $data['name'] = sanitizer($this->input->post('name'));
-    $data['lastname'] = sanitizer($this->input->post('lastname'));
-    $data['password'] = sha1(sanitizer($this->input->post('password')));
-    $data['address'] = sanitizer($this->input->post('address'));
-    $data['phone'] = sanitizer($this->input->post('phone'));
-    $data['website'] = sanitizer($this->input->post('website'));
-    $data['civilite'] = sanitizer($this->input->post('selected_civilite'));
-    $data['about'] = sanitizer($this->input->post('about'));
-    $datas['siret'] = sanitizer($this->input->post('siret'));
-    $datas['nomdesociete'] = sanitizer($this->input->post('nomdesociete'));
-    $datas['adresse'] = sanitizer($this->input->post('adresse'));
-    $datas['codepostal'] = sanitizer($this->input->post('codepostal'));
-    $datas['secteur'] = sanitizer($this->input->post('secteur'));
-    $social_links = array(
-        'facebook' => sanitizer($this->input->post('facebook')),
-        'twitter' => sanitizer($this->input->post('twitter')),
-        'linkedin' => sanitizer($this->input->post('linkedin')),
-    );
-    $data['social'] = json_encode($social_links);
-    $data['role_id'] = 2;
-    $data['wishlists'] = '[]';
-    $verification_code =  md5(rand(100000000, 200000000));
-    $data['verification_code'] = $verification_code;
-    $validity = $this->check_duplication('on_create', $data['email']);
-    if($validity){
-        if (strtolower($this->session->userdata('role')) == 'admin') {
-            $data['is_verified'] = 1;
-            $this->db->insert('user', $data);
-            $user_id = $this->db->insert_id();
-            $datas['user_id'] = $user_id;
-            $this->db->insert('company', $datas);
-            $this->upload_user_image($user_id);
-            $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
-        }else {
-            $data['is_verified'] = 0;
-            $this->db->insert('user', $data);
-            $user_id = $this->db->insert_id();
-            $datas['user_id'] = $user_id;
-            $this->db->insert('company', $datas);
-            $this->upload_user_image($user_id);
-            $this->email_model->send_email_verification_mail($data['email'], $verification_code);
-            $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
-        }
+// function add_user($param1 = "") {
+//     $data['email'] = sanitizer($this->input->post('email'));
+//     $data['name'] = sanitizer($this->input->post('name'));
+//     $data['lastname'] = sanitizer($this->input->post('lastname'));
+//     $data['password'] = sha1(sanitizer($this->input->post('password')));
+//     $data['address'] = sanitizer($this->input->post('address'));
+//     $data['phone'] = sanitizer($this->input->post('phone'));
+//     $data['website'] = sanitizer($this->input->post('website'));
+//     $data['civilite'] = sanitizer($this->input->post('selected_civilite'));
+//     $data['about'] = sanitizer($this->input->post('about'));
+//     $datas['siret'] = sanitizer($this->input->post('siret'));
+//     $datas['nomdesociete'] = sanitizer($this->input->post('nomdesociete'));
+//     $datas['adresse'] = sanitizer($this->input->post('adresse'));
+//     $datas['codepostal'] = sanitizer($this->input->post('codepostal'));
+//     $datas['secteur'] = sanitizer($this->input->post('secteur'));
+//     $social_links = array(
+//         'facebook' => sanitizer($this->input->post('facebook')),
+//         'twitter' => sanitizer($this->input->post('twitter')),
+//         'linkedin' => sanitizer($this->input->post('linkedin')),
+//     );
+//     $data['social'] = json_encode($social_links);
+//     $data['role_id'] = 2;
+//     $data['wishlists'] = '[]';
+//     $verification_code =  md5(rand(100000000, 200000000));
+//     $data['verification_code'] = $verification_code;
+//     $validity = $this->check_duplication('on_create', $data['email']);
+//     if($validity){
+//         if (strtolower($this->session->userdata('role')) == 'admin') {
+//             $data['is_verified'] = 1;
+//             $this->db->insert('user', $data);
+//             $user_id = $this->db->insert_id();
+//             $datas['user_id'] = $user_id;
+//             $this->db->insert('company', $datas);
+//             $this->upload_user_image($user_id);
+//             $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
+//         }else {
+//             $data['is_verified'] = 0;
+//             $this->db->insert('user', $data);
+//             $user_id = $this->db->insert_id();
+//             $datas['user_id'] = $user_id;
+//             $this->db->insert('company', $datas);
+//             $this->upload_user_image($user_id);
+//             $this->email_model->send_email_verification_mail($data['email'], $verification_code);
+//             $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+//         }
         
-    }else {
-        if($param1 == 'sign_up'){
-            $this->db->where('email', $data['email']);
-            $this->db->where('is_verified', 0);
-            $unverified_user = $this->db->get('user');
-            if($unverified_user->num_rows() > 0){
-                $unverified_user_row = $unverified_user->row_array();
-                $this->email_model->send_email_verification_mail($unverified_user_row['email'], $unverified_user_row['verification_code']);
-                $this->session->set_flashdata('flash_message', get_phrase('You have already registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
-                return;
-            }
-        }
-        $this->session->set_flashdata('error_message', get_phrase('this_email_id_has_been_taken'));
-    }
-    return;
-}
+//     }else {
+//         if($param1 == 'sign_up'){
+//             $this->db->where('email', $data['email']);
+//             $this->db->where('is_verified', 0);
+//             $unverified_user = $this->db->get('user');
+//             if($unverified_user->num_rows() > 0){
+//                 $unverified_user_row = $unverified_user->row_array();
+//                 $this->email_model->send_email_verification_mail($unverified_user_row['email'], $unverified_user_row['verification_code']);
+//                 $this->session->set_flashdata('flash_message', get_phrase('You have already registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+//                 return;
+//             }
+//         }
+//         $this->session->set_flashdata('error_message', get_phrase('this_email_id_has_been_taken'));
+//     }
+//     return;
+// }
 function get_sub_categories($category_id = 0)
 {
 //   if ($category_id > 0) {

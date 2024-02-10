@@ -5,8 +5,8 @@
                  <div class="card">
                      <div class="card-body">
                          <h5 class="card-title mb-4">Sign In</h5>
-                         <form>
-                             <p v-if="Object.keys(validationErrors).length != 0" class='text-center '><small class='text-danger'>Incorrect Email or Password</small></p>
+                         <form role="form" class="text-start">
+                             <!-- <p v-if="Object.keys(validationErrors).length != 0" class='text-center '><small class='text-danger'>Incorrect Email or Password</small></p> -->
                              <div class="mb-3">
                                  <label 
                                      htmlFor="email"
@@ -37,7 +37,7 @@
                              <div class="d-grid gap-2">
                                  <button 
                                      :disabled="isSubmitting"
-                                     @click="loginAction()"
+                                     @click="login()"
                                      type="button"
                                      class="btn btn-primary btn-block">Login</button>
                                  <p class="text-center">Don't have account? 
@@ -57,63 +57,42 @@
 
    
  export default {
-   name: 'LoginPage',
-   components: {
-    //  LayoutDiv,
-   },
-   data() {
-     return {
-         email:'',
-         password:'',
-         validationErrors:{},
-         isSubmitting:false,
-     };
-   },
-   created() {
-     if(localStorage.getItem('token') != "" && localStorage.getItem('token') != null){
-         this.$router.push('/user/dashboard')
-     }
-   },
-  methods: {
-    loginAction() {
-  this.isSubmitting = true;
+    data() {
+        return {
+            email: '',
+            password: '',
+            errorMsg: '',
+        };
+    },
+    methods: {
+        login() {
+            const loginData = {
+                email: this.email,
+                password: sha1(this.password),
+            };
 
-  // Validation côté client
-  if (!this.email || !this.password) {
-    this.validationErrors = { general: 'Email and password are required.' };
-    this.isSubmitting = false;
-    return;
-  }
-
-  let payload = {
-    email: this.email,
-    password: this.password,
-  };
-
-  axios.post('/api/validate_login/', payload)
-    .then(response => {
-      if (response.data && response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        this.$router.push('/user/dashboard');
-      } else {
-        this.validationErrors = { general: 'Incorrect Email or Password.' };
-        this.isSubmitting = false;
-      }
-    })
-    .catch(error => {
-        console.error('Axios Error:', error);
-
-        this.isSubmitting = false;
-
-        if (error.response && error.response.data && error.response.data.errors != undefined) {
-            this.validationErrors = error.response.data.errors;
-        } else if (error.response && error.response.data && error.response.data.error != undefined) {
-            this.validationErrors = { general: error.response.data.error };
-        } else {
-            this.validationErrors = { general: 'An error occurred during login.' };
-        }
-        });
-        }
-  },
+            axios.post('/api/validate_login_api', loginData)
+                .then(response => {
+                    if (response.data.status === 'success') {
+                        const userData = response.data.user_data;
+                        // Set user data in local storage or Vuex store
+                        localStorage.setItem('user_data', JSON.stringify(userData));
+                        
+                        // Redirect to the appropriate dashboard
+                        if (userData.role_id === 1) {
+                            this.$router.push('/admin/dashboard');
+                        } else if (userData.role_id === 2) {
+                            this.$router.push('/user/dashboard');
+                        }
+                    } else {
+                        this.errorMsg = response.data.message;
+                    }
+                })
+                .catch(error => {
+                    this.errorMsg = 'An unexpected error occurred.';
+                    console.error(error);
+                });
+        },
+    },
 };
 </script>

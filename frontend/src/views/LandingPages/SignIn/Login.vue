@@ -46,48 +46,41 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" v-on:submit.prevent>
-                  <MaterialInput
-                    v-model="data.email"
-                    id="email"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'Email', class: 'form-label' }"
-                    type="email"
-                  />
-                  <MaterialInput
-                    v-model="data.password"
-                    id="password"
-                    class="input-group-outline mb-3"
-                    :label="{ text: 'Password', class: 'form-label' }"
-                    type="password"
-                  />
-                  <MaterialSwitch
-                    class="d-flex align-items-center mb-3"
-                    id="rememberMe"
-                    labelClass="mb-0 ms-3"
-                    checked
-                    >Se souvenir de moi</MaterialSwitch
-                  >
-
-                  <div class="text-center">
-                    <MaterialButton
-                      class="my-4 mb-2"
-                      variant="gradient"
-                      color="success"
-                      fullWidth
-                      >Connecter</MaterialButton
-                    >
+                <form role="form" class="text-start" v-on:submit.prevent="login()">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="data.email" type="email" class="form-control" name="email" placeholder="Email *" required>
+                    </div>
                   </div>
-                  <p class="mt-4 text-sm text-center">
-                    Vous n'avez pas de compte?
-                    <RouterLink
-                        :to="{ name: 'signin-up' }"
-                        class="text-success text-gradient font-weight-bold"
-                      >
-                      S'inscrire
-                      </RouterLink>
-                  </p>
-                </form>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="data.password" type="password" class="form-control" name="password" placeholder="Mot de passe *" required>
+                    </div>
+                  </div>
+  <MaterialSwitch
+    class="d-flex align-items-center mb-3"
+    id="rememberMe"
+    labelClass="mb-0 ms-3"
+    checked
+  >Se souvenir de moi</MaterialSwitch>
+
+  <div class="text-center">
+    <MaterialButton
+      class="my-4 mb-2"
+      variant="gradient"
+      color="success"
+      fullWidth
+    >Connecter</MaterialButton>
+  </div>
+  <p class="mt-4 text-sm text-center">
+    Vous n'avez pas de compte?
+    <RouterLink
+      :to="{ name: 'signin-up' }"
+      class="text-success text-gradient font-weight-bold"
+    >S'inscrire</RouterLink>
+  </p>
+</form>
+
               </div>
             </div>
           </div>
@@ -165,48 +158,42 @@ import setMaterialInput from "@/assets/js/material-input";
 //   setMaterialInput();
 // });
 export default {
-  name: 'LoginPage',
-  components: {
-    // LayoutDiv,
-  },
-  data() {
-    return {
-        email:'',
-        password:'',
-        validationErrors:{},
-        isSubmitting:false,
-    };
-  },
-  created() {
-    if(localStorage.getItem('token') != "" && localStorage.getItem('token') != null){
-        this.$router.push('/dashboard')
-    }
-  },
-  methods: {
-     loginAction(){
-        this.isSubmitting = true
-        let payload = {
-            email: this.email,
-            password: this.password,
-        }
-        axios.post('/api/login', payload)
-          .then(response => {
-            localStorage.setItem('token', response.data.token)
-            this.$router.push('/dashboard')
-            return response
-          })
-          .catch(error => {
-            this.isSubmitting = false
-           if (error.response.data.errors != undefined) {
-                this.validationErrors = error.response.data.errors
-            }
-            if (error.response.data.error != undefined) {
-                this.validationErrors = error.response.data.error
-            }
-            return error
-          });
-     }
-  },
-};
+    data() {
+        return {
+            email: '',
+            password: '',
+            errorMsg: '',
+        };
+    },
+    methods: {
+        login() {
+            const loginData = {
+                email: this.email,
+                password: this.password,
+            };
 
+            axios.post('/api/validate_login_api', loginData)
+                .then(response => {
+                    if (response.data.status === 'success') {
+                        const userData = response.data.user_data;
+                        // Set user data in local storage or Vuex store
+                        localStorage.setItem('user_data', JSON.stringify(userData));
+                        
+                        // Redirect to the appropriate dashboard
+                        if (userData.role_id === 1) {
+                            this.$router.push('/admin/dashboard');
+                        } else if (userData.role_id === 2) {
+                            this.$router.push('/user/dashboard');
+                        }
+                    } else {
+                        this.errorMsg = response.data.message;
+                    }
+                })
+                .catch(error => {
+                    this.errorMsg = 'An unexpected error occurred.';
+                    console.error(error);
+                });
+        },
+    },
+};
 </script>

@@ -67,41 +67,51 @@ onMounted(() => {
               </div>
               <div class="card-body">
                 <form role="form" class="text-start" method="post" action="/api/register_post" @submit.prevent="register()">
-                  <MaterialInput
-                    v-model="email"
-                    id="email"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'Email', class: 'form-label' }"
-                    type="email"
-                  />
-                  <MaterialInput
-                    v-model="password"
-                    id="password"
-                    class="input-group-outline mb-3"
-                    :label="{ text: 'Password', class: 'form-label' }"
-                    type="password"
-                  />
-                  <MaterialInput
-                    v-model="name"
-                    id="name"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'Nom', class: 'form-label' }"
-                    type="text"
-                  />
-                  <MaterialInput
-                    v-model="address"
-                    id="address"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'Address*', class: 'form-label' }"
-                    type="text"
-                  />
-                  <MaterialInput
-                    v-model="phone"
-                    id="phone"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'Telephone', class: 'form-label' }"
-                    type="text"
-                  />
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="email" type="email" class="form-control" name="email" placeholder="Email *" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="password" type="password" class="form-control" name="password" placeholder="Mot de passe *" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="name" type="text" class="form-control" name="name" placeholder="Nom *" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="lastname" type="text" class="form-control" name="lastname" placeholder="Nom *" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="address" type="text" class="form-control" name="address" placeholder="Adresse *" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input v-model="phone" type="number" class="form-control" name="phone" placeholder="Phone *" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input v-model="siret" type="text" class="form-control" name="siret" placeholder="SIRET" required>
+                  </div>
+                  <div class="form-group">
+                    <input v-model="nomdesociete" type="text" class="form-control" name="nomdesociete" placeholder="Company Name" required>
+                  </div>
+                  <div class="form-group">
+                    <input v-model="adresse" type="text" class="form-control" name="adresse" placeholder="Company Address" required>
+                  </div>
+                  <div class="form-group">
+                    <input v-model="codepostal" type="text" class="form-control" name="codepostal" placeholder="Postal Code" required>
+                  </div>
+                  <div class="form-group">
+                    <input v-model="secteur" type="text" class="form-control" name="secteur" placeholder="Business Sector" required>
+                  </div>
                   <Alert v-if="msg" :msg="msg" :classAlert="classAlert"></Alert>
                   <div class="text-center">
                     <MaterialButton
@@ -186,45 +196,61 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      selectedCivilite: 'Mm',
       email: '',
       password: '',
       name: '',
-      address: '',
+      lastname: '',
+      adresse: '',
       phone: '',
-      msg: null,
-      classAlert: null,
+      siret: '',
+      nomdesociete: '',
+      adresse: '',
+      codepostal: '',
+      secteur: '',
+      acceptTerms: false,
     };
   },
   methods: {
     register() {
+      console.log('User Data:', this.email, this.password, this.name, this.lastname, this.adresse, this.phone);
+      console.log('User Company Data:', this.siret, this.nomdesociete, this.adresse, this.codepostal, this.secteur);
       // Prepare data for API request
-      const userData = {
-        email: this.email,
-        password: this.password,
-        name: this.name,
-        address: this.address,
-        phone: this.phone,
-        // Add other data as needed
-      };
+      const userData = new URLSearchParams();
+      userData.append('email', this.email);
+      userData.append('password', this.password);
+      userData.append('name', this.name);
+      userData.append('lastname', this.lastname);
+      userData.append('selected_civilite', this.selectedCivilite);
+      userData.append('adresse', this.adresse);
+      userData.append('phone', this.phone);
+      userData.append('siret', this.siret);
+      userData.append('nomdesociete', this.nomdesociete);
+      userData.append('codepostal', this.codepostal);
+      userData.append('secteur', this.secteur);
 
       // Make API request
-      axios.post('/api/register_post', userData)
-  .then(response => {
-    // Handle successful response
-    this.msg = 'User registered successfully';
-    this.classAlert = 'success';
-  })
-  .catch(error => {
-    // Handle error response
-    if (error.response.status === 400) {
-      this.msg = 'Please fill in all the fields';
-    } else if (error.response.status === 500) {
-      this.msg = 'Internal Server Error. Please try again later.';
-    } else {
-      this.msg = 'An unexpected error occurred.';
-    }
-    this.classAlert = 'error';
-  });
+      axios.post('/api/register_post', userData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+        .then(response => {
+          // Handle successful response
+          this.msg = 'User registered successfully';
+          this.classAlert = 'success';
+        })
+        .catch(error => {
+          // Handle error response
+          if (error.response.status === 400) {
+            this.msg = 'Please fill in all the fieldsd';
+          } else if (error.response.status === 500) {
+            this.msg = 'Internal Server Error. Please try again later.';
+          } else {
+            this.msg = 'An unexpected error occurred.';
+          }
+          this.classAlert = 'error';
+        });
 
     },
   },
