@@ -67,6 +67,19 @@ class Api extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($datas));
   }
+  public function get_categories_parent()
+  {
+    //$CI	=&	get_instance();
+    //$CI->load->database();
+	$this->db->where('parent', 0);
+    $result = $this->db->get('category');
+
+    $datas = $result->result_array();
+
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($datas));
+  }
   public function get_all_users($user_id = 0) {
     if ($user_id > 0) {
         $this->db->where('id', $user_id);
@@ -139,7 +152,8 @@ public function validate_login_api() {
     } else {
         $response = array(
             'status' => 'error',
-            'message' => 'Invalid credentials',
+            'message' => 'Invalid credentials P',
+            'credentials' => $credential
         );
         $this->response($response, REST_Controller::HTTP_UNAUTHORIZED);
     }

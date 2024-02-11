@@ -5,7 +5,7 @@
                  <div class="card">
                      <div class="card-body">
                          <h5 class="card-title mb-4">Sign In</h5>
-                         <form role="form" class="text-start">
+                         <form role="form" class="text-start" @submit.prevent="login()">
                              <!-- <p v-if="Object.keys(validationErrors).length != 0" class='text-center '><small class='text-danger'>Incorrect Email or Password</small></p> -->
                              <div class="mb-3">
                                  <label 
@@ -35,10 +35,17 @@
                                  />
                              </div>
                              <div class="d-grid gap-2">
+                                <!-- <MaterialButton
+                      class="my-4 mb-2"
+                      variant="gradient"
+                      type="submit"
+                      color="success"
+                      fullWidth
+                      >S'inscrire</MaterialButton
+                    > -->
                                  <button 
-                                     :disabled="isSubmitting"
-                                     @click="login()"
-                                     type="button"
+                         
+                                     type="submit"
                                      class="btn btn-primary btn-block">Login</button>
                                  <p class="text-center">Don't have account? 
                                      <router-link to="/register">Register here </router-link>
@@ -55,7 +62,6 @@
  <script>
  import axios from 'axios';
 
-   
  export default {
     data() {
         return {
@@ -66,11 +72,10 @@
     },
     methods: {
         login() {
-            const loginData = {
-                email: this.email,
-                password: sha1(this.password),
-            };
-
+            const loginData = new URLSearchParams();
+                loginData.append('email', this.email);
+                loginData.append('password', this.password);
+            console.log('User Data:', this.email, this.password);
             axios.post('/api/validate_login_api', loginData)
                 .then(response => {
                     if (response.data.status === 'success') {

@@ -54,6 +54,7 @@ $route['404_override'] = 'home/page_missing';
 $route['translate_uri_dashes'] = FALSE;
 $route['api/(:any)'] = 'api/$1';
 $route['api/get_categories/(:any)'] = 'api/get_categories/$1';
+$route['api/get_categories_parent/(:any)'] = 'api/get_categories_parent/$1';
 $route['api/filter_listings'] = 'api/filter_listings';
 $route['api/filter_listings/(:any)'] = 'api/filter_listings/$1';
 $route['api/get_listing_id'] = 'api/get_listing_id';
