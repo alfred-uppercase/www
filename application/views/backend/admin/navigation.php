@@ -24,7 +24,7 @@
     <div style=""></div>
     <ul id="main-menu" class="">
         <div style="text-align: -webkit-center;" id="branding_element">
-            <img src="<?php echo base_url('assets/global/light_logo.png'); ?>"  style="max-height:30px;"/>
+            <img src="<?php echo base_url('assets/global/logo.png'); ?>"  style="max-height:30px;"/>
         </div>
         <br>
         <!-- Home -->
@@ -292,6 +292,34 @@
                 <li class="<?php if ($page_name == 'user_add') echo 'active'; ?> ">
                     <a href="<?php echo site_url('admin/user_form/add'); ?>">
                         <span><i class="entypo-dot"></i> <?php echo get_phrase('add_new_user'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- Company -->
+        <li class="<?php if ($page_name == 'company') echo 'opened active has-sub'; ?>">
+            <a href="#">
+            <i class="fa fa-building"></i>
+                <span><?php echo get_phrase('company'); ?></span>
+            </a>
+            <ul>
+                <li class="<?php if ($page_name == 'company') echo 'active'; ?> ">
+                    <a href="<?php echo site_url('admin/company'); ?>">
+                        <span><i class="entypo-dot"></i> <?php echo get_phrase('company_list'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- Company -->
+        <li class="<?php if ($page_name == 'newsletter') echo 'opened active has-sub'; ?>">
+            <a href="#">
+            <i class="fa fa-newspaper"></i>
+                <span><?php echo get_phrase('newsletter'); ?></span>
+            </a>
+            <ul>
+                <li class="<?php if ($page_name == 'newsletter') echo 'active'; ?> ">
+                    <a href="<?php echo site_url('admin/newsletter'); ?>">
+                        <span><i class="entypo-dot"></i> <?php echo get_phrase('newsletter_list'); ?></span>
                     </a>
                 </li>
             </ul>

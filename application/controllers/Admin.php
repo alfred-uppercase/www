@@ -266,6 +266,57 @@ class Admin extends CI_Controller {
 		$this->load->view('backend/index', $page_data);
 
 	}
+	public function company() {
+		if ($this->session->userdata('admin_login') != true) {
+			redirect(site_url('login'), 'refresh');
+		}
+
+		$page_data['page_name'] = 'company';
+		$page_data['page_title'] = get_phrase('company');
+		$page_data['users'] = $this->user_model->get_users_name();
+		$page_data['company'] = $this->user_model->get_company();
+		$this->load->view('backend/index', $page_data);
+
+	}
+	public function newsletter($param1 = "", $param2 = "") {
+		if ($this->session->userdata('admin_login') != true) {
+			redirect(site_url('login'), 'refresh');
+		}
+		if ($param1 == 'add') {
+			$this->newsletter_model->addSubscriber();
+			$this->session->set_flashdata('flash_message', get_phrase('subscribers_has_been_add'));
+			redirect(site_url('admin/newsletter'), 'refresh');
+		}
+		elseif ($param1 == 'edit') {
+			$this->newsletter_model->updateSubscriber($param2);
+			$this->session->set_flashdata('flash_message', get_phrase('subscribers_has_been_updated'));
+			redirect(site_url('admin/newsletter'), 'refresh');
+		}elseif ($param1 == 'delete') {
+			$this->newsletter_model->deleteSubscriber($param2);
+			$this->session->set_flashdata('flash_message', get_phrase('subscribers_has_been_deleted'));
+			redirect(site_url('admin/newsletter'), 'refresh');
+		}
+		$page_data['page_name'] = 'newsletter';
+		$page_data['page_title'] = get_phrase('newsletter');
+		$page_data['subscribers'] = $this->user_model->get_all_subscribers();
+		$this->load->view('backend/index', $page_data);
+
+	}
+
+	public function ns_params($param1 = "", $param2 = "") {
+		if ($this->session->userdata('admin_login') != true) {
+			redirect(site_url('login'), 'refresh');
+		}
+		if ($param1 == 'add') {
+			$page_data['page_name']  = 'newsletter_add';
+			$page_data['page_title'] = get_phrase('add_new_subscribers');
+		}elseif ($param1 == 'edit') {
+			$page_data['page_name']  = 'newsletter_edit';
+			$page_data['page_title'] = get_phrase('update_subscribers');
+			$page_data['ns_id'] = $param2;
+		}
+		$this->load->view('backend/index.php', $page_data);
+	}
 
 	function claimed_listings($param1 = '', $param2 = '', $param3 = ''){
 		if ($this->session->userdata('admin_login') != true) {

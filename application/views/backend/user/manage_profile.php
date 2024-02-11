@@ -174,3 +174,106 @@
 		</div>
 	</div><!-- end col-->
 </div>
+<?php if($company_info){ ?>
+	<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-primary" data-collapsed="0">
+			<div class="panel-heading">
+				<div class="panel-title">
+					Edit Company
+				</div>
+			</div>
+			<div class="panel-body">
+                <form action="<?php echo site_url('user/manage_profile/modifie_entreprise/'.$user_info['id']); ?>" method="post" enctype="multipart/form-data" role="form" class="form-horizontal form-groups-bordered">
+                	<div class="form-group">
+                		<label for="nomdesociete" class="col-sm-3 control-label">Nom de la société</label>
+                		<div class="col-sm-7">
+                			<input type="text" value="<?php echo $company_info['nomdesociete'];?>" name="nomdesociete" class="form-control" id="nomdesociete" placeholder="Nom de société" required>
+                		</div>
+                	</div>
+
+                    <div class="form-group">
+                		<label for="siret" class="col-sm-3 control-label">Siret</label>
+                		<div class="col-sm-7">
+                			<input type="text" value="<?php echo $company_info['siret'];?>" name="siret" class="form-control" id="siret" placeholder="Siret" required>
+                		</div>
+                	</div>
+
+                    <div class="form-group">
+                		<label for="adresse" class="col-sm-3 control-label">Adresse</label>
+                		<div class="col-sm-7">
+                			<input type="text" value="<?php echo $company_info['adresse'];?>" name="adresse" class="form-control" id="adresse" placeholder="Adresse">
+                		</div>
+                	</div>
+                    <div class="form-group">
+                		<label for="codepostal" class="col-sm-3 control-label">Code postale</label>
+                		<div class="col-sm-7">
+                			<input type="text" value="<?php echo $company_info['codepostal'];?>" name="codepostal" class="form-control" id="codepostal" placeholder="Code Postal">
+                		</div>
+                	</div>
+					<div class="form-group">
+                		<label for="secteur" class="col-sm-3 control-label">Secteur</label>
+                		<div class="col-sm-7">
+                			<input type="text" value="<?php echo $company_info['secteur'];?>" name="secteur" class="form-control" id="secteur" placeholder="Secteur">
+                		</div>
+                	</div>
+					<div class="form-group">
+                        <label class="col-sm-3 control-label">Company Image</label>
+
+                        <div class="col-sm-7">
+
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;" data-trigger="fileinput">
+                              <img src="<?php echo $this->user_model->get_company_thumbnail($this->session->userdata('user_id')); ?>" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px"></div>
+                            <div>
+                              <span class="btn btn-white btn-file">
+                                <span class="fileinput-new"><?php echo get_phrase('select_image'); ?></span>
+                                <span class="fileinput-exists"><?php echo get_phrase('change'); ?></span>
+                                <input type="file" name="company_image" accept="image/*">
+                              </span>
+                              <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput"><?php echo get_phrase('remove'); ?></a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Photo de couverture<span class="text-muted"> (600 x 200)</span></label>
+
+                        <div class="col-sm-7">
+
+                          <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;" data-trigger="fileinput">
+                                <?php
+                                    if(file_exists('uploads/company_background/'.$this->session->userdata('user_id').'.jpg')):
+                                        $bg_img = base_url('uploads/company_background/'.$this->session->userdata('user_id').'.jpg');
+                                    else:
+                                        $bg_img = base_url('uploads/company_background/thumb.jpg');
+                                    endif;
+                                ?>
+                              <img src="<?php echo $bg_img; ?>" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px"></div>
+                            <div>
+                              <span class="btn btn-white btn-file">
+                                <span class="fileinput-new"><?php echo get_phrase('select_image'); ?></span>
+                                <span class="fileinput-exists"><?php echo get_phrase('change'); ?></span>
+                                <input type="file" name="company_background" accept="image/*">
+                              </span>
+                              <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput"><?php echo get_phrase('remove'); ?></a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                	<div class="col-sm-offset-3 col-sm-5" style="padding-top: 10px;">
+                		<button type="submit" class="btn btn-info">Enregistrer</button>
+                	</div>
+                </form>
+			</div>
+		</div>
+	</div><!-- end col-->
+</div>
+	
+<?php } ?>

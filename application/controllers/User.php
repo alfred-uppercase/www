@@ -340,9 +340,14 @@ class User extends CI_Controller {
             $this->user_model->change_password($param2);
             redirect(site_url('user/manage_profile'), 'refresh');
         }
+		if ($param1 == 'modifie_entreprise') {
+            $this->user_model->edit_company($param2);
+            redirect(site_url('user/manage_profile'), 'refresh');
+        }
         $page_data['page_name']  = 'manage_profile';
         $page_data['page_title'] = get_phrase('manage_profile');
         $page_data['user_info']  = $this->user_model->get_all_users($this->session->userdata('user_id'))->row_array();
+        $page_data['company_info']  = $this->user_model->get_all_company($this->session->userdata('user_id'))->row_array();
         $this->load->view('backend/index', $page_data);
     }
 

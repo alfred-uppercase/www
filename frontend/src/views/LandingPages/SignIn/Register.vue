@@ -223,6 +223,7 @@ export default {
       userData.append('lastname', this.lastname);
       userData.append('selected_civilite', this.selectedCivilite);
       userData.append('adresse', this.adresse);
+      userData.append('address', this.address);
       userData.append('phone', this.phone);
       userData.append('siret', this.siret);
       userData.append('nomdesociete', this.nomdesociete);

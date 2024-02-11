@@ -17,10 +17,31 @@ class User_model extends CI_Model {
         }
         return $this->db->get('user');
     }
+    public function get_all_company($user_id = 0) {
+        if ($user_id > 0) {
+            $this->db->where('user_id', $user_id);
+        }
+        return $this->db->get('company');
+    }
+    public function get_all_subscribers($user_id = 0) {
+        if ($user_id > 0) {
+            $this->db->where('id', $user_id);
+        }
+        return $this->db->get('newsletter');
+    }
     
     public function get_users() {
         $this->db->where('role_id', 2);
         return $this->db->get('user');
+    }
+    public function get_users_name($user_id = 0) {
+        if ($user_id > 0) {
+            $this->db->where('id', $user_id);
+        }
+        return $this->db->get('user');
+    }
+    public function get_company() {
+        return $this->db->get('company');
     }
     public function GetName($user_id)
 
@@ -155,6 +176,21 @@ class User_model extends CI_Model {
         }
         return;
     }
+    function edit_company($user_id) {
+        $datas['siret'] = sanitizer($this->input->post('siret'));
+        $datas['nomdesociete'] = sanitizer($this->input->post('nomdesociete'));
+        $datas['adresse'] = sanitizer($this->input->post('adresse'));
+        $datas['codepostal'] = sanitizer($this->input->post('codepostal'));
+        $datas['secteur'] = sanitizer($this->input->post('secteur'));
+
+            $this->db->where('user_id', $user_id);
+            $this->db->update('company', $datas);
+            $this->upload_company_image($user_id);
+            $this->upload_company_background_image($user_id);
+            $this->session->set_flashdata('flash_message', get_phrase('company_updated_successfully'));
+
+        return;
+    }
     function update_package($id, $user_id, $active_package)
     {
         // Met tous les enregistrements à 0 d'abord
@@ -174,6 +210,11 @@ class User_model extends CI_Model {
     public function upload_user_image($user_id) {
         if (isset($_FILES['user_image']) && $_FILES['user_image']['name'] != "") {
             move_uploaded_file($_FILES['user_image']['tmp_name'], 'uploads/user_image/'.$user_id.'.jpg');
+        }
+    }
+    public function upload_company_image($user_id) {
+        if (isset($_FILES['company_image']) && $_FILES['company_image']['name'] != "") {
+            move_uploaded_file($_FILES['company_image']['tmp_name'], 'uploads/company_image/'.$user_id.'.jpg');
         }
     }
     public function PictureUrl()
@@ -234,12 +275,24 @@ class User_model extends CI_Model {
             move_uploaded_file($_FILES['user_background']['tmp_name'], 'uploads/user_background/'.$user_id.'.jpg');
         }
     }
+    public function upload_company_background_image($user_id) {
+        if (isset($_FILES['company_background']) && $_FILES['company_background']['name'] != "") {
+            move_uploaded_file($_FILES['company_background']['tmp_name'], 'uploads/company_background/'.$user_id.'.jpg');
+        }
+    }
 
     function get_user_thumbnail($user_id = "") {
         if (file_exists('uploads/user_image/'.$user_id.'.jpg')) {
             return base_url('uploads/user_image/'.$user_id.'.jpg');
         }else {
             return base_url('uploads/user_image/user.png');
+        }
+    }
+    function get_company_thumbnail($user_id = "") {
+        if (file_exists('uploads/company_image/'.$user_id.'.jpg')) {
+            return base_url('uploads/company_image/'.$user_id.'.jpg');
+        }else {
+            return base_url('uploads/company_image/thumb.png');
         }
     }
 
