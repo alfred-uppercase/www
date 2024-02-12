@@ -96,6 +96,7 @@ class User_model extends CI_Model {
         $datas['adresse'] = sanitizer($this->input->post('adresse'));
         $datas['codepostal'] = sanitizer($this->input->post('codepostal'));
         $datas['secteur'] = sanitizer($this->input->post('secteur'));
+        $datas['ville'] = sanitizer($this->input->post('ville'));
         $social_links = array(
             'facebook' => sanitizer($this->input->post('facebook')),
             'twitter' => sanitizer($this->input->post('twitter')),

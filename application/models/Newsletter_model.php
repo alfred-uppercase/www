@@ -2,7 +2,11 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Newsletter_model extends CI_Model {
-    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database(); // Make sure to load the database library
+    }
     public function subscriber_exists()
     {
         $query = $this->db->get_where('newsletter', array('email' => $this->input->post('email')

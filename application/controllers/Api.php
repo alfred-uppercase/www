@@ -67,6 +67,31 @@ class Api extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($datas));
   }
+  public function subscribe()
+  {
+      // $data['is_new_subscriber'] = true;
+      // if (!$this->newsletter_model->subscriber_exists()) {
+      //     $this->newsletter_model->addSubscriber();
+      // } else {
+      //     $data['is_new_subscriber'] = false;
+      // }
+      // echo json_encode($data);
+      $response = array();
+
+      if (!$this->newsletter_model->subscriber_exists()) {
+          if ($this->newsletter_model->addSubscriber()) {
+              $response['status'] = 'success';
+              $response['message'] = 'Subscriber added successfully.';
+          } else {
+              $response['status'] = 'error';
+              $response['message'] = 'Failed to add subscriber.';
+          }
+      } else {
+          $response['status'] = 'duplicate';
+          $response['message'] = 'Subscriber already exists.';
+      }
+      echo json_encode($response);
+  }
   public function get_categories_parent()
   {
     //$CI	=&	get_instance();

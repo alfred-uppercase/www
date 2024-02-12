@@ -90,6 +90,7 @@ $hero_settings = json_decode(get_frontend_settings('hero_settings'), true);
 			<p><?php echo get_phrase('the_featured_listings_are_progressively_below'); ?>.</p>
 			<a href="<?php echo site_url('home/listings'); ?>"><?php echo get_phrase('see_all'); ?></a>
 		</div>
+		<h2>TESTE</h2>
 		<div class="row add_bottom_30">
 			<?php
 			$this->db->order_by('name', 'asc');
@@ -141,7 +142,7 @@ $hero_settings = json_decode(get_frontend_settings('hero_settings'), true);
 	<!-- /row -->
 </div>
 <!-- /bg_color_1 -->
-
+sdeshqdchsruefd
 <div class="call_section">
 	<div class="wrapper">
 		<div class="container margin_80_55">

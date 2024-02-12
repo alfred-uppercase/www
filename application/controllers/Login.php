@@ -76,6 +76,7 @@ class Login extends CI_Controller {
         $siret = sanitizer($this->input->post('siret'));
         $nomdesociete = sanitizer($this->input->post('nomdesociete'));
         $adresse = sanitizer($this->input->post('adresse'));
+        $ville = sanitizer($this->input->post('ville'));
         $codepostal = sanitizer($this->input->post('codepostal'));
         $secteur = sanitizer($this->input->post('secteur'));
 
@@ -85,7 +86,7 @@ class Login extends CI_Controller {
         }
 
 		$this->user_model->add_user('sign_up');
-        $this->user_model->add_user($siret, $nomdesociete, $adresse, $codepostal, $secteur);
+        $this->user_model->add_user($siret, $nomdesociete, $adresse, $codepostal, $secteur, $ville);
 		redirect(site_url('home/login'), 'refresh');
 	}
 

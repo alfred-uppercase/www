@@ -331,7 +331,15 @@
 	<!--/footer-->
 	</div>
 	<!-- page -->
-	
+	<h5>Sign Up for Newsletter</h5>
+<p>Signup to get updates on articles, interviews and events.</p>
+<div id="newsletter-form">
+        <h3>Subscribe to Our Newsletter</h3>
+        <form action="<?= base_url('newsletter/subscribe'); ?>" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
 	<!-- Sign In Popup -->
 	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 		<div class="small-dialog-header">
