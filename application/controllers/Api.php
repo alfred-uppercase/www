@@ -619,5 +619,174 @@ function now_open($listing_id = '') {
             ->set_output(json_encode($datas));
     }
     
-  
+    function add_listing()
+  {
+    $photo_gallery  = array();
+    $listing_owner = $this->input->post('user_id');
+    if (isset($listing_owner) && !empty($listing_owner)) {
+      $data['user_id'] = $listing_owner;
+    } else {
+      $data['user_id'] = $this->session->userdata('user_id');
+    }
+    $data['name'] = sanitizer($this->input->post('title'));
+    $data['description'] = sanitizer($this->input->post('description'));
+
+
+    if ($this->session->userdata('user_login') == '1' || $this->session->userdata('user_id') != $data['user_id']) {
+      // $package_id = has_package($this->session->userdata('user_id'), 'package_id');
+      // $featured_status = $this->db->get_where('package', array('id' => $package_id))->row('featured');
+      // // $featured_status = $this->db->get_where('package')->row('featured');
+      // if ($featured_status == 0) {
+      //   $data['is_featured'] = 0;
+      // } else {
+      //   $data['is_featured'] = $this->input->post('is_featured');
+      // }
+      $package_id = has_package($this->session->userdata('user_id'), 'package_id');
+      if (is_array($package_id)) {
+          // Si $package_id est un tableau, choisissez l'élément approprié
+          $package_id = isset($package_id['package_id']) ? $package_id['package_id'] : null;
+      }
+      
+      // Vérifiez si $package_id est défini avant d'utiliser dans la requête
+      if ($package_id !== null) {
+          $featured_stat = $this->db->get_where('package', array('id' => $package_id))->row_array();
+      
+          if (!empty($featured_stat)) {
+              $featured_status = $featured_stat['featured'];
+      
+              if ($featured_status == 0) {
+                  $data['is_featured'] = 0;
+              } else {
+                  $data['is_featured'] = $this->input->post('is_featured');
+              }
+          } else {
+              // Gérez le cas où $featured_stat est vide
+              $data['is_featured'] = 0; // ou toute autre valeur par défaut
+          }
+      } else {
+          // Gérez le cas où $package_id n'est pas défini correctement
+          $data['is_featured'] = 0; // ou toute autre valeur par défaut
+      }
+      // $this->db->select_max('id');
+      // $this->db->select('expired_date');
+      // $this->db->where('user_id', $data['user_id']);
+      // $package_purchased_history = $this->db->get('package_purchased_history');
+      // if ($package_purchased_history->num_rows() > 0) {
+      //   $data['package_expiry_date'] = $package_purchased_history->row('expired_date');
+      // } else {
+      //   $data['package_expiry_date'] = '';
+      // }
+      $this->db->select('expired_date, package_id');
+      $this->db->where('user_id', $data['user_id']);
+      $this->db->where('active', 1); // Ajoutez cette condition pour sélectionner le package actif
+      $this->db->order_by('id', 'desc'); // Assurez-vous de trier par ordre décroissant pour obtenir le plus récent
+      $this->db->limit(1); // Limitez aux résultats à 1 (le plus récent)
+      $package_purchased_history = $this->db->get('package_purchased_history');
+      
+      if ($package_purchased_history->num_rows() > 0) {
+          $data['package_expiry_date'] = $package_purchased_history->row('expired_date');
+      } else {
+          $data['package_expiry_date'] = '';
+      }
+
+    } else {
+      $data['package_expiry_date'] = 'admin';
+      $data['is_featured'] = $this->input->post('is_featured');
+    }
+
+    $data['country_id'] = sanitizer($this->input->post('country_id'));
+    $data['city_id'] = sanitizer($this->input->post('city_id'));
+    $data['state_id'] = sanitizer($this->input->post('state_id'));
+    $data['address'] = sanitizer($this->input->post('address'));
+    $data['latitude'] = sanitizer($this->input->post('latitude'));
+    $data['longitude'] = sanitizer($this->input->post('longitude'));
+    $data['google_analytics_id'] = sanitizer($this->input->post('google_analytics_id'));
+
+
+    if (!empty($this->input->post('amenities'))) {
+      $data['amenities'] = $this->make_json(sanitizer($this->input->post('amenities')));
+    } else {
+      $data['amenities'] = json_encode(array());
+    }
+
+    if (!empty($this->input->post('categories'))) {
+      $data['categories'] = $this->make_json(sanitizer($this->input->post('categories')));
+    } else {
+      $data['categories'] = json_encode(array());
+    }
+
+
+    $data['video_provider'] = sanitizer($this->input->post('video_provider'));
+    $data['video_url'] = sanitizer($this->input->post('video_url'));
+    $data['tags'] = sanitizer($this->input->post('tags'));
+    $data['seo_meta_tags'] = sanitizer($this->input->post('seo_meta_tags'));
+    $data['meta_description'] = sanitizer($this->input->post('meta_description'));
+
+    $data['website'] = sanitizer($this->input->post('website'));
+    $data['email'] = sanitizer($this->input->post('email'));
+    $data['phone'] = sanitizer($this->input->post('phone'));
+    $data['listing_type'] = sanitizer($this->input->post('listing_type'));
+
+    $social_links = array(
+      'facebook' => sanitizer($this->input->post('facebook')),
+      'twitter' => sanitizer($this->input->post('twitter')),
+      'linkedin' => sanitizer($this->input->post('linkedin')),
+    );
+    $data['social'] = json_encode($social_links);
+    $data['date_added'] = strtotime(date('D, d-M-Y'));
+    $time_config = array();
+    $days = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday');
+    foreach ($days as $day) {
+      $time_config[$day] = sanitizer($this->input->post($day . '_opening')) . '-' . sanitizer($this->input->post($day . '_closing'));
+    }
+
+    if ($_FILES['listing_thumbnail']['name'] == "") {
+      $data['listing_thumbnail'] = 'thumbnail.png';
+    } else {
+      $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
+      move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+    }
+
+    if ($_FILES['listing_cover']['name'] == "") {
+      $data['listing_cover'] = 'thumbnail.png';
+    } else {
+      $data['listing_cover'] = md5(rand(10000000, 20000000)) . '.jpg';
+      move_uploaded_file($_FILES['listing_cover']['tmp_name'], 'uploads/listing_cover_photo/' . $data['listing_cover']);
+    }
+
+    foreach ($_FILES['listing_images']['tmp_name'] as $listing_image) {
+      if ($listing_image != "") {
+        $random_identifier = md5(rand(10000000, 20000000)) . '.jpg';
+        move_uploaded_file($listing_image, 'uploads/listing_images/' . $random_identifier);
+        array_push($photo_gallery, $random_identifier);
+      }
+    }
+    $data['photos'] = json_encode($photo_gallery);
+    $data['code'] = md5(rand(10000000, 20000000));
+
+    if (strtolower($this->session->userdata('role')) == 'admin') {
+      $data['status'] = 'active';
+    } else {
+      $data['status'] = 'pending';
+    }
+
+    $total_listing = $this->input->post('total_listing');
+    $submited_listing = $this->input->post('submited_listing');
+
+    $user_type = $this->db->get_where('user', array('id' => $this->session->userdata('user_id')))->row('role_id');
+
+    if ($total_listing > $submited_listing || $user_type == '1') {
+      $this->db->insert('listing', $data);
+      $listing_id = $this->db->insert_id();
+      $time_config['listing_id'] = $listing_id;
+      $this->db->insert('time_configuration', $time_config);
+
+      // Add listing inner details data
+      $this->add_listing_type_wise_details(sanitizer($this->input->post('listing_type')), $listing_id);
+      $this->session->set_flashdata('flash_message', get_phrase('listing_added_successfully'));
+    } else {
+      $this->session->set_flashdata('error_message', get_phrase('there_is_no_free_space_to_add_to_the_listing'));
+    }
+  }
+
 }

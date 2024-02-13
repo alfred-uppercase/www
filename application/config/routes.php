@@ -103,6 +103,7 @@ $route['message/chat-attachment/upload'] = 's/chat/send_text_message';
 $route['message/get-chat-history-vendor'] = 's/chat/get_chat_history_by_vendor';
 $route['message/chat-clear'] = 's/chat/chat_clear_client_cs';
 $route['api/subscribes'] = 'newsletter/subscribe';
+$route['api/add_listing'] = 'newsletter/subscribe';
 
 
 //custom URL
