@@ -120,7 +120,7 @@ class User_model extends CI_Model {
                 $this->upload_user_image($user_id);
                 $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
             }else {
-                $data['is_verified'] = 0;
+                $data['is_verified'] = 1;
                 $this->db->insert('user', $data);
                 $user_id = $this->db->insert_id();
                 $datas['user_id'] = $user_id;
