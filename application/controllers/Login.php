@@ -60,7 +60,37 @@ class Login extends CI_Controller {
         }
 
     }
+    public function pending_email() {
 
+        $email = sanitizer($this->input->post('email'));
+        $verification_code = sanitizer($this->input->post('verification_code'));
+
+        if(empty($email)){
+            $this->session->set_flashdata('error_message', get_phrase('fill_in_the_mail'));
+            redirect(site_url('home/login'), 'refresh');    
+        }
+
+		$this->user_model->check_mail($email, $verification_code);
+		redirect(site_url('home'), 'refresh');
+	}
+    public function verify_email() {
+        $email = sanitizer($this->input->post('email'));
+        $verification_code = sanitizer($this->input->post('verification_code'));
+    
+        $query = $this->db->get_where('pending_email', array('email' => $email, 'verification_code' => $verification_code, 'is_verified' => 0));
+    
+        if ($query->num_rows() > 0) {
+            $data = array('is_verified' => 1);
+            $this->db->where('email', $email);
+            $this->db->update('pending_email', $data);
+    
+            redirect('home/ok');
+    
+        } else {
+            $this->session->set_flashdata('error_message', get_phrase('invalid_verification_code'));
+            redirect('home'); 
+        }
+    }
     public function register_user() {
         if(!$this->crud_model->check_rechaptcha() && get_settings('recaptcha_status') == 1){
             $this->session->set_flashdata('error_message', get_phrase('recaptcha_validation_failed'));

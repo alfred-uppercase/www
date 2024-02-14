@@ -81,6 +81,42 @@ class User_model extends CI_Model {
 			return false;
 
  	}
+     function check_mail($param1 = "") {
+        $data['email'] = sanitizer($this->input->post('email'));
+        $verification_code =  rand(100000, 999999);
+        $data['verification_code'] = $verification_code;
+        $validity = $this->check_duplication('on_create', $data['email']);
+        if($validity){
+            if (strtolower($this->session->userdata('role')) == 'admin') {
+                $data['is_verified'] = 0;
+                $this->db->insert('pending_email', $data);
+                $this->email_model->send_email_verification_mail($data['email'], $verification_code);
+                $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
+            }else {
+                $data['is_verified'] = 0;
+                $this->db->insert('pending_email', $data);
+                $this->email_model->send_email_verification_mail($data['email'], $verification_code);
+                $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+            }
+            
+        }else {
+            if($param1 == 'sign_up'){
+                $this->db->where('email', $data['email']);
+                $this->db->where('is_verified', 0);
+                $unverified_user = $this->db->get('user');
+                if($unverified_user->num_rows() > 0){
+                    $unverified_user_row = $unverified_user->row_array();
+                    $this->email_model->send_email_verification_mail($unverified_user_row['email'], $unverified_user_row['verification_code']);
+                    $this->session->set_flashdata('flash_message', get_phrase('you_have_already_registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+                    return;
+                }
+            }
+            $this->session->set_flashdata('error_message', get_phrase('this_email_id_has_been_taken'));
+        }
+        return;
+    }
+
+    
     function add_user($param1 = "") {
         $data['email'] = sanitizer($this->input->post('email'));
         $data['name'] = sanitizer($this->input->post('name'));

@@ -335,11 +335,24 @@
 <p>Signup to get updates on articles, interviews and events.</p>
 <div id="newsletter-form">
         <h3>Subscribe to Our Newsletter</h3>
-        <form action="<?= base_url('newsletter/subscribe'); ?>" method="post">
+        <form action="<?= base_url('login/pending_email'); ?>" method="post">
             <input type="email" name="email" placeholder="Enter your email" required>
             <button type="submit">Subscribe</button>
         </form>
     </div>
+	<!-- Your verification form -->
+<form method="post" action="<?php echo base_url('login/verify_email'); ?>">
+    <!-- Email input -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <!-- Verification code input -->
+    <label for="verification_code">Verification Code:</label>
+    <input type="text" id="verification_code" name="verification_code" required>
+
+    <!-- Submit button -->
+    <button type="submit">Verify Email</button>
+</form>
 	<!-- Sign In Popup -->
 	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 		<div class="small-dialog-header">

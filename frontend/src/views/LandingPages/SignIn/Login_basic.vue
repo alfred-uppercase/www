@@ -62,42 +62,93 @@
  <script>
  import axios from 'axios';
 
- export default {
-    data() {
-        return {
-            email: '',
-            password: '',
-            errorMsg: '',
-        };
-    },
-    methods: {
-        login() {
-            const loginData = new URLSearchParams();
-                loginData.append('email', this.email);
-                loginData.append('password', this.password);
-            console.log('User Data:', this.email, this.password);
-            axios.post('/api/validate_login_api', loginData)
-                .then(response => {
-                    if (response.data.status === 'success') {
-                        const userData = response.data.user_data;
-                        // Set user data in local storage or Vuex store
-                        localStorage.setItem('user_data', JSON.stringify(userData));
+//  export default {
+//     data() {
+//         return {
+//             email: '',
+//             password: '',
+//             errorMsg: '',
+//         };
+//     },
+//     methods: {
+//         login() {
+//             const loginData = new URLSearchParams();
+//                 loginData.append('email', this.email);
+//                 loginData.append('password', this.password);
+//             console.log('User Data:', this.email, this.password);
+//             axios.post('/api/validate_login_api', loginData)
+//                 .then(response => {
+//                     if (response.data.status === 'success') {
+//                         const userData = response.data.user_data;
+//                         // Set user data in local storage or Vuex store
+//                         localStorage.setItem('user_data', JSON.stringify(userData));
                         
-                        // Redirect to the appropriate dashboard
-                        if (userData.role_id === 1) {
-                            this.$router.push('/admin/dashboard');
-                        } else if (userData.role_id === 2) {
-                            this.$router.push('/user/dashboard');
-                        }
-                    } else {
-                        this.errorMsg = response.data.message;
-                    }
-                })
-                .catch(error => {
-                    this.errorMsg = 'An unexpected error occurred.';
-                    console.error(error);
-                });
-        },
+//                         // Redirect to the appropriate dashboard
+//                         if (userData.role_id === 1) {
+//                             this.$router.push('/admin/dashboard');
+//                         } else if (userData.role_id === 2) {
+//                             this.$router.push('/user/dashboard');
+//                         }
+//                     } else {
+//                         this.errorMsg = response.data.message;
+//                     }
+//                 })
+//                 .catch(error => {
+//                     this.errorMsg = 'An unexpected error occurred.';
+//                     console.error(error);
+//                 });
+//         },
+//     },
+// };
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      errorMsg: '',
+    };
+  },
+  created() {
+    // Check if user data is already stored in local storage
+    const storedUserData = localStorage.getItem('user_data');
+    if (storedUserData) {
+      const userData = JSON.parse(storedUserData);
+      this.redirectToDashboard(userData.role_id);
+    }
+  },
+  methods: {
+    login() {
+      const loginData = new URLSearchParams();
+      loginData.append('email', this.email);
+      loginData.append('password', this.password);
+
+      axios.post('/api/validate_login_api', loginData)
+        .then(response => {
+          if (response.data.status === 'success') {
+            const userData = response.data.user_data;
+
+            // Set user data in local storage
+            localStorage.setItem('user_data', JSON.stringify(userData));
+
+            // Redirect to the appropriate dashboard
+            this.redirectToDashboard(userData.role_id);
+          } else {
+            this.errorMsg = response.data.message;
+          }
+        })
+        .catch(error => {
+          this.errorMsg = 'An unexpected error occurred.';
+          console.error(error);
+        });
     },
+    redirectToDashboard(roleId) {
+      if (roleId === 1) {
+        this.$router.push('/admin/dashboard');
+      } else if (roleId === 2) {
+        this.$router.push('/user/dashboard');
+      }
+    },
+  },
 };
 </script>
