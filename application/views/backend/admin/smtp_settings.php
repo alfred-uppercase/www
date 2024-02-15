@@ -39,7 +39,7 @@
           <div class="form-group">
             <label for="smtp_pass" class="col-sm-3 control-label"><?php echo get_phrase('smtp_password'); ?></label>
             <div class="col-sm-7">
-              <input type="text" class="form-control" name="smtp_pass" id="smtp_pass" placeholder="<?php echo get_phrase('smtp_password'); ?>" value="<?php echo get_settings('smtp_pass'); ?>" required>
+              <input type="text" class="form-control" name="smtp_pass" id="smtp_pass" placeholder="<?php echo get_phrase('smtp_password'); ?>" value="" required>
             </div>
           </div>
           <div class="col-sm-offset-3 col-sm-5" style="padding-top: 10px;">
