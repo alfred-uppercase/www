@@ -152,6 +152,37 @@ public function register_post() {
     $user_id = $this->user_model->add_user($siret, $nomdesociete, $adresse, $codepostal, $secteur);
     $this->response(['message' => 'User registered successfully', 'user_id' => $user_id], REST_Controller::HTTP_OK);
 }
+// public function validate_login_api() {
+//     $email = sanitizer($this->input->post('email'));
+//     $password = sanitizer($this->input->post('password'));
+//     $credential = array('email' => $email, 'password' => sha1($password), 'is_verified' => 1);
+
+//     // Checking login credential for admin
+//     $query = $this->db->get_where('user', $credential);
+//     if ($query->num_rows() > 0) {
+//         $row = $query->row();
+//         $user_data = array(
+//             'user_id' => $row->id,
+//             'role_id' => $row->role_id,
+//             'role' => get_user_role('user_role', $row->id),
+//             'name' => $row->name,
+//         );
+
+//         $response = array(
+//             'status' => 'success',
+//             'message' => 'Login successful',
+//             'user_data' => $user_data,
+//         );
+//         $this->response($response, REST_Controller::HTTP_OK);
+//     } else {
+//         $response = array(
+//             'status' => 'error',
+//             'message' => 'Invalid credentials P',
+//             'credentials' => $credential
+//         );
+//         $this->response($response, REST_Controller::HTTP_UNAUTHORIZED);
+//     }
+// }
 public function validate_login_api() {
     $email = sanitizer($this->input->post('email'));
     $password = sanitizer($this->input->post('password'));
@@ -168,6 +199,9 @@ public function validate_login_api() {
             'name' => $row->name,
         );
 
+        // Créer une session pour l'utilisateur connecté
+        $this->session->set_userdata('user_data', $user_data);
+
         $response = array(
             'status' => 'success',
             'message' => 'Login successful',
@@ -183,6 +217,8 @@ public function validate_login_api() {
         $this->response($response, REST_Controller::HTTP_UNAUTHORIZED);
     }
 }
+
+
 
 public function response($data, $status = 200) {
     $this->output

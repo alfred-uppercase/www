@@ -105,5 +105,13 @@
     "smtp_user": "Smtp user",
     "smtp_password": "Smtp password",
     "save": "Save",
-    "smtp_settings_updated": "Smtp settings updated"
+    "smtp_settings_updated": "Smtp settings updated",
+    "": "",
+    "show_on_map": "Show on map",
+    "watch_details": "Watch details",
+    "featured": "Featured",
+    "this_listing_is_verified": "This listing is verified",
+    "listing_by": "Listing by",
+    "total": "Total",
+    "closed": "Closed"
 }

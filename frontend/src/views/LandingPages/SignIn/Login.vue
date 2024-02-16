@@ -46,15 +46,15 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" v-on:submit.prevent="login()">
+                <form role="form" class="text-start" @submit.prevent="handleLogin">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input v-model="data.email" type="email" class="form-control" name="email" placeholder="Email *" required>
+                      <input v-model='form.email' type="email" class="form-control" name="email" placeholder="Email *" required>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <input v-model="data.password" type="password" class="form-control" name="password" placeholder="Mot de passe *" required>
+                      <input v-model='form.password' type="password" class="form-control" name="password" placeholder="Mot de passe *" required>
                     </div>
                   </div>
   <MaterialSwitch
@@ -140,8 +140,24 @@
   </Header>
 </template>
 
-<script>
-import { onMounted } from "vue";
+<script setup>
+import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const form = ref({
+  email: "",
+  password: "",
+});
+
+const handleLogin = async () => {
+  await axios.post('/api/validate_login_api',
+  {
+    email: form.value.email,
+    password: form.value.password
+  });
+  router.push('/');
+}
 
 // example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
@@ -157,43 +173,41 @@ import setMaterialInput from "@/assets/js/material-input";
 // onMounted(() => {
 //   setMaterialInput();
 // });
-export default {
-    data() {
-        return {
-            email: '',
-            password: '',
-            errorMsg: '',
-        };
-    },
-    methods: {
-        login() {
-            const loginData = {
-                email: this.email,
-                password: this.password,
-            };
+// export default {
+//     data() {
+//         return {
+//             email: '',
+//             password: '',
+//             errorMsg: '',
+//         };
+//     },
+//     methods: {
+//         login() {
+//             const loginData = {
+//                 email: this.email,
+//                 password: this.password,
+//             };
 
-            axios.post('/api/validate_login_api', loginData)
-                .then(response => {
-                    if (response.data.status === 'success') {
-                        const userData = response.data.user_data;
-                        // Set user data in local storage or Vuex store
-                        localStorage.setItem('user_data', JSON.stringify(userData));
+//             axios.post('/api/validate_login_api', loginData)
+//                 .then(response => {
+//                     if (response.data.status === 'success') {
+//                         const userData = response.data.user_data;
+//                         localStorage.setItem('user_data', JSON.stringify(userData));
                         
-                        // Redirect to the appropriate dashboard
-                        if (userData.role_id === 1) {
-                            this.$router.push('/admin/dashboard');
-                        } else if (userData.role_id === 2) {
-                            this.$router.push('/user/dashboard');
-                        }
-                    } else {
-                        this.errorMsg = response.data.message;
-                    }
-                })
-                .catch(error => {
-                    this.errorMsg = 'An unexpected error occurred.';
-                    console.error(error);
-                });
-        },
-    },
-};
+//                         if (userData.role_id === 1) {
+//                             this.$router.push('/admin/dashboard');
+//                         } else if (userData.role_id === 2) {
+//                             this.$router.push('/user/dashboard');
+//                         }
+//                     } else {
+//                         this.errorMsg = response.data.message;
+//                     }
+//                 })
+//                 .catch(error => {
+//                     this.errorMsg = 'An unexpected error occurred.';
+//                     console.error(error);
+//                 });
+//         },
+//     },
+// };
 </script>

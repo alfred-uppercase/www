@@ -29,6 +29,35 @@
                     ""
                 ]
             }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "-73.9351",
+                    "40.697195"
+                ]
+            },
+            "properties": {
+                "id": "524f5cfbcc1b6168b5eae0e3435b192f",
+                "index": 1,
+                "isActive": true,
+                "logo": "f89c4289473b0c04612d22c36b0b7fbf.jpg",
+                "image": "f89c4289473b0c04612d22c36b0b7fbf.jpg",
+                "link": "http://localhost/hotel/grand-hotel/1",
+                "url": "www.err.Fr",
+                "name": "Grand Hotel",
+                "category": "hotel",
+                "email": "alfreddjpro@gmail.com",
+                "stars": "0.0",
+                "phone": "0325300003",
+                "address": "Logt 255 cité des 67 HA COrnRue Augostino Netto",
+                "about": "about",
+                "tags": [
+                    ""
+                ]
+            }
         }
     ]
 }

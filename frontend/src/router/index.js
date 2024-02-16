@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import PresentationView from "../views/Presentation/PresentationView.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import ResultPage from '../views/Presentation/Listing.vue';
+import RedirectToDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
+import UserDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import Annonces from '../views/Presentation/Annonces.vue';
 import AnnoncesUnique from '../views/Presentation/AnnonceUnique.vue';
 import UserUnique from '../views/Presentation/UserUnique.vue';
@@ -71,6 +73,42 @@ const router = createRouter({
       path: "/annonces",
       name: "annonces",
       component: Annonces,
+    },
+    {
+      path: '/mon-compte',
+      name: 'RedirectToDashboard',
+      component: RedirectToDashboard, // Composant de redirection, s'il est nécessaire
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'AdminDashboard',
+      beforeEnter: (to, from, next) => {
+        // Votre logique de redirection pour le tableau de bord administrateur de CodeIgniter ici
+        // Si l'utilisateur est un administrateur, redirigez-le vers la page d'administration de CodeIgniter
+        // Sinon, redirigez-le vers la page de tableau de bord utilisateur Vue.js
+      }
+    },
+    {
+      path: '/user/dashboard',
+      name: 'UserDashboard',
+      component: UserDashboard, // Composant de tableau de bord de l'utilisateur
+      beforeEnter: (to, from, next) => {
+        // Vérifiez si l'utilisateur est connecté ou non
+        const userData = JSON.parse(localStorage.getItem('user_data'));
+        if (!userData) {
+          // Si l'utilisateur n'est pas connecté, redirigez-le vers la page de connexion
+          next('/mon-compte');
+        } else {
+          // Si l'utilisateur est connecté, vérifiez si son rôle est celui d'utilisateur
+          if (userData.role_id !== 2) {
+            // Si l'utilisateur n'est pas un utilisateur, redirigez-le vers la page d'administration de CodeIgniter
+            next('/admin/dashboard');
+          } else {
+            // Si l'utilisateur est un utilisateur, laissez-le accéder au tableau de bord utilisateur Vue.js
+            next();
+          }
+        }
+      }
     },
     {
       path: "/pages/landing-pages/contact-us",
