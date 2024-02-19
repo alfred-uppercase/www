@@ -63,6 +63,7 @@
    <script>
    import { ref, computed } from "vue";
    import axios from 'axios';
+  // import { useUserStore } from '@/stores/user'
    import { useAuthStore } from '@/stores/authStore';
    import { useRouter } from 'vue-router';
    
@@ -80,7 +81,7 @@
        const login = () => {
          // Vérifiez d'abord si l'utilisateur est déjà connecté
          if (userLoggedIn.value) {
-           router.push('/');
+           router.push('/mon-compte');
            return; // Arrêtez l'exécution de la fonction ici pour éviter d'envoyer la requête au serveur
          }
    
@@ -110,14 +111,14 @@
            });
        };
    
-       const redirectToDashboard = (roleId) => {
-         if (roleId === 1) {
-           router.push('/testeaa');
-         } else if (roleId === 2) {
-           router.push('/teste');
-         }
-       };
-   
+      //  const redirectToDashboard = (roleId) => {
+      //    if (roleId === 1) {
+      //      router.push('/testeaa');
+      //    } else if (roleId === 2) {
+      //      router.push('/teste');
+      //    }
+      //  };
+      console.log('userLoggedIn before watch:', userLoggedIn);
        return { userLoggedIn, userData, email, password, errorMsg, login };
      },
    };

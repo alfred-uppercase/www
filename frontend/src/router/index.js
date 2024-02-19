@@ -6,6 +6,7 @@ import RedirectToDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import UserDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import Annonces from '../views/Presentation/Annonces.vue';
 import AnnoncesUnique from '../views/Presentation/AnnonceUnique.vue';
+import deposeAnnonce from "../views/Presentation/deposeAnnonce.vue";
 import UserUnique from '../views/Presentation/UserUnique.vue';
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
@@ -30,6 +31,7 @@ import ElDropdowns from "../layouts/sections/elements/dropdowns/DropdownsView.vu
 import ElProgressBars from "../layouts/sections/elements/progress-bars/ProgressBarsView.vue";
 import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -77,7 +79,15 @@ const router = createRouter({
     {
       path: '/mon-compte',
       name: 'RedirectToDashboard',
-      component: RedirectToDashboard, // Composant de redirection, s'il est nécessaire
+      component: RedirectToDashboard,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
     },
     {
       path: '/admin/dashboard',
@@ -121,9 +131,22 @@ const router = createRouter({
       component: AuthorView,
     },
     {
-      path: "/login",
+      path: "/depose_annonces",
+      name: "depose_annonces",
+      component: deposeAnnonce,
+    },
+    {
+      path: "/se-connecter",
       name: "signin-basic",
       component: SignInBasicView,
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (userData) {
+          next('/mon-compte');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
     },
     {
       path: "/register",
@@ -227,5 +250,11 @@ const router = createRouter({
     },
   ],
 });
-
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/mon-compte' && !authStore.isLoggedIn) {
+//     next('/se-connecter');
+//   } else {
+//     next();
+//   }
+// });
 export default router;

@@ -1,7 +1,11 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, onMounted, watch  } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
+import axios from 'axios';
 
 // images
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
@@ -88,7 +92,59 @@ watch(
     }
   }
 );
+const store = useAuthStore();
+const router = useRouter();
+
+// Getter for checking if the user is logged in
+const userLoggedIn = computed(() => store.isLoggedIn);
+
+// Getter to get the information of the connected user
+const userData = computed(() => store.userData);
+
+// Method to handle logout
+const logout = () => {
+  store.logout(); // Call the logout method from the authStore
+  router.push('/'); // Redirect to the home page or login page after logout
+};
+
+const checkLocalStorage = () => {
+  const userData = localStorage.getItem('userData');
+  if (userData) {
+    store.login(JSON.parse(userData));
+  } else {
+    router.push('/');
+  }
+};
+const get_user_thumbnail = ref('');
+onMounted(() => {
+  checkLocalStorage();
+});
+onMounted(async () => {
+    try {
+      // Use the outer id variable, not the one defined in onMounted
+      const currentId = userData.value.user_id;
+      if (!currentId) {
+        console.error('Error: User ID is undefined');
+        return;
+      }
+  
+      const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${userData.value.user_id}`);
+      console.log('User thumbail:', get_user_thumbnails.data)
+      get_user_thumbnail.value = get_user_thumbnails.data;
+  checkLocalStorage();
+
+
+    } catch (error) {
+      console.error('Error fetching single listing:', error);
+    }
+  });
 </script>
+
+<!-- <script>
+
+
+
+</script> -->
 <template>
   <nav
     class="navbar text-dark navbar-expand-lg navbar-dark navbar-absolute bg-white shadow-none"
@@ -875,24 +931,59 @@ watch(
               </div>
             </div>
           </li>
-          <li class="nav-item dropdown dropdown-hover mx-2">
-            <div v-if="userLoggedIn">
-              <!-- Afficher le nom et la miniature de l'utilisateur -->
-              <div>{{ userData.name }}</div>
-              <img :src="userData.thumbnail" alt="User Thumbnail">
-            </div>
-            <div v-else>
+          <li v-if="userLoggedIn" class="nav-item dropdown dropdown-hover mx-2">
+
+
+            <RouterLink
+            :to="{ name: 'RedirectToDashboard' }"
+            class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+            :class="getTextColor()"
+            >
+            <img :src='get_user_thumbnail' class="rounded-circle user-bg-img" width="30" height="30" >{{ userData.name }}
+            </RouterLink>
+              <div
+              class="dropdown-menu dropdown-menu-end dropdown-menu-animation dropdown-md mt-0 mt-lg-3 p-3 border-radius-lg"
+              aria-labelledby="dropdownMenuDocs"
+            >
+              <div class="d-none d-lg-block">
+                <ul class="list-group">
+                  <li class="nav-item list-group-item border-0 p-0">
+                    <a
+                      class="dropdown-item py-2 ps-3 border-radius-md"
+                      href=""
+                    >
+                      <h6 @click="logout"
+                        class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0"
+                      >
+                      Déconnexion
+                      </h6>
+
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              </div>
+            </li>
+            <li v-else>
               <RouterLink
               :to="{ name: 'signin-basic' }"
               class="dropdown-item text-dark border-radius-md nav-link d-flex cursor-pointer align-items-center">
               <svg :fill="props.transparent && '#344767'" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
                 <span>Se Connecter</span>
               </RouterLink>
-            </div>
-
+            </li>
+        </ul>
+        <ul class="navbar-nav d-lg-block " v-if="isDeposeAnnoce && !isLogin">
+          <li class="nav-item">Deposer une annonce
           </li>
         </ul>
-        <ul class="navbar-nav d-lg-block d-none">
+        <ul class="navbar-nav d-lg-block" v-if="!isDeposeAnnoce && !isLogin">
+          <li class="nav-item">
+            <RouterLink :to="{ name: 'depose_annonces' }" class="btn btn-sm mb-0 btn-dark "><i
+                class="fas fa-plus-circle"></i>Deposer une annonce</RouterLink>
+          </li>
+        </ul>
+        <!-- <ul class="navbar-nav d-lg-block d-none">
           <li class="nav-item">
             <a
               :href="action.route"
@@ -901,7 +992,7 @@ watch(
               >{{ action.label }}</a
             >
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </nav>
@@ -909,28 +1000,7 @@ watch(
 </template>
 
 
-<script>
-import { computed } from 'vue';
-import { useAuthStore } from '@/stores/authStore'; // Assurez-vous de mettre le chemin correct
 
-export default {
-  setup() {
-    const store = useAuthStore();
-
-    // Getter pour vérifier si l'utilisateur est connecté
-    const userLoggedIn = computed(() => store.isLoggedIn);
-
-    // Getter pour obtenir les informations de l'utilisateur connecté
-    const userData = computed(() => store.userData);
-
-    const login = () => {
-      // Logique pour rediriger vers la page de connexion
-    };
-
-    return { userLoggedIn, userData, login };
-  }
-};
-</script>
 
 
 
@@ -948,5 +1018,8 @@ nav.navbar{
 }
 .navbar .nav-link{
   font-size: 1.08rem!important;
+}
+.user-bg-img{
+  margin-top: 0!important;
 }
 </style>

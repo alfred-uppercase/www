@@ -1,3 +1,4 @@
+// authStore.js
 import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
@@ -8,6 +9,7 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
     login(userData) {
+      console.log('Logging in:', userData);
       this.isLoggedIn = true;
       this.userData = userData;
       localStorage.setItem('userData', JSON.stringify(userData));
