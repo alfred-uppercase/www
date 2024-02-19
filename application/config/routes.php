@@ -112,6 +112,7 @@ $route['message/get-chat-history-vendor'] = 's/chat/get_chat_history_by_vendor';
 $route['message/chat-clear'] = 's/chat/chat_clear_client_cs';
 $route['api/subscribes'] = 'newsletter/subscribe';
 $route['api/add_listing'] = 'newsletter/subscribe';
+$route['api/add_listing'] = 'api/add_listing';
 $route['login/pending_email'] = 'login/pending_email';
 $route['login/verify_email'] = 'login/verify_email';
 

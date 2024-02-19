@@ -402,6 +402,19 @@ return $this->db->get('listing');
       $data['categories'] = json_encode(array());
     }
 
+    $data['reference'] = sanitizer($this->input->post('reference'));
+    $data['marque'] = sanitizer($this->input->post('marque'));
+    $data['modele'] = sanitizer($this->input->post('modele'));
+    $data['prix'] = sanitizer($this->input->post('prix'));
+    $data['couleur'] = sanitizer($this->input->post('couleur'));
+    $data['etat'] = sanitizer($this->input->post('etat'));
+    $data['os'] = sanitizer($this->input->post('os'));
+    $data['reseau'] = sanitizer($this->input->post('reseau'));
+    $data['memoire'] = sanitizer($this->input->post('memoire'));
+    $data['ram'] = sanitizer($this->input->post('ram'));
+    $data['sim'] = sanitizer($this->input->post('sim'));
+    $data['copie'] = sanitizer($this->input->post('copie'));
+
 
     $data['video_provider'] = sanitizer($this->input->post('video_provider'));
     $data['video_url'] = sanitizer($this->input->post('video_url'));
@@ -660,6 +673,19 @@ return $this->db->get('listing');
       $data['package_expiry_date'] = 'admin';
       $data['is_featured'] = $this->input->post('is_featured');
     }
+
+    $data['reference'] = sanitizer($this->input->post('reference'));
+    $data['marque'] = sanitizer($this->input->post('marque'));
+    $data['modele'] = sanitizer($this->input->post('modele'));
+    $data['prix'] = sanitizer($this->input->post('prix'));
+    $data['couleur'] = sanitizer($this->input->post('couleur'));
+    $data['etat'] = sanitizer($this->input->post('etat'));
+    $data['os'] = sanitizer($this->input->post('os'));
+    $data['reseau'] = sanitizer($this->input->post('reseau'));
+    $data['memoire'] = sanitizer($this->input->post('memoire'));
+    $data['ram'] = sanitizer($this->input->post('ram'));
+    $data['sim'] = sanitizer($this->input->post('sim'));
+    $data['copie'] = sanitizer($this->input->post('copie'));
 
     $data['country_id'] = sanitizer($this->input->post('country_id'));
     $data['city_id'] = sanitizer($this->input->post('city_id'));

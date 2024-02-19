@@ -34,7 +34,7 @@
                       <input id="subject" name="subject"
                         class="border-gray relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                         required="" aria-invalid="false" type="text" maxlength="200" data-qa-id="input_subject_research"
-                        v-model="titreAnnonce">
+                        v-model="name">
                     </div>
                     <button data-spark-component="button" v-if="!isTitreAnnonce"
                       class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold  mt-lg btn btn-theme mx-3"
@@ -387,8 +387,11 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
-                    :multipleUpload="true" :parallelUpload="3" />
+                  <DropZone :maxFiles="Number(10000000000)" 
+                  url="/uploads" 
+                  :uploadOnDrop="true"
+                    :multipleUpload="true" 
+                    :parallelUpload="3" />
                 </div>
                 <div
                   class="flex justify-between fixed z-sticky bottom-[0] left-[0] right-[0] shadow bg-surface px-xl py-md sm:z-base sm:relative sm:mt-2xl sm:shadow-none sm:p-none">
@@ -2765,14 +2768,14 @@ import { mapState } from 'pinia'
 import { useAuthStore } from '@/stores/authStore';
 // import { useUserStore } from '../../stores/user'
 import { useCategoryStore } from '../../stores/categorie'
-//   import DropZone from 'dropzone-vue';
+  import DropZone from 'dropzone-vue';
 
-// optionally import default styles
-// import 'dropzone-vue/dist/dropzone-vue.common.css';
+
+import 'dropzone-vue/dist/dropzone-vue.common.css';
 import '../../plugins/scroll'
 export default {
   components: {
-  //   DropZone,
+    DropZone,
   },
   data() {
     return {
@@ -2788,9 +2791,50 @@ export default {
       userStore: useAuthStore(),
       isSugsestionCat: true,
       typeCategorie: '',
-      titreAnnonce:''
+      user_id: '',
+      name:'',
+      description:'',
+      country_id:'',
+      city_id:'',
+      state_id:'',
+      address:'',
+      latitude:'',
+      latitude:'',
+      longitude:'',
+      google_analytics_id:'',
+      amenities:'',
+      categories:'',
+      reference:'',
+      marque:'',
+      modele:'',
+      prix:'',
+      couleur:'',
+      etat:'',
+      os:'',
+      reseau:'',
+      memoire:'',
+      ram:'',
+      sim:'',
+      copie:'',
+      video_provider:'',
+      video_url:'',
+      seo_meta_tags:'',
+      meta_description:'',
+      website:'',
+      email:'',
+      phone:'',
+      listing_type:'',
+      social:'',
+      date_added:'',
+      listing_thumbnail:'',
+      listing_cover:'',
+      listing_images:'',
+      photos:'',
+      code:'',
+      titreAnnonce:'',
     };
   },
+  
   computed: {
     ...mapState(useAuthStore, ['isLogin']),
     ...mapState(useCategoryStore, ['categories', 'subCategories'])
@@ -2799,6 +2843,75 @@ export default {
     this.CategoryStore.getCategories();
   },
   methods: {
+    register() {
+      console.log('User Data:', this.email, this.password, this.name, this.lastname, this.adresse, this.phone);
+      console.log('User Company Data:', this.siret, this.nomdesociete, this.adresse, this.codepostal, this.secteur);
+      // Prepare data for API request
+      const listingData = new URLSearchParams();
+      listingData.append('user_id', this.user_id);
+      listingData.append('name', this.name);
+      listingData.append('description', this.description);
+      listingData.append('country_id', this.country_id);
+      listingData.append('city_id', this.city_id);
+      listingData.append('state_id', this.state_id);
+      listingData.append('address', this.address);
+      listingData.append('latitude', this.latitude);
+      listingData.append('longitude', this.longitude);
+      listingData.append('google_analytics_id', this.google_analytics_id);
+      listingData.append('amenities', this.amenities);
+      listingData.append('categories', this.categories);
+      listingData.append('reference', this.reference);
+      listingData.append('marque', this.marque);
+      listingData.append('modele', this.modele);
+      listingData.append('prix', this.prix);
+      listingData.append('couleur', this.couleur);
+      listingData.append('etat', this.etat);
+      listingData.append('os', this.os);
+      listingData.append('reseau', this.reseau);
+      listingData.append('memoire', this.memoire);
+      listingData.append('ram', this.ram);
+      listingData.append('sim', this.sim);
+      listingData.append('copie', this.copie);
+      listingData.append('video_provider', this.video_provider);
+      listingData.append('video_url', this.video_url);
+      listingData.append('seo_meta_tags', this.seo_meta_tags);
+      listingData.append('meta_description', this.meta_description);
+      listingData.append('website', this.website);
+      listingData.append('email', this.email);
+      listingData.append('phone', this.phone);
+      listingData.append('listing_type', this.listing_type);
+      listingData.append('social', this.social);
+      listingData.append('date_added', this.date_added);
+      listingData.append('listing_thumbnail', this.listing_thumbnail);
+      listingData.append('listing_cover', this.listing_cover);
+      listingData.append('listing_images', this.listing_images);
+      listingData.append('photos', this.photos);
+      listingData.append('code', this.code);
+
+      // Make API request
+      axios.post('/api/add_listing', listingData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+        .then(response => {
+          // Handle successful response
+          this.msg = 'User registered successfully';
+          this.classAlert = 'success';
+        })
+        .catch(error => {
+          // Handle error response
+          if (error.response.status === 400) {
+            this.msg = 'Please fill in all the fieldsd';
+          } else if (error.response.status === 500) {
+            this.msg = 'Internal Server Error. Please try again later.';
+          } else {
+            this.msg = 'An unexpected error occurred.';
+          }
+          this.classAlert = 'error';
+        });
+
+    },
     valideTitreAnnonce() {
       this.isTitreAnnonce = true
     },

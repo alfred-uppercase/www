@@ -7,6 +7,8 @@ import router from "./router";
 // Nucleo Icons
 import "./assets/css/nucleo-icons.css";
 import "./assets/css/nucleo-svg.css";
+import "./assets/css/style.css";
+import "./assets/css/personaliser.css";
 
 
 

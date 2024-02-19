@@ -78,6 +78,90 @@
 </div>
 
 
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="reference"><?php echo get_phrase('reference'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="reference" name="reference">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="marque"><?php echo get_phrase('marque'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="marque" name="marque">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="modele"><?php echo get_phrase('modele'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="modele" name="modele">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="prix"><?php echo get_phrase('prix'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="prix" name="prix">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="couleur"><?php echo get_phrase('couleur'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="couleur" name="couleur">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="etat"><?php echo get_phrase('etat'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="etat" name="etat">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="os"><?php echo get_phrase('os'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="os" name="os">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="reseau"><?php echo get_phrase('reseau'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="reseau" name="reseau">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="memoire"><?php echo get_phrase('memoire'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="memoire" name="memoire">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="ram"><?php echo get_phrase('ram'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="ram" name="ram">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="sim"><?php echo get_phrase('sim'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="sim" name="sim">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="copie"><?php echo get_phrase('copie'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="copie" name="copie">
+  </div>
+</div>
+
 
 
 

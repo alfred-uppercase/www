@@ -96,7 +96,89 @@
 </div>
 
 
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="reference"><?php echo get_phrase('reference'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="reference" name="reference" value="<?php echo $listing_details['reference']; ?>">
+  </div>
+</div>
 
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="marque"><?php echo get_phrase('marque'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="marque" name="marque" value="<?php echo $listing_details['marque']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="modele"><?php echo get_phrase('modele'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="modele" name="modele" value="<?php echo $listing_details['modele']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="prix"><?php echo get_phrase('prix'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="prix" name="prix" value="<?php echo $listing_details['prix']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="couleur"><?php echo get_phrase('couleur'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="couleur" name="couleur" value="<?php echo $listing_details['couleur']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="etat"><?php echo get_phrase('etat'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="etat" name="etat" value="<?php echo $listing_details['etat']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="os"><?php echo get_phrase('os'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="os" name="os" value="<?php echo $listing_details['os']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="reseau"><?php echo get_phrase('reseau'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="reseau" name="reseau" value="<?php echo $listing_details['reseau']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="memoire"><?php echo get_phrase('memoire'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="memoire" name="memoire"  value="<?php echo $listing_details['memoire']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="ram"><?php echo get_phrase('ram'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="ram" name="ram" value="<?php echo $listing_details['ram']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="sim"><?php echo get_phrase('sim'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="sim" name="sim" value="<?php echo $listing_details['sim']; ?>">
+  </div>
+</div>
+
+  <div class="form-group">
+  <label class="col-sm-3 control-label" for="copie"><?php echo get_phrase('copie'); ?></label>
+  <div class="col-sm-7">
+    <input type="text" class="form-control" id="copie" name="copie" value="<?php echo $listing_details['copie']; ?>">
+  </div>
+</div>
 
 
 
