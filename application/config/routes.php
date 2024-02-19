@@ -79,7 +79,6 @@ $route['home/listing'] = 'home/listing';
 $route['annonces'] = 'vue';
 $route['annonces/(:any)'] = 'vue';
 $route['user'] = 'vue';
-$route['login'] = 'vue';
 $route['redister'] = 'vue';
 $route['mon-compte'] = 'vue';
 $route['user/(:any)'] = 'vue';

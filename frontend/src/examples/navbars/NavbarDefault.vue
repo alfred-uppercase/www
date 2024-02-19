@@ -96,7 +96,7 @@ const store = useAuthStore();
 const router = useRouter();
 
 // Getter for checking if the user is logged in
-const userLoggedIn = computed(() => store.isLoggedIn);
+const userLoggedIn = computed(() => store.isLogin);
 
 // Getter to get the information of the connected user
 const userData = computed(() => store.userData);

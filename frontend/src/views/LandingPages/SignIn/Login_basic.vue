@@ -71,7 +71,7 @@
      setup() {
        const authStore = useAuthStore();
        const router = useRouter();
-       const userLoggedIn = computed(() => authStore.isLoggedIn);
+       const userLoggedIn = computed(() => authStore.isLogin);
        const userData = computed(() => authStore.userData);
    
        const email = ref('');
