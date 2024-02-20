@@ -1,6 +1,6 @@
 {
-  "name": "lebonomar",
-  "version": "2.0.0",
+  "name": "host",
+  "version": "2.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
