@@ -20,6 +20,7 @@
               <img :src="img_depose" alt="" width="254">
             </div>
           </div>
+          <form method="post" action="/api/register_post" @submit.prevent="postAnnonce()">
           <div class="card card-body iline-block w-full" v-if="isLogin">
             <div class="src__Box-sc-10d053g-0 hUqdBx" v-if="isInfo">
               <div class="w-full">
@@ -31,6 +32,14 @@
                       role="presentation" aria-hidden="true" class="text-caption text-on-surface/dim-3">*</span></label>
                   <div class="flex flex-col md-flex-row">
                     <div class="flex flex-col gap-sm md:mr-md md:min-w-[50%] md:max-w-[50%]">
+                        <input 
+                        :value="userData.user_id" 
+                        name="user_id" 
+                        id="user_id" 
+                        type="text"
+                        
+                        />
+
                       <input id="subject" name="subject"
                         class="border-gray relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                         required="" aria-invalid="false" type="text" maxlength="200" data-qa-id="input_subject_research"
@@ -2735,8 +2744,8 @@
                 </div>
               </div>
             </div>
-
           </div>
+        </form>
 
         </div>
 
@@ -2757,6 +2766,7 @@
               d’être contacté
               si votre annonce est dans la bonne catégorie.</div>
           </div>
+        
         </div>
       </div>
 
@@ -2768,14 +2778,14 @@ import { mapState } from 'pinia'
 import { useAuthStore } from '@/stores/authStore';
 // import { useUserStore } from '../../stores/user'
 import { useCategoryStore } from '../../stores/categorie'
-  import DropZone from 'dropzone-vue';
+//   import DropZone from 'dropzone-vue';
 
 
-import 'dropzone-vue/dist/dropzone-vue.common.css';
+// import 'dropzone-vue/dist/dropzone-vue.common.css';
 import '../../plugins/scroll'
 export default {
   components: {
-    DropZone,
+    // DropZone,
   },
   data() {
     return {
@@ -2803,7 +2813,7 @@ export default {
       longitude:'',
       google_analytics_id:'',
       amenities:'',
-      categories:'',
+      categorie:'',
       reference:'',
       marque:'',
       modele:'',
@@ -2836,14 +2846,14 @@ export default {
   },
   
   computed: {
-    ...mapState(useAuthStore, ['isLogin']),
+    ...mapState(useAuthStore, ['isLogin','userData']),
     ...mapState(useCategoryStore, ['categories', 'subCategories'])
   },
   mounted() {
     this.CategoryStore.getCategories();
   },
   methods: {
-    register() {
+    postAnnonce() {
       console.log('User Data:', this.email, this.password, this.name, this.lastname, this.adresse, this.phone);
       console.log('User Company Data:', this.siret, this.nomdesociete, this.adresse, this.codepostal, this.secteur);
       // Prepare data for API request
@@ -2859,7 +2869,7 @@ export default {
       listingData.append('longitude', this.longitude);
       listingData.append('google_analytics_id', this.google_analytics_id);
       listingData.append('amenities', this.amenities);
-      listingData.append('categories', this.categories);
+      listingData.append('categories', this.categorie);
       listingData.append('reference', this.reference);
       listingData.append('marque', this.marque);
       listingData.append('modele', this.modele);
@@ -2896,7 +2906,7 @@ export default {
     })
         .then(response => {
           // Handle successful response
-          this.msg = 'User registered successfully';
+          this.msg = 'Listing add successfull';
           this.classAlert = 'success';
         })
         .catch(error => {
