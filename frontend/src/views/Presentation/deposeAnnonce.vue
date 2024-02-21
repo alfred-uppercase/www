@@ -2770,14 +2770,14 @@ import { mapState } from 'pinia'
 import { useAuthStore } from '@/stores/authStore';
 // import { useUserStore } from '../../stores/user'
 import { useCategoryStore } from '../../stores/categorie'
-//   import DropZone from 'dropzone-vue';
+import DropZone from 'dropzone-vue';
 
 
-// import 'dropzone-vue/dist/dropzone-vue.common.css';
+import 'dropzone-vue/dist/dropzone-vue.common.css';
 import '../../plugins/scroll'
 export default {
   components: {
-    // DropZone,
+    DropZone,
   },
   data() {
     return {
