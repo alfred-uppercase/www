@@ -20,7 +20,7 @@
               <img :src="img_depose" alt="" width="254">
             </div>
           </div>
-          <form method="post" action="/api/register_post" @submit.prevent="postAnnonce()">
+          <form method="post" action="/api/add_listings" @submit.prevent="postAnnonce()">
           <div class="card card-body iline-block w-full" v-if="isLogin">
             <div class="src__Box-sc-10d053g-0 hUqdBx" v-if="isInfo">
               <div class="w-full">
@@ -32,14 +32,6 @@
                       role="presentation" aria-hidden="true" class="text-caption text-on-surface/dim-3">*</span></label>
                   <div class="flex flex-col md-flex-row">
                     <div class="flex flex-col gap-sm md:mr-md md:min-w-[50%] md:max-w-[50%]">
-                        <input 
-                        :value="userData.user_id" 
-                        name="user_id" 
-                        id="user_id" 
-                        type="text"
-                        
-                        />
-
                       <input id="subject" name="subject"
                         class="border-gray relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                         required="" aria-invalid="false" type="text" maxlength="200" data-qa-id="input_subject_research"
@@ -104,7 +96,7 @@
                     data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                     class="ml-sm text-caption text-on-surface/dim-3">*</span></p>
 
-                <select name="" id="" @change="getSubCategorie($event)"
+                <select v-model="categorie" name="" id="" @change="getSubCategorie($event)"
                   class="mr-10-p border-gray relative ring-1 ring-inset peer box-border w-50 appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
                   <option value="0">Choisissez</option>
                   <option v-for="(category, index) in categories" :key="category.id" :value="category.id"
@@ -112,7 +104,7 @@
                       category.name }}</option>
                 </select>
 
-                <select name="" id="" v-if="isSubCategorie" @change="valideSubCategorie($event)"
+                <select v-model="subcategorie" name="" id="" v-if="isSubCategorie" @change="valideSubCategorie($event)"
                   class="border-gray relative ring-1 ring-inset peer box-border w-45 appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
                   <option value="0">Choisissez sous categorie</option>
                   <option v-for="(sub, index) in subCategories" :key="sub.id" :value="sub.id"> {{
@@ -548,9 +540,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rq:" for="bedrooms">Référence:</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="reference" id="reference" name="reference"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric"  value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -562,9 +554,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Marque </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="marque" id="marque" name="marque"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -581,9 +573,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Prix</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="prix" id="prix" name="prix"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30" value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -595,9 +587,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rq:" for="bedrooms">RAM</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="ram" id="ram" name="ram"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -611,9 +603,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Processeur </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="processeur" id="processeur" name="processeur"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -625,9 +617,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Taille écran </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="screensize" id="screensize" name="screensize"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -646,9 +638,9 @@
                             id="radix-:rk:" for="square">Carte graphique: </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
-                              <input id="bedrooms" name="bedrooms"
+                              <input v-model="gpu" id="gpu" name="gpu"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value="">
+                                aria-invalid="false" type="text">
                             </div>
                           </div>
                           <div class="flex justify-between gap-md">
@@ -661,7 +653,7 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Reférence carte graphique integrée </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="gpuref" id="gpuref" name="gpuref"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text"></div>
                           </div>
@@ -680,12 +672,12 @@
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                <input class="form-check-input" type="radio" v-model="disquetype" name="disquetype" id="disquetype1"
                                   value="Promesse_vente">
-                                <label class="form-check-label" for="inlineRadio1">HDD</label>
+                                <label class="form-check-label" for="inlineRadio2">HDD</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                <input class="form-check-input" type="radio" v-model="disquetype" name="disquetype" id="disquetype2"
                                   value="credit_bancaire">
                                 <label class="form-check-label" for="inlineRadio2">SSD</label>
                               </div>
@@ -701,7 +693,7 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Taille du disque </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="disquesize" id="disquesize" name="disquesize"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text"></div>
                           </div>
@@ -780,7 +772,7 @@
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><textarea rows="8" name="body" id="body" required=""
+                        <div class="relative inline-flex w-full"><textarea v-model="description" rows="8" name="body" id="body" required=""
                             maxlength="4000" aria-describedby="body-helper-text-0"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline min-h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg py-[var(--sz-10)] resize-y"
                             aria-invalid="false" data-spark-component="textarea"></textarea></div>
@@ -875,9 +867,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rq:" for="bedrooms">Modèle:</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="modele" id="modele" name="modele"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric"  value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -889,9 +881,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Marque </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="marque" id="marque" name="marque"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -908,9 +900,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Prix</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="prix" id="prix" name="prix"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30" value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -922,9 +914,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rq:" for="bedrooms">Année</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="annee" id="annee" name="annee"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -938,9 +930,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Couleur </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="couleur" id="couleur" name="couleur"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -952,9 +944,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Kilométrage  </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="kilometrage" id="kilometrage" name="kilometrage"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1007,14 +999,14 @@
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                  value="Promesse_vente">
-                                <label class="form-check-label" for="inlineRadio1">Manuelle</label>
+                                <input class="form-check-input"  v-model="typeboite" type="radio" name="typeboite" id="typeboite1"
+                                  value="Manuelle">
+                                <label class="form-check-label" for="typeboite1">Manuelle</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                  value="credit_bancaire">
-                                <label class="form-check-label" for="inlineRadio2">Automatique</label>
+                                <input class="form-check-input" v-model="typeboite" type="radio" name="typeboite" id="typeboite2"
+                                  value="Automatique">
+                                <label class="form-check-label" for="typeboite2">Automatique</label>
                               </div>
                             </div>
                           </div>
@@ -1028,7 +1020,7 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Energie</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="energie" id="energie" name="energie"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text" ></div>
                           </div>
@@ -1107,7 +1099,7 @@
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><textarea rows="8" name="body" id="body" required=""
+                        <div class="relative inline-flex w-full"><textarea v-model="description" rows="8" name="body" id="body" required=""
                             maxlength="4000" aria-describedby="body-helper-text-0"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline min-h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg py-[var(--sz-10)] resize-y"
                             aria-invalid="false" data-spark-component="textarea"></textarea></div>
@@ -1388,9 +1380,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rq:" for="bedrooms">Référence :</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="reference" id="reference" name="reference"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric"  value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1402,9 +1394,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Marque </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="marque" id="marque" name="marque"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1421,9 +1413,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rq:" for="bedrooms">Modèle </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="modele" id="modele" name="modele"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1435,9 +1427,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Prix</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="prix" id="prix" name="prix"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30" value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1451,9 +1443,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Couleur </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="couleur" id="couleur" name="couleur"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1465,9 +1457,9 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Etat   </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full"><input v-model="etat" id="etat" name="etat"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1486,9 +1478,9 @@
                             id="radix-:rk:" for="square">OS: </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
-                              <input id="bedrooms" name="bedrooms"
+                              <input v-model="os" id="os" name="os"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value="">
+                                aria-invalid="false" type="text">
                             </div>
                           </div>
                           <div class="flex justify-between gap-md">
@@ -1501,7 +1493,7 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Type Reseaux</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input  v-model="reseau" id="reseau" name="reseau"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text"></div>
                           </div>
@@ -1520,7 +1512,7 @@
                             id="radix-:ro:" for="rooms">Mémoire </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
-                              <input id="nb_bathrooms" name="nb_bathrooms"
+                              <input v-model="memoire" id="memoire" name="memoire"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text" >
                             </div>
@@ -1535,7 +1527,7 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">RAM</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="ram" id="ram" name="ram"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text" ></div>
                           </div>
@@ -1553,7 +1545,7 @@
                             id="radix-:ro:" for="rooms">SIM </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
-                              <input id="nb_bathrooms" name="nb_bathrooms"
+                              <input v-model="sim" id="sim" name="sim"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text" >
                             </div>
@@ -1568,7 +1560,7 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Copie</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full"><input v-model="copie" id="copie" name="copie"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                                 aria-invalid="false" type="text" ></div>
                           </div>
@@ -2518,7 +2510,7 @@
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><textarea rows="8" name="body" id="body" required=""
+                        <div class="relative inline-flex w-full"><textarea v-model="descripton" rows="8" name="body" id="body" required=""
                             maxlength="4000" aria-describedby="body-helper-text-0"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline min-h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg py-[var(--sz-10)] resize-y"
                             aria-invalid="false" data-spark-component="textarea"></textarea></div>
@@ -2801,7 +2793,7 @@ export default {
       userStore: useAuthStore(),
       isSugsestionCat: true,
       typeCategorie: '',
-      user_id: '',
+      user_id:null,
       name:'',
       description:'',
       country_id:'',
@@ -2814,6 +2806,7 @@ export default {
       google_analytics_id:'',
       amenities:'',
       categorie:'',
+      subcategorie: '',
       reference:'',
       marque:'',
       modele:'',
@@ -2824,8 +2817,16 @@ export default {
       reseau:'',
       memoire:'',
       ram:'',
+      processeur:'',
+      screensize:'',
       sim:'',
       copie:'',
+      gpuref:'',
+      disquetype:'',
+      disquesize:'',
+      kilometrage:'',
+      typeboite:'',
+      energie:'',
       video_provider:'',
       video_url:'',
       seo_meta_tags:'',
@@ -2851,12 +2852,19 @@ export default {
   },
   mounted() {
     this.CategoryStore.getCategories();
+    this.user_id = this.userData ? this.userData.user_id : null;
   },
   methods: {
     postAnnonce() {
-      console.log('User Data:', this.email, this.password, this.name, this.lastname, this.adresse, this.phone);
-      console.log('User Company Data:', this.siret, this.nomdesociete, this.adresse, this.codepostal, this.secteur);
-      // Prepare data for API request
+      // Check if user_id is available
+      if (!this.user_id) {
+        // Handle the case when user_id is not available
+        console.error("User ID is not available");
+        return;
+      }
+      const combinedCategoryIds = [this.categorie, this.subcategorie];
+      console.log('Enrol Data:', this.combinedCategoryIds, this.user_id,this.reference,this.couleur, this.memoire, this.ram, this.description, this.name, this.sim);
+
       const listingData = new URLSearchParams();
       listingData.append('user_id', this.user_id);
       listingData.append('name', this.name);
@@ -2869,7 +2877,7 @@ export default {
       listingData.append('longitude', this.longitude);
       listingData.append('google_analytics_id', this.google_analytics_id);
       listingData.append('amenities', this.amenities);
-      listingData.append('categories', this.categorie);
+      listingData.append('categories', combinedCategoryIds);
       listingData.append('reference', this.reference);
       listingData.append('marque', this.marque);
       listingData.append('modele', this.modele);

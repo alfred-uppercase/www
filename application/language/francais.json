@@ -274,5 +274,6 @@
     "ram": "Ram",
     "sim": "Sim",
     "copie": "Copie",
-    "listing_updated_successfully": "Listing updated successfully"
+    "listing_updated_successfully": "Listing updated successfully",
+    "there_is_no_free_space_to_add_to_the_listing": "There is no free space to add to the listing"
 }

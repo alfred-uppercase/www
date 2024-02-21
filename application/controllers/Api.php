@@ -448,7 +448,10 @@ function now_open($listing_id = '') {
     }
 
     if (!empty($this->input->post('categories'))) {
-      $data['categories'] = $this->make_json(sanitizer($this->input->post('categories')));
+    //   $data['categories'] = sanitizer($this->input->post('categories'));
+    // $categoriesJson = sanitizer($this->input->post('categories'));
+
+    $data['categories'] = json_encode(sanitizer($this->input->post('categories')));
     } else {
       $data['categories'] = json_encode(array());
     }
@@ -491,28 +494,28 @@ function now_open($listing_id = '') {
       $time_config[$day] = sanitizer($this->input->post($day . '_opening')) . '-' . sanitizer($this->input->post($day . '_closing'));
     }
 
-    if ($_FILES['listing_thumbnail']['name'] == "") {
-      $data['listing_thumbnail'] = 'thumbnail.png';
-    } else {
-      $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
-      move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
-    }
+    // if ($_FILES['listing_thumbnail']['name'] == "") {
+    //   $data['listing_thumbnail'] = 'thumbnail.png';
+    // } else {
+    //   $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
+    //   move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+    // }
 
-    if ($_FILES['listing_cover']['name'] == "") {
-      $data['listing_cover'] = 'thumbnail.png';
-    } else {
-      $data['listing_cover'] = md5(rand(10000000, 20000000)) . '.jpg';
-      move_uploaded_file($_FILES['listing_cover']['tmp_name'], 'uploads/listing_cover_photo/' . $data['listing_cover']);
-    }
+    // if ($_FILES['listing_cover']['name'] == "") {
+    //   $data['listing_cover'] = 'thumbnail.png';
+    // } else {
+    //   $data['listing_cover'] = md5(rand(10000000, 20000000)) . '.jpg';
+    //   move_uploaded_file($_FILES['listing_cover']['tmp_name'], 'uploads/listing_cover_photo/' . $data['listing_cover']);
+    // }
 
-    foreach ($_FILES['listing_images']['tmp_name'] as $listing_image) {
-      if ($listing_image != "") {
-        $random_identifier = md5(rand(10000000, 20000000)) . '.jpg';
-        move_uploaded_file($listing_image, 'uploads/listing_images/' . $random_identifier);
-        array_push($photo_gallery, $random_identifier);
-      }
-    }
-    $data['photos'] = json_encode($photo_gallery);
+    // foreach ($_FILES['listing_images']['tmp_name'] as $listing_image) {
+    //   if ($listing_image != "") {
+    //     $random_identifier = md5(rand(10000000, 20000000)) . '.jpg';
+    //     move_uploaded_file($listing_image, 'uploads/listing_images/' . $random_identifier);
+    //     array_push($photo_gallery, $random_identifier);
+    //   }
+    // }
+    // $data['photos'] = json_encode($photo_gallery);
     $data['code'] = md5(rand(10000000, 20000000));
 
     if (strtolower($this->session->userdata('role')) == 'admin') {
@@ -536,6 +539,14 @@ function now_open($listing_id = '') {
       $this->add_listing_type_wise_details(sanitizer($this->input->post('listing_type')), $listing_id);
       $this->session->set_flashdata('flash_message', get_phrase('listing_added_successfully'));
     } else {
+        $this->db->insert('listing', $data);
+        $listing_id = $this->db->insert_id();
+        $time_config['listing_id'] = $listing_id;
+        $this->db->insert('time_configuration', $time_config);
+  
+        // Add listing inner details data
+        // $this->add_listing_type_wise_details(sanitizer($this->input->post('listing_type')), $listing_id);
+        
       $this->session->set_flashdata('error_message', get_phrase('there_is_no_free_space_to_add_to_the_listing'));
     }
   }
