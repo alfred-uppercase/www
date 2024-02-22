@@ -389,7 +389,7 @@
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
                   <DropZone :maxFiles="Number(10000000000)" 
-                  url="/uploads" 
+                  url="/uploads/listing_images" 
                   :uploadOnDrop="true"
                     :multipleUpload="true" 
                     :parallelUpload="3" />
@@ -719,7 +719,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -1046,7 +1046,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -1233,7 +1233,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -1584,9 +1584,15 @@
                 </div>
               </div>
               <div v-if="isImageImobl">
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
-                <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                <h3 class="mb-xl text-headline-2 font-semi-bold">Photo à la une</h3>
+                <div style="position: relative;">
+                  <DropZone method="POST" v-model="listing_thumbnail" :maxFiles="Number(10000000000)" url="/uploads/listing_images"
+              :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
+                </div>
+                
+                <h3 class="mb-xl text-headline-2 font-semi-bold">Galerie</h3>
+                <div style="position: relative;">
+                  <DropZone v-model="listing_images" :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="false"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -1822,7 +1828,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -2061,7 +2067,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -2219,7 +2225,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -2457,7 +2463,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -2647,7 +2653,7 @@
               <div v-if="isImageImobl">
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
                 <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="http://localhost:5000/item" :uploadOnDrop="true"
+                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing-images" :uploadOnDrop="true"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -2771,7 +2777,7 @@ import { useAuthStore } from '@/stores/authStore';
 // import { useUserStore } from '../../stores/user'
 import { useCategoryStore } from '../../stores/categorie'
 import DropZone from 'dropzone-vue';
-
+// import Dropzone from "dropzone";
 
 import 'dropzone-vue/dist/dropzone-vue.common.css';
 import '../../plugins/scroll'
@@ -2839,7 +2845,7 @@ export default {
       date_added:'',
       listing_thumbnail:'',
       listing_cover:'',
-      listing_images:'',
+      listing_images:[],
       photos:'',
       code:'',
       titreAnnonce:'',
@@ -2855,7 +2861,12 @@ export default {
     this.user_id = this.userData ? this.userData.user_id : null;
   },
   methods: {
-    postAnnonce() {
+    async handleSuccess(file, response) {
+    // La fonction appelée lorsqu'un téléchargement réussit
+    console.log('Upload success:', response);
+    await this.postAnnonce();
+  },
+    async postAnnonce() {
       // Check if user_id is available
       if (!this.user_id) {
         // Handle the case when user_id is not available
@@ -2863,7 +2874,7 @@ export default {
         return;
       }
       const combinedCategoryIds = [this.categorie, this.subcategorie];
-      console.log('Enrol Data:', this.combinedCategoryIds, this.user_id,this.reference,this.couleur, this.memoire, this.ram, this.description, this.name, this.sim);
+      console.log('Enrol Data:', this.listing_thumbnail, this.listing_images, this.combinedCategoryIds, this.user_id,this.reference,this.couleur, this.memoire, this.ram, this.description, this.name, this.sim);
 
       const listingData = new URLSearchParams();
       listingData.append('user_id', this.user_id);
@@ -2902,7 +2913,9 @@ export default {
       listingData.append('date_added', this.date_added);
       listingData.append('listing_thumbnail', this.listing_thumbnail);
       listingData.append('listing_cover', this.listing_cover);
-      listingData.append('listing_images', this.listing_images);
+      for (let i = 0; i < this.listing_images.length; i++) {
+        listingData.append('listing_images[]', this.listing_images[i]);
+      }
       listingData.append('photos', this.photos);
       listingData.append('code', this.code);
 
