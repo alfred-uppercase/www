@@ -48,7 +48,11 @@ export default defineConfig({
       input: '/main.js'
     }
   },
-
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   server: {
     // required to load scripts from custom host
     cors: true,

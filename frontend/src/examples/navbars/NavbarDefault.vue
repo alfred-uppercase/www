@@ -147,11 +147,11 @@ onMounted(async () => {
 </script> -->
 <template>
   <nav
-    class="navbar text-dark navbar-expand-lg navbar-dark navbar-absolute bg-white shadow-none"
+    class="navbar text-dark navbar-expand-lg navbar-dark bg-white shadow-none"
     :class="{
-      'z-index-3 w-100 shadow-none navbar-transparent position-absolute my-3':
+      'z-index-3 w-100 shadow-none navbar-transparent my-3':
         props.transparent,
-      'my-3 blur border-radius-lg z-index-3 py-2 shadow py-2 start-0 end-0 mx-4 position-absolute mt-4':
+      'my-3 blur border-radius-lg z-index-3 py-2 shadow py-2 start-0 end-0 mx-4 mt-4':
         props.sticky,
       'navbar-light bg-white py-3': props.light,
       ' navbar-dark bg-gradient-dark z-index-3 py-3': props.dark
