@@ -7,7 +7,7 @@ defineProps({
     logo: String,
     route: "",
     default: () => ({
-      name: "Lebonomar",
+      name: "Host",
       logo: logoDark,
       route: "/"
     })
@@ -171,7 +171,7 @@ defineProps({
             <p class="text-dark my-4 text-sm font-weight-normal">
               Tout droit réservé ©
               {{ new Date().getFullYear() }}
-              Lebonomar
+              Host
               <a href="" target="_blank"
                 ></a
               >.

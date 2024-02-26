@@ -5,6 +5,11 @@ import ResultPage from '../views/Presentation/Listing.vue';
 import RedirectToDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import UserDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import MesAnnonces from '../views/LandingPages/dashboard/MesAnnonces.vue';
+import MesTransactions from '../views/LandingPages/dashboard/MesTransactions.vue';
+import MesReservations from '../views/LandingPages/dashboard/MesReservations.vue';
+import Profil from '../views/LandingPages/dashboard/Profil.vue';
+import JobProfil from '../views/LandingPages/dashboard/Emploi/Profil.vue';
+import JobCad from '../views/LandingPages/dashboard/Emploi/Candidatures.vue';
 import Annonces from '../views/Presentation/Annonces.vue';
 import AnnoncesUnique from '../views/Presentation/AnnonceUnique.vue';
 import deposeAnnonce from "../views/Presentation/deposeAnnonce.vue";
@@ -94,6 +99,71 @@ const router = createRouter({
       path: '/mes-annonces',
       name: 'MesAnnonces',
       component: MesAnnonces,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
+      path: '/mes-transactions',
+      name: 'MesTransactions',
+      component: MesTransactions,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
+      path: '/mes-reservations',
+      name: 'MesReservations',
+      component: MesReservations,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
+      path: '/profil',
+      name: 'Profil',
+      component: Profil,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
+      path: '/emploi/profil',
+      name: 'JobProfil',
+      component: JobProfil,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
+      path: '/emploi/candidatures',
+      name: 'JobCad',
+      component: JobCad,      
       beforeEnter: (to, from, next) => {
         const userData = JSON.parse(localStorage.getItem('userData'));
         if (!userData) {
