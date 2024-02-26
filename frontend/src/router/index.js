@@ -8,6 +8,8 @@ import MesAnnonces from '../views/LandingPages/dashboard/MesAnnonces.vue';
 import MesTransactions from '../views/LandingPages/dashboard/MesTransactions.vue';
 import MesReservations from '../views/LandingPages/dashboard/MesReservations.vue';
 import Profil from '../views/LandingPages/dashboard/Profil.vue';
+import ParametresCompte from '../views/LandingPages/dashboard/ParametreCompte.vue';
+import ProfilPublic from '../views/LandingPages/dashboard/ProfilPublic.vue';
 import JobProfil from '../views/LandingPages/dashboard/Emploi/Profil.vue';
 import JobCad from '../views/LandingPages/dashboard/Emploi/Candidatures.vue';
 import Annonces from '../views/Presentation/Annonces.vue';
@@ -148,6 +150,32 @@ const router = createRouter({
       },
     },
     {
+      path: '/compte/editer',
+      name: 'ParametresCompte',
+      component: ParametresCompte,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
+      path: '/profil/show',
+      name: 'ProfilPublic',
+      component: ProfilPublic,      
+      beforeEnter: (to, from, next) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+          next('/se-connecter');  // Redirect to /mon-compte if logged in
+        } else {
+          next();  // Continue to the login page
+        }
+      },
+    },
+    {
       path: '/emploi/profil',
       name: 'JobProfil',
       component: JobProfil,      
@@ -215,7 +243,7 @@ const router = createRouter({
       component: AuthorView,
     },
     {
-      path: "/depose_annonces",
+      path: "/deposer-une-annonce",
       name: "depose_annonces",
       component: deposeAnnonce,
     },

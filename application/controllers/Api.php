@@ -197,6 +197,7 @@ public function validate_login_api() {
             'role_id' => $row->role_id,
             'role' => get_user_role('user_role', $row->id),
             'name' => $row->name,
+            'email' => $row->email,
         );
 
         // Créer une session pour l'utilisateur connecté

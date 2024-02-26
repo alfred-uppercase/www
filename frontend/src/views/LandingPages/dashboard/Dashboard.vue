@@ -1,6 +1,6 @@
 
 <script setup>
-import { computed, onMounted, watch } from 'vue';
+import { computed, onMounted, watch, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
 import achatsVentes from '@/assets/img/examples/achats-ventes.avif';
@@ -10,6 +10,8 @@ import parametres from '@/assets/img/examples/parametres.avif';
 import privateProfile from '@/assets/img/examples/private-profile.avif';
 import securite from '@/assets/img/examples/securite.avif';
 import vacances from '@/assets/img/examples/vacances.avif';
+import axios from 'axios';
+
 
 
 const store = useAuthStore();
@@ -47,7 +49,25 @@ onMounted(() => {
   console.log('Component mounted!');
   checkLocalStorage();
 });
+const get_user_thumbnail = ref('');
 
+onMounted(async () => {
+    try {
+      // Use the outer id variable, not the one defined in onMounted
+      const currentId = userData.value.user_id;
+      if (!currentId) {
+        console.error('Error: User ID is undefined');
+        return;
+      }
+  
+      const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${userData.value.user_id}`);
+      console.log('User thumbail:', get_user_thumbnails.data)
+      get_user_thumbnail.value = get_user_thumbnails.data;
+
+    } catch (error) {
+      console.error('Error fetching single listing:', error);
+    }
+  });
 console.log('userLoggedIn before watch:', userLoggedIn);
 
 // Use watch to react to changes in userLoggedIn and userData
@@ -66,7 +86,7 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
 
       <!-- section 1 -->
       <div class="flex flex-col gap-lg md:flex-row">
-        <div class="flex w-full grow items-center justify-center rounded-lg border-sm border-outline p-lg [&amp;>div]:w-full"><button class="relative shrink-0 mr-xl size-sz-96" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed"><img class="h-full w-full rounded-full" src="https://img.leboncoin.fr/api/v1/tenants/9a6387a1-6259-4f2c-a887-7e67f23dd4cb/domains/20bda58f-d650-462e-a72a-a5a7ecf2bf88/buckets/21d2b0bc-e54c-4b64-a30b-89127b18b785/images/profile/pictures/default/db9df679-9e1f-5bac-8428-a311bcb84c8a?rule=pp-large" alt="Photo de profil"><div class="absolute bottom-none  right-none flex  h-2xl w-2xl  items-center justify-center rounded-full bg-surface shadow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Ajouter une photo de profil" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><title>Ajouter une photo de profil</title><path fill-rule="evenodd" d="m12,2c.55,0,1,.45,1,1v7.94h8c.55,0,1,.45,1,1s-.45,1-1,1h-8v8.06c0,.55-.45,1-1,1s-1-.45-1-1v-8.06H3c-.55,0-1-.45-1-1s.45-1,1-1h8V3c0-.55.45-1,1-1Z"></path></svg></div></button><div class="_2KqHw"><div class="flex items-center justify-between text-body-1"><div><h2 class="mr-lg max-w-sz-384 truncate text-headline-2-expanded">{{ userData.name }}</h2></div><a class="hidden font-bold underline md:block" href="/profil/57771296-4f8a-4724-a85e-b2257d9013a2">Accéder à mon profil public</a></div></div></div>
+        <div class="flex w-full grow items-center justify-center rounded-lg border-sm border-outline p-lg [&amp;>div]:w-full"><button class="relative shrink-0 mr-xl size-sz-96" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed"><img class="h-full w-full rounded-full" :src="get_user_thumbnail" alt="Photo de profil"><div class="absolute bottom-none  right-none flex  h-2xl w-2xl  items-center justify-center rounded-full bg-surface shadow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Ajouter une photo de profil" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><title>Ajouter une photo de profil</title><path fill-rule="evenodd" d="m12,2c.55,0,1,.45,1,1v7.94h8c.55,0,1,.45,1,1s-.45,1-1,1h-8v8.06c0,.55-.45,1-1,1s-1-.45-1-1v-8.06H3c-.55,0-1-.45-1-1s.45-1,1-1h8V3c0-.55.45-1,1-1Z"></path></svg></div></button><div class="_2KqHw"><div class="flex items-center justify-between text-body-1"><div><h2 class="mr-lg max-w-sz-384 truncate text-headline-2-expanded">{{ userData.name }}</h2></div><RouterLink :to="{ name: 'ProfilPublic' }" class="hidden font-bold underline md:block" >Accéder à mon profil public</RouterLink></div></div></div>
         <a class="md:w-sz-384" href="/compte/porte-monnaie?entryPoint=myaccount"><div class="relative h-full overflow-hidden rounded-lg py-sm pl-3xl shadow"><div class="absolute -left-[28.3rem] -top-[15.5rem]"><svg width="385" height="418" viewBox="0 0 385 418" fill="none" xmlns="http://www.w3.org/2000/svg"><circle class="fill-main" cx="192.629" cy="225.167" r="136" transform="rotate(-135 192.629 225.167)" fill-opacity="0.56"></circle><circle cx="209.626" cy="142.508" r="125" transform="rotate(-8.37699 209.626 142.508)" fill="#627C93" fill-opacity="0.4"></circle></svg></div><div class="flex flex-col pl-3xl"><h2 class="text-body-1 font-bold">Porte-monnaie</h2><span class="mt-lg text-display-3">0&nbsp;€</span><span class="mt-md text-body-1">Solde disponible</span></div></div></a>
       </div>
 
@@ -94,7 +114,7 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
           </RouterLink>
 
           <!--Parametres-->
-          <a href="/compte/edit"><div class="flex size-full items-center rounded-lg p-xl shadow md:flex-col md:items-start"><div class="mr-xl flex size-3xl min-w-sz-40 items-center"><span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: 40px; height: 40px; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;"><img alt="" src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fparametres.74750762.png&amp;w=96&amp;q=75" decoding="async" data-nimg="fixed" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fparametres.74750762.png&amp;w=48&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fparametres.74750762.png&amp;w=96&amp;q=75 2x"></span></div><div class="md:mt-xl"><h2 class="text-headline-2">Paramètres</h2><span class="text-body-1">Compléter et modifier mes informations privées et préférences</span></div></div></a>
+          <RouterLink :to="{ name: 'ParametresCompte' }"><div class="flex size-full items-center rounded-lg p-xl shadow md:flex-col md:items-start"><div class="mr-xl flex size-3xl min-w-sz-40 items-center"><span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: 40px; height: 40px; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;"><img alt="" src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fparametres.74750762.png&amp;w=96&amp;q=75" decoding="async" data-nimg="fixed" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fparametres.74750762.png&amp;w=48&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fparametres.74750762.png&amp;w=96&amp;q=75 2x"></span></div><div class="md:mt-xl"><h2 class="text-headline-2">Paramètres</h2><span class="text-body-1">Compléter et modifier mes informations privées et préférences</span></div></div></RouterLink>
 
           <!--Connexion et securité-->
           <a href="/compte/connexion-securite"><div class="flex size-full items-center rounded-lg p-xl shadow md:flex-col md:items-start"><div class="mr-xl flex size-3xl min-w-sz-40 items-center"><span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: 34px; height: 38px; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative;"><img alt="" src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsecurite.288e30ea.png&amp;w=96&amp;q=75" decoding="async" data-nimg="fixed" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsecurite.288e30ea.png&amp;w=48&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsecurite.288e30ea.png&amp;w=96&amp;q=75 2x"></span></div><div class="md:mt-xl"><h2 class="text-headline-2"><div class="flex justify-between md:block">Connexion et sécurité<span data-spark-component="badge" role="status" class="inline-flex h-fit empty:p-none text-center font-bold rounded-full box-content bg-main text-on-main border-on-main text-caption px-md py-sm empty:h-sz-16 empty:w-sz-16 ml-md" aria-label="1 notification">1</span></div></h2><span class="text-body-1">Protéger mon compte et consulter son indice de sécurité</span></div></div></a>
