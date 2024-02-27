@@ -1,7 +1,7 @@
 .PresetDateRangePicker_panel {
     padding: 0 22px 11px
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 .PresetDateRangePicker_button {
     position: relative;
     height: 100%;
@@ -24648,8 +24648,8 @@ video {
     --colors-outline-high: 32 39 48;
     --colors-overlay: 32 39 48;
     --colors-on-overlay: 255 255 255;
-    --font-family-sans: "Nunito Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-family-sans: "Raleway", sans-serif;
+    --font-family-mono: "Raleway", sans-serif;
     --font-size-display-1-font-size: 4rem;
     --font-size-display-1-line-height: 5.6rem;
     --font-size-display-1-font-weight: 700;

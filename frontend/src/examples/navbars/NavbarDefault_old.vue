@@ -979,7 +979,7 @@ onMounted(async () => {
         </ul>
         <ul class="navbar-nav d-lg-block" v-if="!isDeposeAnnoce && !isLogin">
           <li class="nav-item">
-            <RouterLink :to="{ name: 'depose_annonces' }" class="btn btn-sm mb-0 btn-dark "><i
+            <RouterLink :to="{ name: 'deposer-une-annonce' }" class="btn btn-sm mb-0 btn-dark "><i
                 class="fas fa-plus-circle"></i>Deposer une annonce</RouterLink>
           </li>
         </ul>

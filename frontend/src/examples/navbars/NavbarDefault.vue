@@ -36,7 +36,7 @@
         </ul>
         <ul class="navbar-nav d-lg-block w-100 pr-0" v-if="!isDeposeAnnoce && !isLogin">
           <li class="nav-item">
-            <RouterLink :to="{ name: 'depose_annonces' }" class="btn btn-sm mb-0 btn-yellow "><i
+            <RouterLink :to="{ name: 'deposer-une-annonce' }" class="btn btn-sm mb-0 btn-yellow "><i
                 class="fas fa-plus-circle"></i>Deposer une annonce</RouterLink>
           </li>
         </ul>
@@ -80,14 +80,29 @@
               </RouterLink>
   
             </li>
-            <li class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
+            <RouterLink
+            v-if="userLoggedIn" 
+              :to="{ name: 'RedirectToDashboard' }"
+                class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
+            <li class="">
+              <img :src='get_user_thumbnail' class="overflow-hidden leading-none h-[2.4rem] w-[2.4rem] rounded-full">
+              
+  
+                <span>{{ userData.name }}</span>
+            </li>
+          </RouterLink>
+          <RouterLink 
+          v-else
+              :to="{ name: 'signin-basic' }"
+                class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
+            <li class="">
               <i class="far fa-user"></i>
-              <RouterLink :to="{ name: 'signin-basic' }"
-                class="dropdown-item text-dark border-radius-md nav-link d-flex cursor-pointer align-items-center">
+
   
                 <span>Se Connecter</span>
-              </RouterLink>
             </li>
+          </RouterLink>
+
           </ul>
   
         </div>
@@ -1398,8 +1413,12 @@
   
   <script setup>
   import { RouterLink, useRoute } from "vue-router";
-  import { ref, watch } from "vue";
-  import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
+import { ref, onMounted, watch  } from "vue";
+import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
+import axios from 'axios';
   
   // images
   import ArrDark from "@/assets/img/down-arrow-dark.svg";
@@ -1415,6 +1434,27 @@
   const isDeposeAnnoce = ref(false)
   const isLogin = ref(false)
   
+  const store = useAuthStore();
+  const router = useRouter();
+
+  // Getter for checking if the user is logged in
+  const userLoggedIn = computed(() => store.isLogin);
+
+  // Getter to get the information of the connected user
+  const userData = computed(() => store.userData);
+  const checkLocalStorage = () => {
+  const userData = localStorage.getItem('userData');
+  if (userData) {
+    store.login(JSON.parse(userData));
+  } else {
+    router.push('/');
+  }
+};
+const get_user_thumbnail = ref('');
+onMounted(() => {
+  checkLocalStorage();
+});
+
   const props = defineProps({
     action: {
       type: Object,
@@ -1496,10 +1536,10 @@
     },)
   
   watch(route, () => {
-    if (route.name == 'depose_annonces') {
+    if (route.name == 'deposer-une-annonce') {
       isDeposeAnnoce.value = true
       isLogin.value = false
-    } if (route.name != 'depose_annonces' && route.name != 'login' && route.name != 'signin-up' && route.name != 'signin-up-company') {
+    } if (route.name != 'deposer-une-annonce' && route.name != 'login' && route.name != 'signin-up' && route.name != 'signin-up-company') {
       isDeposeAnnoce.value = false
       isLogin.value = false
   
@@ -1512,6 +1552,26 @@
   
   
   })
+
+  onMounted(async () => {
+    try {
+      // Use the outer id variable, not the one defined in onMounted
+      const currentId = userData.value.user_id;
+      if (!currentId) {
+        console.error('Error: User ID is undefined');
+        return;
+      }
+  
+      const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${userData.value.user_id}`);
+      console.log('User thumbail:', get_user_thumbnails.data)
+      get_user_thumbnail.value = get_user_thumbnails.data;
+  checkLocalStorage();
+
+
+    } catch (error) {
+      console.error('Error fetching single listing:', error);
+    }
+  });
   </script>
   <style>
   /* @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap'); */

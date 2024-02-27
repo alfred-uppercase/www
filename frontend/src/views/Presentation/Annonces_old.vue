@@ -1,13 +1,12 @@
-
 <template>
     <div style="padding-top: 90px;">
       <h1>{{ title }}</h1>
       <div class="container-fluid margin_60_35" style="transform: none;">
-  <div class="row justify-content-md-center" style="transform: none;">
+	<div class="row justify-content-md-center" style="transform: none;">
     <FIlters />
     <div class="col-lg-6 col-md-12 order-lg-1 order-2" id="listings">
     <div
-    v-for="listing in results.listings" :key="listing.id"
+      v-for="listing in listings" :key="listing.id"
       class="strip map_view featured-tag-border "
       :data-marker-id="listing.code"
       :id="listing.code"
@@ -18,7 +17,7 @@
       >
       <div class="col-4">
         <figure>
-  
+
           <a
             v-if="listing.is_featured === '1'"
             href="javascript::"
@@ -59,7 +58,7 @@
               }"
             ></i>
           </a>
-  
+
           <h3 class="ellipsis">
             <router-link
               :key="listing.id"
@@ -110,7 +109,7 @@
     </div>
   </div>
   <div class="col-lg-3 order-lg-2 order-1">
-      <!-- <div class="stiky-map mb-5 mb-lg-0"></div> -->
+			<!-- <div class="stiky-map mb-5 mb-lg-0"></div> -->
       <!-- <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -128,7 +127,7 @@
         <l-icon :icon-url="iconUrl" :icon-size="iconSize" />
       </l-marker>
     <l-geo-json :geojson="geojson" :options-style="geojsonOptions"></l-geo-json>
-  
+
     <l-polyline
         :lat-lngs="[
           [47.334852, -1.509485],
@@ -178,22 +177,18 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, defineProps } from "vue";
-  import axios from 'axios';
-  import "leaflet/dist/leaflet.css";
-  import { LMap, LTileLayer, LMarker, LPopup, LPolyline, LPolygon, LRectangle, } from "@vue-leaflet/vue-leaflet";
-  import FIlters from '/views/Presentation/annonces/filter.vue';
-  const title = ref('');
-  const listings = ref([]);
-  const get_country = ref([]);
-  const get_phrase_show_on_map = ref('');
-  const get_phrase_watch_details = ref('');
-  const get_phrase_featured = ref('');
-  const geojson = ref(null);
-  // const results = ref([]);
-  // const search_string = ref();
-  // const selected_city_id = ref();
-  // const selected_category_id = ref();
+import { ref, onMounted, onUnmounted } from "vue";
+import axios from 'axios';
+import "leaflet/dist/leaflet.css";
+import { LMap, LTileLayer, LMarker, LPopup, LPolyline, LPolygon, LRectangle, } from "@vue-leaflet/vue-leaflet";
+import FIlters from '/views/Presentation/annonces/filter.vue';
+const title = ref('');
+const listings = ref([]);
+const get_country = ref([]);
+const get_phrase_show_on_map = ref('');
+const get_phrase_watch_details = ref('');
+const get_phrase_featured = ref('');
+const geojson = ref(null);
     const geojsonOptions = ref({
       pointToLayer: (feature, latLng) => {
         // Utilisez vos propres options pour personnaliser l'apparence des points sur la carte
@@ -204,31 +199,19 @@
     const zoom = ref(12); 
     const iconSize = ref(12); 
     const iconUrl = ref(12); 
-  // const mapIsReady = ref(false);
-  // const get_phrase_this_listing_is_verified = ref('');
-  
-  
-  const props = defineProps(['results']);
-  
-  
-  const body = document.getElementsByTagName("body")[0];
-  const getListingUrl = (listingId) => {
-  
+// const mapIsReady = ref(false);
+// const get_phrase_this_listing_is_verified = ref('');
+const body = document.getElementsByTagName("body")[0];
+const getListingUrl = (listingId) => {
+  // Assuming you have a method to generate the listing URL
   return `/api/get_listing_url/${listingId}`;
-  };
-  const capitalizeFirst = (str) => {
+};
+const capitalizeFirst = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-  const id = ref(null);
-
-  id.value = route.params.id;
-  onMounted(async () => {
-    props.results
-    console.log('Response from results:', props.results)
-    // console.log('Response from selected_city_id:', props.selected_city_id)
-    // console.log('Response from selected_category_id:', props.selected_category_id)
+};
+onMounted(async () => {
   try {
-  
+
     const response = await axios.get('/home/listings');
     console.log('Response from listings:', response.data);
     title.value = response.data.title;
@@ -241,119 +224,109 @@
     get_phrase_featured.value = get_phrase_feature.data;
     const this_listing_is_verifi = await axios.get('/api/get_phrase/this_listing_is_verified');
     this_listing_is_verified.value = this_listing_is_verifi.data;
-  
-  
+
+
         const responsegeo = await fetch("/home/filter_listings");
         const datas = await responsegeo.json();
-  
+
         if (datas && datas.geo_json) {
           geojson.value = JSON.parse(datas.geo_json);
         }
-  
+
     const get_count = await axios.get('/api/get_country', { listing_id: 2 });
     console.log('Response from country:', response.data);
     get_country.value = `${response.data.city}, ${response.data.state}, ${response.data.country}`;
   } catch (error) {
     console.error('Error fetching listing:', error);
   }
-  
+
   body.classList.add("annonces");
-  // return { geojson, geojsonOptions };
-  
-  });
-  const isWishlisted = (listingId) => {
-  
+// return { geojson, geojsonOptions };
+
+});
+const isWishlisted = (listingId) => {
+  // Assuming you have a method to check if the listing is wishlisted
+  // Replace this with your actual logic
   return false;
-  };
-  
-  const addToWishList = (listingId) => {
-  
+};
+
+const addToWishList = (listingId) => {
+  // Assuming you have a method to add to the wishlist
+  // Replace this with your actual logic
   console.log('Add to wishlist:', listingId);
-  };
-  
-  const isClaimed = (listingId) => {
-  
+};
+
+const isClaimed = (listingId) => {
+  // Assuming you have a method to check if the listing is claimed
+  // Replace this with your actual logic
   return false;
-  };
-  
-  const getCityStateCountry = async (cityId, stateId, countryId) => {
+};
+
+const getCityStateCountry = async (cityId, stateId, countryId) => {
   try {
     const city = await fetchCity(cityId);
     const state = await fetchState(stateId);
     const country = await fetchCountry(countryId);
-  
+
     return `${city.name}, ${state.name}, ${country.name}`;
   } catch (error) {
     console.error('Error fetching city, state, and country:', error);
     return 'City, State, Country';
   }
-  };
-  const fetchCity = async (cityId) => {
-  
+};
+const fetchCity = async (cityId) => {
+  // Implement logic to fetch city details based on cityId
+  // Replace this with your actual API call or data retrieval logic
   return { name: 'CityName' };
-  };
-  
-  const fetchState = async (stateId) => {
-  
+};
+
+const fetchState = async (stateId) => {
+  // Implement logic to fetch state details based on stateId
+  // Replace this with your actual API call or data retrieval logic
   return { name: 'StateName' };
-  };
-  
-  const fetchCountry = async (countryId) => {
-  
+};
+
+const fetchCountry = async (countryId) => {
+  // Implement logic to fetch country details based on countryId
+  // Replace this with your actual API call or data retrieval logic
   return { name: 'CountryName' };
-  };
-  
-  const isOpenNow = (listingId) => {
-  
+};
+
+const isOpenNow = (listingId) => {
+  // Assuming you have a method to check if the listing is open now
+  // Replace this with your actual logic
   return true;
-  };
-  
-  const isClosedNow = (listingId) => {
-  
+};
+
+const isClosedNow = (listingId) => {
+  // Assuming you have a method to check if the listing is closed now
+  // Replace this with your actual logic
   return false;
-  };
-  
-  const getOpeningStatus = (listingId) => {
-  
+};
+
+const getOpeningStatus = (listingId) => {
+  // Assuming you have a method to get the opening status
+  // Replace this with your actual logic
   return 'open';
-  };
-  
-  const getRatingQuality = (listingId) => {
-  
+};
+
+const getRatingQuality = (listingId) => {
+  // Assuming you have a method to get the quality rating
+  // Replace this with your actual logic
   return '5.0'; // Sample rating
-  };
-  
-  const getListingWiseReviewCount = (listingId) => {
-  
+};
+
+const getListingWiseReviewCount = (listingId) => {
+  // Assuming you have a method to get the review count for the listing
+  // Replace this with your actual logic
   return 10; // Sample count
-  };
-  
-  const getListingWiseRating = (listingId) => {
-  
+};
+
+const getListingWiseRating = (listingId) => {
+  // Assuming you have a method to get the rating for the listing
+  // Replace this with your actual logic
   return '4.5'; // Sample rating
-  };
-  
+};
+
   </script>
-  
-  
-  
-  
-  
-  
-  <!-- <template>
-    <div style="padding-top: 90px;">
-      <h1>Search Results</h1>
-      <ul>
-        <li v-for="result in results" :key="result.id">
-          {{ result.name }}
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const results = ref([]);
-  </script> -->
   

@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import PresentationView from "../views/Presentation/PresentationView.vue";
+import PresentationView from "../views/Presentation/Accueil.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import ResultPage from '../views/Presentation/Listing.vue';
+// import ResultPage from '../views/Presentation/Listing.vue';
 import RedirectToDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import UserDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import MesAnnonces from '../views/LandingPages/dashboard/MesAnnonces.vue';
@@ -54,7 +55,7 @@ const router = createRouter({
       component: AboutView,
     },
     {
-      path: '/annonces/:id',
+      path: '/annonces/details/:id',
       name: 'annoncesUnique',
       component: AnnoncesUnique,
       props: true,
@@ -65,6 +66,18 @@ const router = createRouter({
       component: UserUnique,
       props: true,
     },
+    // {
+    //   path: "/annonces/:id_cat",
+    //   name: "annonces",
+    //   component: Annonces,
+    //   props: true,
+    // },
+    // {
+    //   path: "/annonces",
+    //   name: "annonces",
+    //   component: Annonces,
+    //   props: true,
+    // },
     {
       path: "/recherche",
       name: "recherche",
@@ -78,11 +91,6 @@ const router = createRouter({
       props: route => ({
         results: JSON.parse(route.query.results) // Utilisez route.query.results
       }),
-    },
-    {
-      path: "/annonces",
-      name: "annonces",
-      component: Annonces,
     },
     {
       path: '/mon-compte',
@@ -244,7 +252,7 @@ const router = createRouter({
     },
     {
       path: "/deposer-une-annonce",
-      name: "depose_annonces",
+      name: "deposer-une-annonce",
       component: deposeAnnonce,
     },
     {

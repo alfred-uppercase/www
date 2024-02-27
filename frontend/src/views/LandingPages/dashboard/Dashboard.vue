@@ -86,13 +86,21 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
 
       <!-- section 1 -->
       <div class="flex flex-col gap-lg md:flex-row">
-        <div class="flex w-full grow items-center justify-center rounded-lg border-sm border-outline p-lg [&amp;>div]:w-full"><button class="relative shrink-0 mr-xl size-sz-96" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed"><img class="h-full w-full rounded-full" :src="get_user_thumbnail" alt="Photo de profil"><div class="absolute bottom-none  right-none flex  h-2xl w-2xl  items-center justify-center rounded-full bg-surface shadow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Ajouter une photo de profil" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><title>Ajouter une photo de profil</title><path fill-rule="evenodd" d="m12,2c.55,0,1,.45,1,1v7.94h8c.55,0,1,.45,1,1s-.45,1-1,1h-8v8.06c0,.55-.45,1-1,1s-1-.45-1-1v-8.06H3c-.55,0-1-.45-1-1s.45-1,1-1h8V3c0-.55.45-1,1-1Z"></path></svg></div></button><div class="_2KqHw"><div class="flex items-center justify-between text-body-1"><div><h2 class="mr-lg max-w-sz-384 truncate text-headline-2-expanded">{{ userData.name }}</h2></div><RouterLink :to="{ name: 'ProfilPublic' }" class="hidden font-bold underline md:block" >Accéder à mon profil public</RouterLink></div></div></div>
+        <div class="flex w-full grow items-center justify-center rounded-lg border-sm border-outline p-lg [&amp;>div]:w-full">
+          <button data-bs-toggle="modal" data-bs-target="#addProfil" class="relative shrink-0 mr-xl size-sz-96" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed"><img class="h-full w-full rounded-full" :src="get_user_thumbnail" alt="Photo de profil"><div class="absolute bottom-none  right-none flex  h-2xl w-2xl  items-center justify-center rounded-full bg-surface shadow"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Ajouter une photo de profil" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><title>Ajouter une photo de profil</title><path fill-rule="evenodd" d="m12,2c.55,0,1,.45,1,1v7.94h8c.55,0,1,.45,1,1s-.45,1-1,1h-8v8.06c0,.55-.45,1-1,1s-1-.45-1-1v-8.06H3c-.55,0-1-.45-1-1s.45-1,1-1h8V3c0-.55.45-1,1-1Z"></path></svg></div></button><div class="_2KqHw"><div class="flex items-center justify-between text-body-1"><div><h2 class="mr-lg max-w-sz-384 truncate text-headline-2-expanded">{{ userData.name }}</h2></div><RouterLink :to="{ name: 'ProfilPublic' }" class="hidden font-bold underline md:block" >Accéder à mon profil public</RouterLink></div></div></div>
         <a class="md:w-sz-384" href="/compte/porte-monnaie?entryPoint=myaccount"><div class="relative h-full overflow-hidden rounded-lg py-sm pl-3xl shadow"><div class="absolute -left-[28.3rem] -top-[15.5rem]"><svg width="385" height="418" viewBox="0 0 385 418" fill="none" xmlns="http://www.w3.org/2000/svg"><circle class="fill-main" cx="192.629" cy="225.167" r="136" transform="rotate(-135 192.629 225.167)" fill-opacity="0.56"></circle><circle cx="209.626" cy="142.508" r="125" transform="rotate(-8.37699 209.626 142.508)" fill="#627C93" fill-opacity="0.4"></circle></svg></div><div class="flex flex-col pl-3xl"><h2 class="text-body-1 font-bold">Porte-monnaie</h2><span class="mt-lg text-display-3">0&nbsp;€</span><span class="mt-md text-body-1">Solde disponible</span></div></div></a>
       </div>
 
+
+
+
+
+
+
+
         <div class="mt-xl"><div class="my-xl"></div></div>
         <!-- Add profile pic -->
-        <div class="relative mb-xl w-full items-center justify-between rounded-lg border-sm border-solid border-neutral/dim-4 bg-support-container p-xl pt-3xl sm:flex" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r6:" data-state="closed"><button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-32 h-sz-32 rounded-lg text-neutral hover:bg-neutral/dim-5 enabled:active:bg-neutral/dim-5 focus-visible:bg-neutral/dim-5 px-none text-body-1 absolute right-md top-md" aria-busy="false" aria-live="off" aria-label="Fermer l'avertissement sur la photo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Close" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m21.6,19.67l-7.68-7.68,7.57-7.59c.53-.53.53-1.4,0-1.93-.53-.53-1.4-.53-1.93,0l-7.57,7.58L4.33,2.4c-.53-.53-1.4-.53-1.93,0-.53.53-.53,1.4,0,1.93l7.66,7.66-7.66,7.65c-.53.53-.53,1.4,0,1.93.53.53,1.4.53,1.93,0l7.66-7.66,7.68,7.68c.53.53,1.4.53,1.93,0,.53-.53.53-1.4,0-1.93h0Z"></path></svg></button><div class="basis-3/4"><div class="flex items-center"><h2 class="mr-md text-headline-2">Photo de profil</h2><span data-spark-component="tag" class="box-border inline-flex items-center justify-center gap-sm whitespace-nowrap text-caption font-bold h-sz-20 px-md rounded-full border-sm border-current text-basic"> nouveau</span></div><p class="mb-xl mt-sm text-body-1 md:mb-none">Pour une expérience plus agréable entre membres avec qui vous allez faire de bonnes affaires !</p></div><button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter ma photo de profil</button></div>
+        <div class="relative mb-xl w-full items-center justify-between rounded-lg border-sm border-solid border-neutral/dim-4 bg-support-container p-xl pt-3xl sm:flex" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r6:" data-state="closed"><button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-32 h-sz-32 rounded-lg text-neutral hover:bg-neutral/dim-5 enabled:active:bg-neutral/dim-5 focus-visible:bg-neutral/dim-5 px-none text-body-1 absolute right-md top-md" aria-busy="false" aria-live="off" aria-label="Fermer l'avertissement sur la photo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Close" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m21.6,19.67l-7.68-7.68,7.57-7.59c.53-.53.53-1.4,0-1.93-.53-.53-1.4-.53-1.93,0l-7.57,7.58L4.33,2.4c-.53-.53-1.4-.53-1.93,0-.53.53-.53,1.4,0,1.93l7.66,7.66-7.66,7.65c-.53.53-.53,1.4,0,1.93.53.53,1.4.53,1.93,0l7.66-7.66,7.68,7.68c.53.53,1.4.53,1.93,0,.53-.53.53-1.4,0-1.93h0Z"></path></svg></button><div class="basis-3/4"><div class="flex items-center"><h2 class="mr-md text-headline-2">Photo de profil</h2><span data-spark-component="tag" class="box-border inline-flex items-center justify-center gap-sm whitespace-nowrap text-caption font-bold h-sz-20 px-md rounded-full border-sm border-current text-basic"> nouveau</span></div><p class="mb-xl mt-sm text-body-1 md:mb-none">Pour une expérience plus agréable entre membres avec qui vous allez faire de bonnes affaires !</p></div><button data-bs-toggle="modal" data-bs-target="#addProfil" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter ma photo de profil</button></div>
           <!-- Les sections -->
         <div class="grid gap-xl md:grid-cols-2 lg:grid-cols-3">
           <!--Annonces-->
@@ -138,7 +146,41 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
 </div>
 </main>
 
-
+<!-- Modal -->
+<div
+          class="modal fade"
+          id="addProfil"
+          tabindex="-1"
+          aria-labelledby="addProfilLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <MaterialButton
+                  color="none"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close">
+                </MaterialButton>
+              </div>
+              <div class="modal-body">
+                <div class="mb-xl flex justify-center [&amp;>*]:h-sz-160 [&amp;>*]:w-sz-160 [&amp;>*]:rounded-full"><img :src="get_user_thumbnail" class="_1cnjm" alt="ma photo de profil"></div>
+              
+                <div class="[&amp;>*]:mb-md"><h2 class="text-headline-1">Photo de profil</h2><p class="text-body-1">Nous sommes ravis de vous rencontrer pour de vrai !</p><p class="text-caption text-neutral">Votre photo ne doit pas être contraire aux bonnes mœurs ou à l'ordre public, ni porter atteinte aux droits de tiers.</p><div class="_3jQr3"><p class="text-neutral">Nous acceptons les formats : jpg, jpeg, png • Poids max : </p></div></div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <MaterialButton
+                  variant="gradient"
+                  color="dark"
+                  data-bs-dismiss="modal">
+                  Ferme
+                </MaterialButton>
+                <button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter une photo</button>
+              </div>
+            </div>
+          </div>
+        </div>
 </template>
   
 <!-- <script setup> -->
