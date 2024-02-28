@@ -6,53 +6,24 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    "-74.033074",
-                    "40.706464"
+                    "-74.037191",
+                    "40.708026"
                 ]
             },
             "properties": {
-                "id": "39ee3f7a26af9b54e168d59cc8b3d580",
+                "id": "8922fa59f87a405bc75fb13081fa0a03",
                 "index": 0,
                 "isActive": true,
-                "logo": "82760147a16185456283fb05e22a82d4.jpg",
-                "image": "82760147a16185456283fb05e22a82d4.jpg",
-                "link": "http://localhost/general/teste-mis-en-avant-voitured/2",
+                "logo": "12aa843a2016169177af23c98ff615a7.jpg",
+                "image": "12aa843a2016169177af23c98ff615a7.jpg",
+                "link": "http://localhost/general/hhhhh/3",
                 "url": "ffff.com",
-                "name": "Teste Mis en avant Voitured",
+                "name": "HHHHH",
                 "category": "general",
-                "email": "f203666@gmail.com",
+                "email": "",
                 "stars": "0.0",
-                "phone": "+261325300003",
-                "address": "Logt III G 46 CABIS Ambatolampy Atehiroka",
-                "about": "about",
-                "tags": [
-                    ""
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    "-73.9351",
-                    "40.697195"
-                ]
-            },
-            "properties": {
-                "id": "524f5cfbcc1b6168b5eae0e3435b192f",
-                "index": 1,
-                "isActive": true,
-                "logo": "f89c4289473b0c04612d22c36b0b7fbf.jpg",
-                "image": "f89c4289473b0c04612d22c36b0b7fbf.jpg",
-                "link": "http://localhost/hotel/grand-hotel/1",
-                "url": "www.err.Fr",
-                "name": "Grand Hotel",
-                "category": "hotel",
-                "email": "alfreddjpro@gmail.com",
-                "stars": "0.0",
-                "phone": "0325300003",
-                "address": "Logt 255 citÃ© des 67 HA COrnRue Augostino Netto",
+                "phone": "",
+                "address": "",
                 "about": "about",
                 "tags": [
                     ""

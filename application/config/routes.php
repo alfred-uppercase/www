@@ -78,6 +78,7 @@ $route['api/get_amenities/(:any)'] = 'api/get_amenities/$1';
 $route['home/listing'] = 'home/listing';
 $route['annonces'] = 'vue';
 $route['annonces/details/(:any)'] = 'vue';
+$route['annonces/(:any)'] = 'vue';
 $route['user'] = 'vue';
 $route['redister'] = 'vue';
 $route['deposer-une-annonce'] = 'vue';

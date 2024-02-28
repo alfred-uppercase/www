@@ -557,7 +557,7 @@ class Frontend_model extends CI_Model
     }
 
     if ($selected_category_id != "") {
-      $this->db->like('categories', "$selected_category_id");
+      $this->db->where_in('categories', "$selected_category_id");
     }
     $this->db->order_by('is_featured', 'desc');
 
@@ -596,7 +596,7 @@ class Frontend_model extends CI_Model
     }
 
     if ($selected_category_id != "") {
-      $this->db->like('categories', "$selected_category_id");
+      $this->db->where_in('categories', "$selected_category_id");
     }
 
     $this->db->order_by('is_featured', 'desc');

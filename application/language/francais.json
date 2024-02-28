@@ -275,5 +275,15 @@
     "sim": "Sim",
     "copie": "Copie",
     "listing_updated_successfully": "Listing updated successfully",
-    "there_is_no_free_space_to_add_to_the_listing": "There is no free space to add to the listing"
+    "there_is_no_free_space_to_add_to_the_listing": "There is no free space to add to the listing",
+    "update_category": "Update category",
+    "update_category_form": "Update category form",
+    "category_title": "Category title",
+    "provide_category_name": "Provide category name",
+    "parent_category": "Parent category",
+    "select_parent_category": "Select parent category",
+    "icon_picker": "Icon picker",
+    "category_thumbnail": "Category thumbnail",
+    "category_updated": "Category updated",
+    "listing_updated": "Listing updated"
 }

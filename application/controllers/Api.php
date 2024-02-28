@@ -791,7 +791,7 @@ function now_open($listing_id = '') {
         $page_data['title']        = get_phrase('listings');
         $page_data['listings']     = $listings;
         $page_data['category_ids'] = $category_ids;
-        //$page_data['selected_category_id'] = $selected_category_id;
+        $page_data['selected_category_id'] = $selected_category_id;
         $page_data['amenity_ids']  = $amenity_ids;
         $page_data['city_id']      = $city_id;
         $page_data['search_string']      = $search_string;
@@ -800,9 +800,9 @@ function now_open($listing_id = '') {
         $page_data['with_open']   = $with_open;
         $page_data['price_range']  = $price_range;
         // $this->load->view('frontend/index', $page_data);
-        $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($page_data));
+        // $this->output
+        // ->set_content_type('application/json')
+        // ->set_output(json_encode($page_data));
     }
     function get_country($listing_id = "") {
         if (empty($listing_id)) {

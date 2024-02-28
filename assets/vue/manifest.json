@@ -1,23 +1,22 @@
 {
   "main.js": {
-    "file": "assets/main.9d5268fb.js",
+    "file": "assets/main.594e1553.js",
     "src": "main.js",
     "isEntry": true,
+    "dynamicImports": [
+      "../node_modules/leaflet/dist/images/marker-icon-2x.png",
+      "../node_modules/leaflet/dist/images/marker-icon.png",
+      "../node_modules/leaflet/dist/images/marker-shadow.png",
+      "../node_modules/leaflet/dist/leaflet-src.esm.js",
+      "_leaflet-src.4907a662.js"
+    ],
     "css": [
-      "assets/main.0b197410.css"
+      "assets/main.ace34c10.css"
     ],
     "assets": [
-      "assets/down-arrow.019a2471.svg",
       "assets/logo-ct-dark.7a12dae2.png",
-      "assets/bruce-mars.f4e2d5ca.jpg",
-      "assets/logo-coinbase.5b2f1a35.svg",
-      "assets/logo-nasa.98d2c4fa.svg",
-      "assets/logo-netflix.5140c329.svg",
-      "assets/logo-pinterest.2c5342d8.svg",
-      "assets/logo-spotify.e7181a97.svg",
-      "assets/logo-vodafone.3aa29ca3.svg",
-      "assets/macbook.7b9e2036.png",
       "assets/illustration-signin.4fb4c335.jpg",
+      "assets/bruce-mars.f4e2d5ca.jpg",
       "assets/testimonial-6-2.04ddfb8e.jpg",
       "assets/testimonial-6-3.4714eae5.jpg",
       "assets/blog-9-4.b058d197.jpg",
@@ -32,6 +31,33 @@
       "assets/nucleo-icons.daa807b2.woff",
       "assets/nucleo-icons.655956cd.ttf",
       "assets/nucleo-icons.21030e24.svg"
+    ]
+  },
+  "../node_modules/leaflet/dist/images/marker-icon-2x.png": {
+    "file": "assets/marker-icon-2x.17982e67.js",
+    "src": "../node_modules/leaflet/dist/images/marker-icon-2x.png",
+    "isDynamicEntry": true
+  },
+  "../node_modules/leaflet/dist/images/marker-icon.png": {
+    "file": "assets/marker-icon.c1a4cbf5.js",
+    "src": "../node_modules/leaflet/dist/images/marker-icon.png",
+    "isDynamicEntry": true
+  },
+  "../node_modules/leaflet/dist/images/marker-shadow.png": {
+    "file": "assets/marker-shadow.91c47cf3.js",
+    "src": "../node_modules/leaflet/dist/images/marker-shadow.png",
+    "isDynamicEntry": true
+  },
+  "../node_modules/leaflet/dist/leaflet-src.esm.js": {
+    "file": "assets/leaflet-src.esm.5b9ad573.js",
+    "src": "../node_modules/leaflet/dist/leaflet-src.esm.js",
+    "isDynamicEntry": true
+  },
+  "_leaflet-src.4907a662.js": {
+    "file": "assets/leaflet-src.4907a662.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.js"
     ]
   }
 }

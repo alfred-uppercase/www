@@ -6,24 +6,24 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    "-73.936943",
-                    "40.702011"
+                    "-74.037191",
+                    "40.708026"
                 ]
             },
             "properties": {
-                "id": "3e79e9ca9c351083e9f16dd8c8b7c221",
+                "id": "8922fa59f87a405bc75fb13081fa0a03",
                 "index": 0,
                 "isActive": true,
-                "logo": "0cab217d8d07210f3d63f1c5770de039.jpg",
-                "image": "0cab217d8d07210f3d63f1c5770de039.jpg",
-                "link": "http://localhost/general/renault-206/3",
+                "logo": "12aa843a2016169177af23c98ff615a7.jpg",
+                "image": "12aa843a2016169177af23c98ff615a7.jpg",
+                "link": "http://localhost/general/hhhhh/3",
                 "url": "ffff.com",
-                "name": "Renault 206",
+                "name": "HHHHH",
                 "category": "general",
                 "email": "",
                 "stars": "0.0",
                 "phone": "",
-                "address": "Logt III G 46 CABIS Ambatolampy Atehiroka",
+                "address": "",
                 "about": "about",
                 "tags": [
                     ""

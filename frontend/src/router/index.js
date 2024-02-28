@@ -66,18 +66,17 @@ const router = createRouter({
       component: UserUnique,
       props: true,
     },
-    // {
-    //   path: "/annonces/:id_cat",
-    //   name: "annonces",
-    //   component: Annonces,
-    //   props: true,
-    // },
-    // {
-    //   path: "/annonces",
-    //   name: "annonces",
-    //   component: Annonces,
-    //   props: true,
-    // },
+    {
+      path: "/annonces/:id",
+      name: "Annonces",
+      component: Annonces,
+      props: true,
+    },
+    {
+      path: "/annonces",
+      name: "annonces",
+      component: Annonces,
+    },
     {
       path: "/recherche",
       name: "recherche",

@@ -328,7 +328,7 @@ class Home extends CI_Controller
         $page_data['title']        = get_phrase('listings');
         $page_data['listings']     = $listings;
         $page_data['category_ids'] = $category_ids;
-        //$page_data['selected_category_id'] = $selected_category_id;
+        $page_data['selected_category_id'] = $selected_category_id;
         $page_data['amenity_ids']  = $amenity_ids;
         $page_data['city_id']      = $city_id;
         $page_data['search_string']      = $search_string;

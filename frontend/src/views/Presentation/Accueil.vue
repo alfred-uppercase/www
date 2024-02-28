@@ -49,7 +49,7 @@
                             class="indexstyles__Slide-sc-10uesfx-2 inqJnI">
                             <router-link 
                             :key="category.id"
-                            :to="{ name: 'annonces', params: { id_cat: category.id } }"
+                            :to="{ name: 'Annonces', params: { id: category.id } }"
                             class="group relative mr-lg block h-[12rem] w-[12rem] rounded-lg bg-neutral-container tiny:w-[18rem]" title="Ventes immobilières de maison et appartement">
                                     <!-- <a :href="`/recherche?search_string=&selected_city_id=&selected_category_id=${category.id}`"> -->
                                             <img alt="Ventes immobilières de maison et appartement" loading="lazy" width="361" height="241" decoding="async" data-nimg="1" class="!h-[12rem] w-[12rem] relative block z-base object-cover rounded-lg opacity-none transition-opacity duration-300 group-hover:opacity-[0.9] tiny:w-[18rem]" :src="`/uploads/category_thumbnails/${category.thumbnail}`" style="color: transparent;">
@@ -193,17 +193,19 @@
 import { ref, onMounted, onUnmounted, } from "vue";
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-const router = useRouter();
-
-
-
-
 import { storeToRefs } from 'pinia'
 // categorie
 import { useCategoryStore } from '../../stores/categorie'
 
 
 import { useCitieStore } from '../../stores/cities'
+
+const router = useRouter();
+
+
+
+
+
 const { cities } = storeToRefs(useCitieStore())
 const { getCities } = useCitieStore()
 getCities()
