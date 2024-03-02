@@ -84,30 +84,39 @@
           <!-- Photos -->
           <section class="relative" data-qa-id="adview_spotlight_container">
             <div class="_1o09v"><div class="flex">
-                                    <swiper
-                                            :slides-per-view="3"
-                                            :space-between="5"
-                                            navigation
-                                            @swiper="onSwiper"
-                                            @slideChange="onSlideChange"
-                                            aria-label="Carrousel du top des catégories"
-                                            class="relative flex h-sz-320 w-full"
-                                        >
-                                            <swiper-slide 
-                                            v-for="(photo, index) in parsePhotos(listingDetails.photos)" 
-                                            :key="index"
-                                            :data-marker-id="listing.code"
-                                            :id="listing.code"
-                                            class="shrink-0 grow-0 basis-1/3 first-of-type:pr-md last-of-type:pl-md">
-                                              <div class="shrink-0 grow-0 basis-1/3 first-of-type:pr-md last-of-type:pl-md">
-                                                <button class="styles_ImageFit__iKSDp styles_cover__MsMH7 styles_fullWidth__4pjL_ styles_clickable__UxTEV">
-                                                  <picture>
-                                                    <img :src="'/uploads/listing_images/' + photo" class="_1cnjm">
-                                                  </picture>
-                                                </button>
-                                              </div>
-                                            </swiper-slide>
-                                    </swiper>
+              <div v-if="listingDetails.photos">
+          <lightgallery
+              :settings="{ speed: 500, plugins: plugins }"
+              :onInit="onInit"
+              :onBeforeSlide="onBeforeSlide"
+              class="relative flex h-sz-320 w-full"
+            >
+              <a
+                data-lg-size="1406-1390"
+              v-for="(photo, index) in parsePhotos(listingDetails.photos)" :key="index"
+                class="gallery-item shrink-0 grow-0 basis-1/3 first-of-type:pr-md last-of-type:pl-md"
+                :data-src="'/uploads/listing_images/' + photo"
+                data-sub-html=""
+              >
+                <img
+                  class="img-responsive"
+                  :src="'/uploads/listing_images/' + photo"
+                />
+              </a>
+              <!-- <a
+                class="gallery-item"
+                data-video='{"source": [{"src":"https://www.lightgalleryjs.com/videos/video1.mp4", "type":"video/mp4"}], "attributes": {"preload": false, "controls": true}}'
+                data-poster=""
+                data-sub-html="<h4>Photo by - <a href='https://unsplash.com/@katherine_xx11' >Katherine Gu </a></h4><p> For all those years we were alone and helpless.</p>"
+              >
+                <img
+                  width="200"
+                  class="img-responsive"
+                  src="https://www.lightgalleryjs.com/images/demo/html5-video-poster.jpg"
+                />
+              </a> -->
+            </lightgallery>
+          </div>
           </div>
           </div>
           </section>
@@ -133,7 +142,40 @@
 
         <!--  colonne -->
         <aside id="aside" class="col-[1] row-[2] min-w-page-min custom:col-start-2 custom:col-end-3 custom:row-start-1 custom:row-end-3 custom:ml-[2rem] custom:flex custom:flex-col">
-<section class="rounded-sm bg-surface shadow mx-lg mb-xl mt-none lg:mx-none _1o09v"><div class="overflow-hidden border-neutral/dim-4 custom:border-b-sm custom:mx-xl custom:py-xl"><div><div class="flex items-center truncate"><div class="relative flex w-sz-64"><a rel="nofollow" class="styles_profilePicture__HJ2JL" href="/profil/4b435e44-8ef7-4113-b52e-265de8108ea7/offres"><img src="https://img.leboncoin.fr/api/v1/tenants/9a6387a1-6259-4f2c-a887-7e67f23dd4cb/domains/20bda58f-d650-462e-a72a-a5a7ecf2bf88/buckets/21d2b0bc-e54c-4b64-a30b-89127b18b785/images/profile/pictures/default/190eb3d4-57e2-50b5-9a58-f6e5af8cc20b?rule=pp-large" class="_1cnjm" alt="avatar de l’utilisateur"></a></div><div class="ml-lg flex flex-col overflow-hidden"><a rel="nofollow" class="block truncate text-headline-2 hover:underline" href="/profil/4b435e44-8ef7-4113-b52e-265de8108ea7/offres">cg</a><div></div><div></div></div><a aria-label="Accéder à mon profil public" class="grow" rel="nofollow" href="/profil/4b435e44-8ef7-4113-b52e-265de8108ea7/offres"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ArrowVerticalRight" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16 ml-auto" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m7.3,2.28c-.38.38-.4,1.02-.03,1.41l7.69,8.31-7.69,8.31c-.37.4-.36,1.03.03,1.41.38.38.99.37,1.36-.03l7.87-8.51c.15-.16.27-.34.35-.54.08-.21.12-.43.12-.65s-.04-.44-.12-.65c-.08-.2-.2-.38-.35-.54L8.66,2.31c-.37-.4-.98-.41-1.36-.03Z"></path></svg></a></div><div class="mt-lg grid gap-md"></div></div><div class="_1o09v"><span class="flex items-center text-body-2 pt-lg"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ClockOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16 mr-sm" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m12,3.97C7.56,3.97,3.97,7.56,3.97,12s3.6,8.03,8.03,8.03,8.03-3.6,8.03-8.03S16.44,3.97,12,3.97ZM2,12C2,6.48,6.48,2,12,2s10,4.48,10,10-4.48,10-10,10S2,17.52,2,12Z"></path><path fill-rule="evenodd" d="m12,7.55c.54,0,.98.44.98.98v3.1l3.29,3.83c.35.41.31,1.03-.11,1.39-.41.35-1.03.31-1.39-.11l-3.52-4.11c-.15-.18-.24-.41-.24-.64v-3.47c0-.54.44-.98.98-.98Z"></path></svg>Répond généralement dans les 3 heures</span></div></div><div class="mx-lg my-xl flex flex-col gap-md"><div class="_1o09v"><button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-support text-on-support hover:bg-support-hovered enabled:active:bg-support-pressed focus-visible:bg-support-focused w-full" aria-busy="false" aria-live="off" data-pub-id="adview_button_contact_contact">Message</button></div></div></section>
+          <section class="rounded-sm bg-surface shadow mx-lg mb-xl mt-none lg:mx-none _1o09v">
+            <div class="overflow-hidden border-neutral/dim-4 custom:border-b-sm custom:mx-xl custom:py-xl">
+              <div>
+                <div class="flex items-center truncate">
+                  <div class="relative flex w-sz-64">
+                    <router-link v-if="listingDetails.user_id !== undefined" :key="listingDetails.user_id"
+                    :to="{ name: 'userUnique', params: { user_id: listingDetails.user_id } }"
+                    class="styles_profilePicture__HJ2JL"
+                    >
+                      <img :src="get_user_thumbnail" class="_1cnjm">
+                    </router-link>
+                  </div>
+                  <div class="ml-lg flex flex-col overflow-hidden">
+                    <router-link v-if="listingDetails.user_id !== undefined" :key="listingDetails.user_id"
+                    :to="{ name: 'userUnique', params: { user_id: listingDetails.user_id } }" rel="nofollow" class="block truncate text-headline-2 hover:underline">
+                    {{ get_users.name }}</router-link>
+                    <div>
+
+                    </div>
+                    <div>
+
+                    </div>
+                  </div>
+                  <a aria-label="Accéder à mon profil public" class="grow" rel="nofollow" href="/profil/4b435e44-8ef7-4113-b52e-265de8108ea7/offres">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ArrowVerticalRight" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16 ml-auto" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m7.3,2.28c-.38.38-.4,1.02-.03,1.41l7.69,8.31-7.69,8.31c-.37.4-.36,1.03.03,1.41.38.38.99.37,1.36-.03l7.87-8.51c.15-.16.27-.34.35-.54.08-.21.12-.43.12-.65s-.04-.44-.12-.65c-.08-.2-.2-.38-.35-.54L8.66,2.31c-.37-.4-.98-.41-1.36-.03Z"></path></svg></a></div><div class="mt-lg grid gap-md"></div></div><div class="_1o09v"><span class="flex items-center text-body-2 pt-lg">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ClockOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16 mr-sm" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m12,3.97C7.56,3.97,3.97,7.56,3.97,12s3.6,8.03,8.03,8.03,8.03-3.6,8.03-8.03S16.44,3.97,12,3.97ZM2,12C2,6.48,6.48,2,12,2s10,4.48,10,10-4.48,10-10,10S2,17.52,2,12Z"></path><path fill-rule="evenodd" d="m12,7.55c.54,0,.98.44.98.98v3.1l3.29,3.83c.35.41.31,1.03-.11,1.39-.41.35-1.03.31-1.39-.11l-3.52-4.11c-.15-.18-.24-.41-.24-.64v-3.47c0-.54.44-.98.98-.98Z"></path></svg>Répond généralement dans les 3 heures</span>
+                  </div>
+                </div>
+                <div class="mx-lg my-xl flex flex-col gap-md">
+                  <div class="_1o09v">
+                    <button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-support text-on-support hover:bg-support-hovered enabled:active:bg-support-pressed focus-visible:bg-support-focused w-full" aria-busy="false" aria-live="off" data-pub-id="adview_button_contact_contact">Message</button>
+                  </div>
+                </div>
+          </section>
         </aside>
 
       </article>
@@ -477,35 +519,35 @@ onMounted(async () => {
 });
 </script>
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-  import 'swiper/css/scrollbar';
+import Lightgallery from 'lightgallery/vue';
+import lgZoom from 'lightgallery/plugins/zoom';
+import lgVideo from 'lightgallery/plugins/video';
 
 export default {
-    components: {
-      Swiper,
-      SwiperSlide,
+  name: 'App',
+  components: {
+    Lightgallery,
+  },
+  data: () => ({
+    plugins: [lgZoom, lgVideo],
+  }),
+  methods: {
+    onInit: () => {
+      console.log('lightGallery has been initialized');
     },
-    setup() {
-      const onSwiper = (swiper) => {
-        console.log(swiper);
-      };
-      const onSlideChange = () => {
-        console.log('slide change');
-      };
-      return {
-        onSwiper,
-        onSlideChange,
-        modules: [Navigation, Pagination, Scrollbar, A11y],
-      };
+    onBeforeSlide: () => {
+      console.log('calling before slide');
     },
-  };
+  },
+};
 </script> 
   
-  
+<style lang="css" scoped>
+@import url('https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lightgallery.css');
+@import url('https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lg-zoom.css');
+@import url('https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lg-video.css');
+</style>
+
     
 <style>.gallery {
   display: flex;
@@ -522,7 +564,18 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}</style>
+}
+.lightgallery-vue{
+  overflow: hidden;
+}
+.img-responsive{
+  height: 100%;
+  object-fit: cover;
+}
+.first-of-type\:pr-md:nth-child(2) {
+    padding-right: var(--spacing-md);
+}
+</style>
     
   
   <!-- ListingSingle.vue -->

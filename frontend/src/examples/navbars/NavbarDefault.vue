@@ -1587,8 +1587,8 @@ onMounted(() => {
     background: #fff;
     border-bottom: 1px solid #e2e2e2;
   }
-  
+/*   
   .navbar .nav-link {
     font-size: 1.08rem !important;
-  }
+  } */
   </style>

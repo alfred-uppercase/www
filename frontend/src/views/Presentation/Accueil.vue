@@ -115,11 +115,11 @@
                                                     <div class="adCard_c3c39 relative flex h-[inherit]" data-test-id="adcard-consumer-goods-list">
                                                         <div class="adCard_9vq5pg relative before:block" data-test-id="image">
                                                             <div class="adCard_10ldc relative h-full">
-                                                                <div class=" relative box-border flex h-full items-center justify-center overflow-hidden bg-neutral-container min-h-[auto] min-w-[auto] rounded-md">
+                                                                <div style="height: 237px;" class=" relative imgbox box-border flex h-full items-center justify-center overflow-hidden bg-neutral-container min-h-[auto] min-w-[auto] rounded-md">
                                                                     <div class="_2JtY0">
                                                                         <div class="LazyLoad is-visible">
                                                                             <div class="_29Lk0">
-                                                                                <img :src="'uploads/listing_thumbnails/' + listing.listing_thumbnail" class="_1cnjm absolute inset-none m-auto h-full w-full object-cover" alt="">
+                                                                                <img :src="'/uploads/listing_thumbnails/' + listing.listing_thumbnail" class="_1cnjm absolute inset-none m-auto h-full w-full object-cover" alt="">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -355,5 +355,8 @@ export default {
     margin-left: 0;
     margin-top: var(--spacing-md);
     width: 100%;
+}
+.imgbox{
+    height: 237px;
 }
 </style>

@@ -17,6 +17,7 @@
     "dropzone": "^6.0.0-beta.2",
     "dropzone-vue": "^0.1.11",
     "jquery-nice-select": "^1.1.0",
+    "lightgallery": "^2.7.2",
     "pinia": "^2.0.14",
     "prismjs": "1.28.0",
     "swiper": "^11.0.7",

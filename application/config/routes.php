@@ -83,6 +83,7 @@ $route['user'] = 'vue';
 $route['redister'] = 'vue';
 $route['deposer-une-annonce'] = 'vue';
 $route['profil'] = 'vue';
+$route['profil/(:any)'] = 'vue';
 $route['profil/show'] = 'vue';
 $route['compte/editer'] = 'vue';
 $route['emploi/profil'] = 'vue';

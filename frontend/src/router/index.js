@@ -61,7 +61,7 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/user/:user_id',
+      path: '/profil/:user_id',
       name: 'userUnique',
       component: UserUnique,
       props: true,

@@ -17,7 +17,11 @@ body {
   }
   
   .navbar .nav-link {
-    font-size: 0.8rem !important;
+    font-size: var(--font-size-body-2-font-size)!important;
+    line-height: var(--font-size-body-2-line-height)!important;
+  }
+  .btn.btn-sm i, .btn-group-sm>.btn i{
+    font-size: 1.3rem !important;
   }
   
   .bg-blue {
@@ -71,7 +75,7 @@ body {
   .btn.btn-sm i,
   .btn-group-sm>.btn i {
     margin-right: 5px !important;
-    font-size: 0.8rem !important;
+    font-size: 1.3rem !important;
   }
   
   .pr-0 {

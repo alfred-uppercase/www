@@ -285,5 +285,18 @@
     "icon_picker": "Icon picker",
     "category_thumbnail": "Category thumbnail",
     "category_updated": "Category updated",
-    "listing_updated": "Listing updated"
+    "listing_updated": "Listing updated",
+    "general_user_list": "General user list",
+    "photo": "Photo",
+    "name": "Name",
+    "solcial_links": "Solcial links",
+    "update_user": "Update user",
+    "user_add_form": "User add form",
+    "facebook_link": "Facebook link",
+    "write_down_facebook_url": "Write down facebook url",
+    "twitter_link": "Twitter link",
+    "write_down_twitter_url": "Write down twitter url",
+    "linkedin_link": "Linkedin link",
+    "write_down_linkedin_url": "Write down linkedin url",
+    "user_image": "User image"
 }
