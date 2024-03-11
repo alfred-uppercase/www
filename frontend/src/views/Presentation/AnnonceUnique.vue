@@ -122,7 +122,29 @@
           </section>
 
           <!-- Details -->
-          <div class="mx-lg grid gap-lg py-xl border-b-sm border-b-neutral/dim-4 lg:mx-md undefined"><div class="flex flex-col gap-lg" data-qa-id="adview_spotlight_description_container"><h1 class="break-words text-headline-1-expanded undefined" data-qa-id="adview_title">{{ listingDetails.name }}</h1><div class="flex flex-wrap items-center"><div class="mr-md flex flex-wrap items-center justify-between" data-qa-id="adview_price"><div class="flex"><p class="text-headline-2  ">80&nbsp;€</p></div></div></div><div class="flex flex-col items-baseline justify-between gap-md md:flex-row"><p class="text-caption opacity-dim-1">aujourd’hui à 18:58</p><div class="flex items-center gap-sm text-surface"><div data-tip="Remonter en tête de liste" currentitem="false"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="MoveUp" fill="currentColor" stroke="none" class="fill-current text-main w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m4.85,4.88c.18-.18.44-.18.62,0l2.48,2.47c.27.37,0,.82-.35.82h-1.59v10.17c0,.46-.35.92-.89.92s-.88-.46-.88-.92v-10.17h-1.59c-.35,0-.53-.55-.27-.82l2.48-2.47Zm6.46,5.95h-1.77c-.53,0-.88-.46-.88-.92s.35-.92.88-.92h1.77c.53,0,.89.46.89.92s-.35.92-.89.92Zm5.31,4.21h-7.26c-.35,0-.71-.37-.71-.92s.27-.92.71-.92h7.26c.44,0,.71.37.71.92s-.26.92-.71.92Zm4.43,2.38h-11.68c-.44,0-.71.46-.71.92,0,.55.35.92.71.92h11.6c.44,0,.8-.37.8-.92,0-.46-.35-.92-.71-.92Z"></path><path fill-rule="evenodd" d="m5.64,4.71l2.49,2.48v.02c.38.51.03,1.21-.54,1.21h-1.35v9.92c0,.57-.44,1.16-1.13,1.16s-1.13-.59-1.13-1.16v-9.92h-1.35c-.32,0-.52-.25-.6-.48-.08-.23-.05-.54.16-.76h0s2.48-2.47,2.48-2.47c.27-.28.7-.28.97,0Zm-.35.34c-.08-.08-.19-.08-.27,0h0s-2.48,2.47-2.48,2.47c-.05.06-.08.16-.04.27.04.11.1.14.13.14h1.84v10.41c0,.35.27.67.64.67s.64-.32.64-.67V7.93h1.84c.13,0,.31-.21.17-.43l-2.47-2.46Zm3.12,4.87c0-.56.44-1.16,1.13-1.16h1.77c.69,0,1.13.59,1.13,1.16s-.44,1.16-1.13,1.16h-1.77c-.69,0-1.13-.59-1.13-1.16Zm1.13-.67c-.37,0-.64.32-.64.67s.27.67.64.67h1.77c.37,0,.64-.32.64-.67s-.27-.67-.64-.67h-1.77Zm-.89,4.08c.17-.22.42-.35.71-.35h7.26c.3,0,.55.13.72.35.16.21.24.5.24.81s-.07.6-.24.81c-.17.22-.42.35-.72.35h-7.26c-.53,0-.95-.52-.95-1.16,0-.31.07-.6.24-.81Zm.39.29c-.08.11-.14.28-.14.52,0,.46.29.67.46.67h7.26c.15,0,.25-.06.33-.16.08-.11.14-.28.14-.52s-.06-.41-.14-.52c-.08-.1-.18-.16-.33-.16h-7.26c-.15,0-.25.06-.33.16Zm0,4.24c-.09.13-.14.3-.14.49,0,.46.29.67.46.67h11.6c.28,0,.55-.23.55-.67,0-.17-.07-.35-.17-.48-.11-.14-.22-.19-.29-.19h-11.68c-.13,0-.23.06-.32.18Zm-.4-.28c.16-.22.4-.39.72-.39h11.68c.28,0,.52.18.68.38.16.21.27.49.27.78,0,.66-.44,1.16-1.04,1.16h-11.6c-.53,0-.95-.52-.95-1.16,0-.27.08-.55.23-.77Z"></path></svg></div><div class="__react_component_tooltip t01651f31-df1f-47ae-b9f0-e18e6cfd7a64 place-top type-dark" id="t01651f31-df1f-47ae-b9f0-e18e6cfd7a64" data-id="tooltip"></div></div></div></div></div>
+          <div class="mx-lg grid gap-lg py-xl border-b-sm border-b-neutral/dim-4 lg:mx-md undefined">
+            <div class="flex flex-col gap-lg" data-qa-id="adview_spotlight_description_container">
+              <h1 class="break-words text-headline-1-expanded undefined" data-qa-id="adview_title">{{ listingDetails.name }}</h1>
+              {{ listingDetails.address }}
+              <div class="flex flex-wrap items-center">
+                <div class="mr-md flex flex-wrap items-center justify-between" data-qa-id="adview_price">
+                  <div class="flex" v-if="cheapestRoom(listingDetails.id)" :key="cheapestRoom(listingDetails.id).id">
+                    <p class="text-headline-2  ">à partir de&nbsp;{{ cheapestRoom(listingDetails.id).price }} € / nuit</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-baseline justify-between gap-md md:flex-row">
+                <p class="text-caption opacity-dim-1">{{ formattedDate(listingDetails.date_added) }}</p><div class="flex items-center gap-sm text-surface">
+                  <div data-tip="Remonter en tête de liste" currentitem="false">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="MoveUp" fill="currentColor" stroke="none" class="fill-current text-main w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m4.85,4.88c.18-.18.44-.18.62,0l2.48,2.47c.27.37,0,.82-.35.82h-1.59v10.17c0,.46-.35.92-.89.92s-.88-.46-.88-.92v-10.17h-1.59c-.35,0-.53-.55-.27-.82l2.48-2.47Zm6.46,5.95h-1.77c-.53,0-.88-.46-.88-.92s.35-.92.88-.92h1.77c.53,0,.89.46.89.92s-.35.92-.89.92Zm5.31,4.21h-7.26c-.35,0-.71-.37-.71-.92s.27-.92.71-.92h7.26c.44,0,.71.37.71.92s-.26.92-.71.92Zm4.43,2.38h-11.68c-.44,0-.71.46-.71.92,0,.55.35.92.71.92h11.6c.44,0,.8-.37.8-.92,0-.46-.35-.92-.71-.92Z"></path><path fill-rule="evenodd" d="m5.64,4.71l2.49,2.48v.02c.38.51.03,1.21-.54,1.21h-1.35v9.92c0,.57-.44,1.16-1.13,1.16s-1.13-.59-1.13-1.16v-9.92h-1.35c-.32,0-.52-.25-.6-.48-.08-.23-.05-.54.16-.76h0s2.48-2.47,2.48-2.47c.27-.28.7-.28.97,0Zm-.35.34c-.08-.08-.19-.08-.27,0h0s-2.48,2.47-2.48,2.47c-.05.06-.08.16-.04.27.04.11.1.14.13.14h1.84v10.41c0,.35.27.67.64.67s.64-.32.64-.67V7.93h1.84c.13,0,.31-.21.17-.43l-2.47-2.46Zm3.12,4.87c0-.56.44-1.16,1.13-1.16h1.77c.69,0,1.13.59,1.13,1.16s-.44,1.16-1.13,1.16h-1.77c-.69,0-1.13-.59-1.13-1.16Zm1.13-.67c-.37,0-.64.32-.64.67s.27.67.64.67h1.77c.37,0,.64-.32.64-.67s-.27-.67-.64-.67h-1.77Zm-.89,4.08c.17-.22.42-.35.71-.35h7.26c.3,0,.55.13.72.35.16.21.24.5.24.81s-.07.6-.24.81c-.17.22-.42.35-.72.35h-7.26c-.53,0-.95-.52-.95-1.16,0-.31.07-.6.24-.81Zm.39.29c-.08.11-.14.28-.14.52,0,.46.29.67.46.67h7.26c.15,0,.25-.06.33-.16.08-.11.14-.28.14-.52s-.06-.41-.14-.52c-.08-.1-.18-.16-.33-.16h-7.26c-.15,0-.25.06-.33.16Zm0,4.24c-.09.13-.14.3-.14.49,0,.46.29.67.46.67h11.6c.28,0,.55-.23.55-.67,0-.17-.07-.35-.17-.48-.11-.14-.22-.19-.29-.19h-11.68c-.13,0-.23.06-.32.18Zm-.4-.28c.16-.22.4-.39.72-.39h11.68c.28,0,.52.18.68.38.16.21.27.49.27.78,0,.66-.44,1.16-1.04,1.16h-11.6c-.53,0-.95-.52-.95-1.16,0-.27.08-.55.23-.77Z"></path></svg>
+                  </div>
+                  <div class="__react_component_tooltip t01651f31-df1f-47ae-b9f0-e18e6cfd7a64 place-top type-dark" id="t01651f31-df1f-47ae-b9f0-e18e6cfd7a64" data-id="tooltip">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         
           <!-- Description -->
           <div class="mx-lg grid gap-lg py-xl border-b-sm border-b-neutral/dim-4 lg:mx-md undefined"><h2 class="flex items-center text-headline-2">{{ get_phrase.about }}</h2><div data-qa-id="adview_description_container"><p class="whitespace-pre-line text-body-1 [overflow-wrap:anywhere]" v-html="listingDetails.description"></p></div></div>
@@ -178,6 +200,14 @@
           </section>
         </aside>
 
+        <h3>Spécifications de la chambre :</h3>
+                                                                    <ul>
+                                                                        <li v-for="romspec in romspecs[listingDetails.id]" :key="romspec.id">
+                                                                            {{ romspec.name }} - {{ romspec.description }} - {{ romspec.price }}
+                                                                        </li>
+                                                                    </ul>
+
+
       </article>
 
     </div>
@@ -186,250 +216,6 @@
 
 
 
-
-
-
-  <div class="container mt-90">
-    <div class="row">
-      <div class="col-lg-8">
-        <section id="description">
-          <div class="detail_title_1">
-            <div class="row">
-              <div class="col-6">
-
-              </div>
-              <div class="col-6">
-
-              </div>
-            </div>
-            <h1>
-              {{ listingDetails.name }}
-
-              <!-- Assuming you have a property 'claimingStatus' in your data -->
-              <!-- <span v-if="claimingStatus === 1" class="claimed_icon" data-toggle="tooltip" title="This listing is verified">
-                <img src="/assets/frontend/images/verified.png" width="30" />
-              </span> -->
-            </h1>
-
-            <!-- Check if latitude and longitude are not empty -->
-            <a v-if="listingDetails.latitude && listingDetails.longitude" class="address"
-              :href="'http://maps.google.com/maps?q=' + listingDetails.latitude + ',' + listingDetails.longitude"
-              target="_blank">
-              {{ listingDetails.address }}
-            </a>
-          </div>
-          <div class="add_bottom_15">
-            <!-- <span v-for="(categoryId, index) in listingDetails.categories" :key="index" class="loc_open mr-2">
-            <a v-if="categoryNames[categoryId]" :href="'/home/filter_listings?category=' + categoryNames[categoryId].slug" style="color: #32a067;">
-              {{ categoryNames[categoryId].name }}
-            </a>
-          </span> -->
-          </div>
-          <h5>{{ get_phrase.about }}</h5>
-          <p v-html="listingDetails.description"></p>
-
-          <div v-if="listingDetails.photos">
-            <h2>Photos {{ get_phrase.photo_gallery }}</h2>
-            <div class="gallery">
-              <div class="imgcontent" v-for="(photo, index) in parsePhotos(listingDetails.photos)" :key="index">
-                <img :src="'/uploads/listing_images/' + photo" :alt="'Photo ' + (index + 1)" />
-              </div>
-            </div>
-
-          </div>
-
-          <!-- <Social /> -->
-
-          <div class="row mb-3 ch">
-            <div class="col-12">
-              <h5 class="mb-3">Agents details</h5>
-
-              <div class="row mb-1">
-                <div class="col-md-12">
-                  <!-- <router-link
-                :key="listingDetails.user_id"
-                :to="{ 
-                name: 'userUnique', 
-                params: { user_id: listingDetails.user_id } 
-                }"
-              >
-              <img :src='get_user_thumbnail' alt="" class="float-left mr-3" width="80">
-              </router-link> -->
-                  <router-link v-if="listingDetails.user_id !== undefined" :key="listingDetails.user_id"
-                    :to="{ name: 'userUnique', params: { user_id: listingDetails.user_id } }">
-                    <img :src="get_user_thumbnail" alt="" class="float-left mr-3" width="80">
-                  </router-link>
-
-
-                  <p class="m-0 pt-3">
-                    <!-- <router-link
-                :key="listingDetails.user_id"
-                :to="{ name: 'userUnique', params: { user_id: listingDetails.user_id } }"
-              >
-              {{ get_users.name }}
-              </router-link> -->
-                  </p>
-                  <p>
-                    <!-- <small>{{ $t('total') }} {{ getUserListingsCount(get_user_detail.id) }} {{ $t('listings') }}</small> -->
-                  </p>
-                </div>
-              </div>
-
-              <!-- <a v-if="listingDetails.website" :href="listingDetails.website" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
-        <i class="icon-globe-6 mr-2"></i>{{ $t('website') }}
-      </a>
-  
-      <a v-if="listingDetails.email" :href="`mailto:${listingDetails.email}`" target="" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
-        <i class="icon-email mr-2"></i>{{ $t('email_us') }}
-      </a>
-  
-      <a v-if="listingDetails.phone" :href="`tel:${listingDetails.phone}`" target="" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
-        <i class="icon-phone mr-2"></i>{{ $t('call_now') }}
-      </a>
-  
-      <template v-if="listingDetails.social">
-        <a v-if="listingDetails.social.facebook" :href="listingDetails.social.facebook" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
-          <i class="icon-facebook-6 mr-2"></i>{{ $t('facebook') }}
-        </a>
-  
-        <a v-if="listingDetails.social.twitter" :href="listingDetails.social.twitter" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
-          <i class="icon-twitter mr-2"></i>{{ $t('twitter') }}
-        </a>
-  
-        <a v-if="listingDetails.social.linkedin" :href="listingDetails.social.linkedin" target="blank" class="btn_1 full-width outline wishlist social-button" id="btn-wishlist-social">
-          <i class="fab fa-linkedin mr-2"></i>{{ $t('linkedin') }}
-        </a>
-      </template> -->
-            </div>
-          </div>
-
-
-
-          <!-- <h5 class="add_bottom_15">{{ getPhrase.amenities }}</h5> -->
-          <!-- <div class="row add_bottom_30">
-            <div v-for="(amenity, key) in get_amenity" :key="key" class="col-md-4">
-              <ul>
-                <li>
-                  <i :class="amenity"></i>
-                  {{ amenity }}
-                </li>
-              </ul>
-            </div>
-          </div> -->
-
-          <div class="row add_bottom_30">
-            <div class="col-md-4">
-              <ul class="">
-                <li>
-                  <i class="fas fa-tree "></i>
-                  Outdoor seating
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <ul class="">
-                <li>
-                  <i class="fas fa-wifi "></i>
-                  Free WiFi
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <ul class="">
-                <li>
-                  <i class="fas fa-utensils "></i>
-                  BBQ facilities
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <ul class="">
-                <li>
-                  <i class="fas fa-music "></i>
-                  Music
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Opening and Closing Time -->
-
-          <div class="opening">
-            <div class="ribbon">
-              <span class="closed">Closed</span>
-            </div>
-            <i class="icon_clock_alt"></i>
-            <h4>Opening hours</h4>
-            <div class="row">
-              <div class="col-md-6">
-                <ul>
-                  <li>
-                    Saturday <span>
-                      05 am - 10 pm </span>
-                  </li>
-                  <li>
-                    Sunday <span>
-                      02 am - 05 pm </span>
-                  </li>
-                  <li>
-                    Monday <span>
-                      11 am - 03 pm </span>
-                  </li>
-                  <li>
-                    Tuesday <span>
-                      Closed </span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <ul>
-                  <li>
-                    Wednesday <span>
-                      Closed </span>
-                  </li>
-                  <li>
-                    Thursday <span>
-                      Closed </span>
-                  </li>
-                  <li>
-                    Friday <span>
-                      Closed </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-
-        </section>
-      </div>
-      <aside class="col-lg-4" id="sidebar"
-        style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
-
-
-
-        <div class="theiaStickySidebar"
-          style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; top: 0px; left: 1156.5px;">
-          <div class="box_detail booking">
-
-          </div>
-          <ul class="share-buttons">
-            <li><a
-                href="https://www.facebook.com/sharer/sharer.php?u=https://demo.creativeitem.com/atlas/restaurant/ristorante-del-arte/1"
-                class="fb-share" target="_blank"><i class="social_facebook"></i> Share</a></li>
-            <li><a
-                href="https://twitter.com/share?url=https://demo.creativeitem.com/atlas/restaurant/ristorante-del-arte/1"
-                target="_blank" class="twitter-share"><i class="social_twitter"></i> Tweet</a></li>
-            <li><a
-                href="http://pinterest.com/pin/create/link/?url=https://demo.creativeitem.com/atlas/restaurant/ristorante-del-arte/1"
-                target="_blank" class="gplus-share"><i class="social_pinterest"></i> Pin</a></li>
-          </ul>
-        </div>
-      </aside>
-
-
-    </div>
-  </div>
 
 
 
@@ -464,6 +250,7 @@ const slugs = ref('');
 const get_user_thumbnail = ref('');
 const get_user_detail = ref('');
 const get_users = ref('');
+const romspecs  = ref([]);
 // const get_user = ref('');
 const route = useRoute();
 const id = ref(null);
@@ -502,6 +289,12 @@ onMounted(async () => {
     const response = await axios.get(`/home/listing/${currentSlug}/${currentId}`);
     console.log('Response from single listing:', response.data);
     listingDetails.value = response.data;
+
+          const romspec = await axios.get(`/api/get_hotel_spec/${listingDetails.value.id}`);
+          console.log('Response from Room spec:', romspec.data);
+          
+          romspecs.value[listingDetails.value.id] = romspec.data;
+
     const get_phrases = await axios.get('/api/get_phrase');
     console.log('Response from getphrase:', get_phrases.data);
     get_phrase.value = get_phrases.data;
@@ -517,6 +310,37 @@ onMounted(async () => {
     console.error('Error fetching single listing:', error);
   }
 });
+function formattedDate(timestamp) {
+    const date = new Date(timestamp * 1000);
+  const now = new Date();
+
+  // Comparer la date actuelle avec la date de l'annonce
+  const diffInDays = Math.floor((now - date) / (24 * 60 * 60 * 1000));
+
+  if (diffInDays === 0) {
+    return 'Aujourd\'hui';
+  } else if (diffInDays === 1) {
+    return 'Hier';
+  } else if (diffInDays === 2) {
+    return 'Avant-hier';
+  } else {
+    const options = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    };
+    
+    return date.toLocaleDateString('fr-FR', options);
+  }
+}
+    // Fonction pour trouver la chambre avec le prix le moins cher
+    const cheapestRoom = (listingId) => {
+      const rooms = romspecs.value[listingId];
+      if (rooms && rooms.length > 0) {
+        return rooms.reduce((min, romspecs) => (min.price < romspecs.price ? min : romspecs));
+      }
+      return null;
+    };
 </script>
 <script>
 import Lightgallery from 'lightgallery/vue';

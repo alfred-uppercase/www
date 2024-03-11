@@ -42668,7 +42668,7 @@ _global.SENTRY_RELEASE = {
     64726: function(e, t) {
         "use strict";
         t.Z = {
-            src: "/_next/static/media/favicon-32.e6c3ce2a.png",
+            src: "",
             height: 32,
             width: 32,
             blurDataURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAAHlBMVEWXRhH4+fr////7/Pz+lVLbWgrdjVr/bAz/x6X9XgDmSFq0AAAAAnRSTlP+78wZ/uIAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAtSURBVAiZNcZBDgAgDAJBWrDq/z9sIHEvOyimAjvxo40jaQzdvRD4gY9ij/8AGUkArPLhfREAAAAASUVORK5CYII=",
@@ -45499,8 +45499,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
         ev.E5)((0,
         I._)((0,
         R._)({}, e2.e), {
-            BASE_URL: "https://www.leboncoin.fr",
-            BRAND_NAME: "leboncoin"
+            BASE_URL: "https://echri.store",
+            BRAND_NAME: "echri"
         })),
         ev._q.setConsent(window.Didomi),
         ev._q.setTracker(window.ATInternet),
@@ -45513,14 +45513,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
           , te = n(47150)
           , tt = n(7665)
           , tn = {
-            src: "/_next/static/media/favicon-16.fe104e12.png"
+            src: ""
         }
           , tr = n(64726)
           , ti = {
-            src: "/_next/static/media/favicon-notif-16.56e3ae5c.png"
+            src: ""
         }
           , to = {
-            src: "/_next/static/media/favicon-notif-32.4cda6cdd.png"
+            src: ""
         }
           , ta = n(42235)
           , ts = function() {

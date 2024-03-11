@@ -45,7 +45,7 @@ return str.charAt(0).toUpperCase() + str.slice(1);
 const id = ref(null);
 const romspecs = ref([]);
 
-id.value = route.params.id;
+id.value = route.params.val;
 onMounted(async () => {
 
   const currentId = id.value;
@@ -57,7 +57,7 @@ onMounted(async () => {
     // }
 try {
 
-  const response = await axios.get(`/recherche?search_string=&selected_city_id=&selected_category_id=${currentId}`);
+  const response = await axios.get(`/recherche?search_string=${currentId}&selected_city_id=&selected_category_id=`);
   console.log('Response from listings seul:', response.data);
   title.value = response.data.title;
   listings.value = response.data.listings;
@@ -228,7 +228,7 @@ return '4.5'; // Sample rating
     <!--Titre-->
     <div>
       <div class="inline-block w-full p-none align-top sm:w-[55%]">
-        <h1 class="mb-lg text-headline-1 text-on-surface md:mb-xl">Annonces Vêtements d’occasion : Toute la France</h1>
+        <h1 class="mb-lg text-headline-1 text-on-surface md:mb-xl">Résultat de Recherche</h1>
       </div>
       <div class="apn-lt styles_AdvertisingLinkDesktop__rH5JP" style="display: inline-block;">
           <span aria-label="Encart publicitaire" id="lt-l" class="teal-apn" data-liberty-position-name="lt" data-liberty-breakpoint-name="l"></span>
@@ -344,7 +344,7 @@ return '4.5'; // Sample rating
 
 
     <div style="padding-top: 90px;">
-      <h1>{{ title }} dffdf</h1>
+      <h1>{{ title }}</h1>
       <div class="container-fluid margin_60_35" style="transform: none;">
   <div class="row justify-content-md-center" style="transform: none;">
     <FIlters />

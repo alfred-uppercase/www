@@ -37,6 +37,15 @@ class Email_model extends CI_Model {
 		$this->send_smtp_mail($email_msg, $subject, $to);
 		//$this->sent_smtp_mail_with_php_mailer_library($email_msg, $subject, $to);
 	}
+  	public function send_email_verification_mail_api($to = "", $verification_code = "") {
+		$query = $this->db->get_where('pending_email' , array('verification_code' => $verification_code));
+		$redirect_url = $verification_code;
+
+		$email_msg	=	$this->email_template('verify_email_address', $query->row('name'), get_settings('website_title'), $redirect_url);
+		$subject 		= get_phrase('"Verify_Email_Address"');
+		$this->send_smtp_mail($email_msg, $subject, $to);
+		//$this->sent_smtp_mail_with_php_mailer_library($email_msg, $subject, $to);
+	}
 
 	public function restaurant_booking_mail($data = "") {
 		$user_details = $this->user_model->get_all_users($this->session->userdata('user_id'))->row_array();
@@ -137,22 +146,22 @@ class Email_model extends CI_Model {
 		$this->load->library('email');
 
 		if($from == NULL){
-			$from		=	get_settings('system_email');
+			$from		=	'echri@echri.store';
 		}
 
 		//SMTP & mail configuration
 		$config = array(
-			'protocol'  => get_settings('protocol'),
-			'smtp_host' => get_settings('smtp_host'),
-			'smtp_port' => get_settings('smtp_port'),
-			'smtp_user' => get_settings('smtp_user'),
-			'smtp_pass' => get_settings('smtp_pass'),
+			'protocol'  => 'sendmail',
+			'smtp_host' => 'smtppro.zoho.com',
+			'smtp_port' => 587,
+          	'smtp_crypto' => 'tls',
+			'smtp_user' => 'echri@echri.store',
+			'smtp_pass' => 'Yasserharoun@3596',
 			'mailtype'  => 'html',
-			'charset'   => 'utf-8'
-			//,
-			// 'smtp_timeout' => '30',
-			// 'mailpath' => '/usr/sbin/sendmail',
-			// 'wordwrap' => TRUE
+			'charset'   => 'utf-8',
+			//'smtp_timeout' => '30',
+			//'mailpath' => '/usr/sbin/sendmail',
+			//'wordwrap' => TRUE
 		);
 		$this->email->initialize($config);
 		$this->email->set_mailtype("html");
@@ -165,8 +174,8 @@ class Email_model extends CI_Model {
 		$this->email->subject($sub);
 		$this->email->message($htmlContent);
 
-		//Send email
-		// $this->email->send();
+		//Send email 
+		$this->email->send();
 	}
 
 	public function sent_smtp_mail_with_php_mailer_library($msg=NULL, $sub=NULL, $to=NULL, $from=NULL) {
@@ -229,7 +238,7 @@ class Email_model extends CI_Model {
                       <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
                         <tr>
                           <td align="center">
-                            <a href="'.$param1.'" class="f-fallback button button--green" style="color: #fff;">Verify Your email address</a>
+                          <p><strong>'.$param1.'</strong></p>
                           </td>
                         </tr>
                       </table>

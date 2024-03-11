@@ -86,17 +86,18 @@ class User_model extends CI_Model {
         $verification_code =  rand(100000, 999999);
         $data['verification_code'] = $verification_code;
         $validity = $this->check_duplication('on_create', $data['email']);
+       	//$this->email_model->send_email_verification_mail($data['email'], $verification_code);
         if($validity){
             if (strtolower($this->session->userdata('role')) == 'admin') {
                 $data['is_verified'] = 0;
                 $this->db->insert('pending_email', $data);
-                $this->email_model->send_email_verification_mail($data['email'], $verification_code);
+                $this->email_model->send_email_verification_mail_api($data['email'], $verification_code);
                 $this->session->set_flashdata('flash_message', get_phrase('user_registration_successfully_done'));
             }else {
                 $data['is_verified'] = 0;
                 $this->db->insert('pending_email', $data);
-                $this->email_model->send_email_verification_mail($data['email'], $verification_code);
-                $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+                $this->email_model->send_email_verification_mail_api($data['email'], $verification_code);
+                $this->session->set_flashdata('flash_message', get_phrase('your_registration_has_been_successfully_done').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address_after_that').'.');
             }
             
         }else {
@@ -106,8 +107,8 @@ class User_model extends CI_Model {
                 $unverified_user = $this->db->get('user');
                 if($unverified_user->num_rows() > 0){
                     $unverified_user_row = $unverified_user->row_array();
-                    $this->email_model->send_email_verification_mail($unverified_user_row['email'], $unverified_user_row['verification_code']);
-                    $this->session->set_flashdata('flash_message', get_phrase('you_have_already_registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address').'.');
+                    $this->email_model->send_email_verification_mail_api($unverified_user_row['email'], $unverified_user_row['verification_code']);
+                    $this->session->set_flashdata('flash_message', get_phrase('you_have_already_registered').'. '.get_phrase('please_check_your_mail_inbox_to_verify_your_email_address_to_confirm').'.');
                     return;
                 }
             }

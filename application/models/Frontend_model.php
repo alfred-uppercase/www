@@ -531,77 +531,83 @@ class Frontend_model extends CI_Model
   }
 
   ////Search function For custom pagination
-  function search_listing($search_string = '', $selected_city_id = '', $selected_category_id = '', $page_number = 1)
-  {
-    if ($page_number <= 1) :
-      $starting_value = 0;
-    else :
-      $starting_value = $page_number * 12 - 12;
-    endif;
+  // function search_listing($search_string = '', $selected_city_id = '', $selected_category_id = '', $page_number = 1)
+  // {
+  //   if ($page_number <= 1) :
+  //     $starting_value = 0;
+  //   else :
+  //     $starting_value = $page_number * 12 - 12;
+  //   endif;
 
-    $this->db->where('status', 'active');
-    $this->db->where('package_expiry_date >', time());
-    $this->db->or_where('package_expiry_date', 'admin');
+  //   $this->db->where('status', 'active');
+  //   $this->db->where('package_expiry_date >', time());
+  //   $this->db->or_where('package_expiry_date', 'admin');
 
-    if ($search_string != "") {
-      $this->db->group_start();
-      $this->db->like('name', $search_string);
-      $this->db->or_like('description', $search_string);
-      $this->db->or_like('seo_meta_tags', $search_string);
-      $this->db->or_like('meta_description', $search_string);
-      $this->db->group_end();
-    }
+  //   if ($search_string != "") {
+  //     $this->db->group_start();
+  //     $this->db->like('name', $search_string);
+  //     $this->db->or_like('description', $search_string);
+  //     $this->db->or_like('seo_meta_tags', $search_string);
+  //     $this->db->or_like('meta_description', $search_string);
+  //     $this->db->group_end();
+  //   }
 
-    if ($selected_city_id != "") {
-      $this->db->like('city_id', "$selected_city_id");
-    }
+  //   if ($selected_city_id != "") {
+  //     $this->db->like('city_id', "$selected_city_id");
+  //   }
 
-    if ($selected_category_id != "") {
-      $this->db->where_in('categories', "$selected_category_id");
-    }
-    $this->db->order_by('is_featured', 'desc');
+  //   if ($selected_category_id != "") {
+  //     $this->db->like('categories', "$selected_category_id");
+  //   }
+  //   $this->db->order_by('is_featured', 'desc');
 
 
-    return  $this->db->get('listing', 12, $starting_value)->result_array();
-  }
-
-  // function search_listing($search_string = '', $selected_category_id = '') {
-  //     if ($search_string != "") {
-  //         $this->db->like('name', $search_string);
-  //         $this->db->or_like('description', $search_string);
-  //     }
-
-  //     if ($selected_category_id != "") {
-  //         $this->db->like('categories', "$selected_category_id");
-  //     }
-
-  //     $this->db->order_by('is_featured', 'desc');
-
-  //     $this->db->where('status', 'active');
-  //     return  $this->db->get('listing')->result_array();
+  //   return  $this->db->get('listing', 12, $starting_value)->result_array();
   // }
 
-  function search_listing_all_rows($search_string = '', $selected_city_id = '', $selected_category_id = '')
-  {
+  function search_listing($search_string = '', $selected_city_id = '', $selected_category_id = '') {
+      if ($search_string != "") {
+          $this->db->like('name', $search_string);
+          $this->db->or_like('description', $search_string);
+      }
+
+      if ($selected_city_id != "") {
+        $this->db->like('country_id', "$selected_city_id");
+    }
+
+      if ($selected_category_id != "") {
+          $this->db->like('categories', "\"$selected_category_id\"");
+      }
+
+      $this->db->order_by('is_featured', 'desc');
+
+      $this->db->where('status', 'active');
+      return  $this->db->get('listing')->result_array();
+  }
+
+  function search_listing_all_rows($search_string = '', $selected_city_id = '', $selected_category_id = '') {
     $this->db->where('status', 'active');
     $this->db->where('package_expiry_date >', time());
     $this->db->or_where('package_expiry_date', 'admin');
+    
     if ($search_string != "") {
-      $this->db->like('name', $search_string);
-      $this->db->or_like('description', $search_string);
+        $this->db->like('name', $search_string);
+        $this->db->or_like('description', $search_string);
     }
 
     if ($selected_city_id != "") {
-      $this->db->like('city_id', "$selected_city_id");
+        $this->db->like('city_id', "$selected_city_id");
     }
 
     if ($selected_category_id != "") {
-      $this->db->where_in('categories', "$selected_category_id");
+        // Ajoutez une clause WHERE pour la catégorie spécifiée
+        $this->db->like('categories', "\"$selected_category_id\"");
     }
 
     $this->db->order_by('is_featured', 'desc');
     return  $this->db->get('listing')->result_array();
-  }
+}
+
 
   function get_the_maximum_price_limit_of_all_listings()
   {

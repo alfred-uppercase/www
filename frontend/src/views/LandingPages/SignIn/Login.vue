@@ -98,7 +98,7 @@
                   href=""
                   class="font-weight-bold text-white"
                   target="_blank"
-                  >Lebonomar</a
+                  >Echri.store</a
                 >
                 Tout droit reservé
               </div>

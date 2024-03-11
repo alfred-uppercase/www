@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PresentationView from "../views/Presentation/Accueil.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
-import ResultPage from '../views/Presentation/Listing.vue';
+import ResultPage from '../views/Presentation/Resultat.vue';
 // import ResultPage from '../views/Presentation/Listing.vue';
 import RedirectToDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import UserDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import MesAnnonces from '../views/LandingPages/dashboard/MesAnnonces.vue';
 import MesTransactions from '../views/LandingPages/dashboard/MesTransactions.vue';
 import MesReservations from '../views/LandingPages/dashboard/MesReservations.vue';
+import RegisterCompany from "../views/LandingPages/SignIn/SignInCompany.vue";
 import Profil from '../views/LandingPages/dashboard/Profil.vue';
 import ParametresCompte from '../views/LandingPages/dashboard/ParametreCompte.vue';
 import ProfilPublic from '../views/LandingPages/dashboard/ProfilPublic.vue';
@@ -20,7 +21,7 @@ import UserUnique from '../views/Presentation/UserUnique.vue';
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/Login_basic.vue";
-import Register from "../views/LandingPages/SignIn/Register.vue";
+import Register from "../views/LandingPages/SignIn/Signin.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -67,6 +68,11 @@ const router = createRouter({
       props: true,
     },
     {
+      path: "/inscription-societe",
+      name: "signin-up-company",
+      component: RegisterCompany,
+    },
+    {
       path: "/annonces/:id",
       name: "Annonces",
       component: Annonces,
@@ -78,18 +84,19 @@ const router = createRouter({
       component: Annonces,
     },
     {
-      path: "/recherche",
+      path: "/recherche?q=:val",
       name: "recherche",
       component: ResultPage,
+      props: true,
       // props: route => ({ results: route.query.results }),
       // props: route => ({
       //   search_string: route.query.search_string || '',
       //   selected_city_id: route.query.selected_city_id || '',
       //   selected_category_id: route.query.selected_category_id || '',
       // }),
-      props: route => ({
-        results: JSON.parse(route.query.results) // Utilisez route.query.results
-      }),
+      // props: route => ({
+      //   results: JSON.parse(route.query.results) // Utilisez route.query.results
+      // }),
     },
     {
       path: '/mon-compte',
@@ -238,16 +245,6 @@ const router = createRouter({
           }
         }
       }
-    },
-    {
-      path: "/pages/landing-pages/contact-us",
-      name: "contactus",
-      component: ContactView,
-    },
-    {
-      path: "/pages/landing-pages/author",
-      name: "author",
-      component: AuthorView,
     },
     {
       path: "/deposer-une-annonce",

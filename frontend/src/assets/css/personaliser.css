@@ -3341,7 +3341,16 @@
      .float-md-start {
         float:left!important
     }
-
+    .footer .nav-link{
+        line-height: 2rem;
+        font-size: 14px!important;
+    }
+    .btn.btn-theme{
+        font-size: 12px;
+    }
+    h6.text-sm, .footer-global .grid p{
+        font-size: 1.475rem !important;
+      }
      .float-md-end, .float-md-start {
         float: right!important
     }

@@ -324,7 +324,7 @@ body {
   background: #f8f8f8;
   font-size: 0.875rem;
   line-height: 1.6;
-  font-family: "Poppins", Helvetica, sans-serif;
+  /* font-family: "Poppins", Helvetica, sans-serif; */
   color: #555;
 }
 
@@ -5627,7 +5627,7 @@ a.social_bt.linkedin:before {
   background: white;
   position: relative;
   z-index: 999;
-  font-family: "Poppins", Helvetica, sans-serif;
+  /* font-family: "Poppins", Helvetica, sans-serif; */
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.12);
 }
 .marker_info img {

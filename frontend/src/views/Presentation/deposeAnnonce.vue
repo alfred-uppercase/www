@@ -1584,15 +1584,17 @@
                 </div>
               </div>
               <div v-if="isImageImobl">
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Photo à la une</h3>
+                <h3 class="mb-xl text-headline-2 font-semi-bold">Photo à la une !</h3>
                 <div style="position: relative;">
-                  <DropZone method="POST" v-model="listing_thumbnail" :maxFiles="Number(10000000000)" url="/uploads/listing_images"
-              :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
+                  <DropZone
+                  :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
                 </div>
-                
+                <!-- <input type="file" @change="handleFileUpload( $event )"/> -->
+                <!-- <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> -->
+
                 <h3 class="mb-xl text-headline-2 font-semi-bold">Galerie</h3>
                 <div style="position: relative;">
-                  <DropZone v-model="listing_images" :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="false"
+                  <DropZone method="POST" v-model="listing_images" :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="false"
                     :multipleUpload="true" :parallelUpload="3" />
                 </div>
                 <div
@@ -2778,6 +2780,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useCategoryStore } from '../../stores/categorie'
 import DropZone from 'dropzone-vue';
 // import Dropzone from "dropzone";
+import { useDropzone } from "vue3-dropzone";
 
 import 'dropzone-vue/dist/dropzone-vue.common.css';
 import '../../plugins/scroll'
@@ -2864,8 +2867,17 @@ export default {
     async handleSuccess(file, response) {
     // La fonction appelée lorsqu'un téléchargement réussit
     console.log('Upload success:', response);
+
+    this.listing_thumbnail = response.data.url;
+
+    console.log('Enrol Thumbnail:', this.listing_thumbnail);
+
     await this.postAnnonce();
   },
+    // handleFileUpload( event ){
+    //   console.log('File selected:', event.target.files[0]);
+    // this.listing_thumbnail = event.target.files[0];
+  // },
     async postAnnonce() {
       // Check if user_id is available
       if (!this.user_id) {

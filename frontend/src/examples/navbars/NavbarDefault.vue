@@ -28,7 +28,7 @@
           isLogin ? 'logo-center' : ''
         ]" :to="{ name: 'presentation' }" rel="tooltip" title="Designed and Coded by Creative Tim"
           data-placement="bottom">
-          Lebonomar
+          Echri.store
         </RouterLink>
         <ul class="navbar-nav d-lg-block w-100 pr-0" v-if="isDeposeAnnoce && !isLogin">
           <li class="nav-item">Deposer une annonce
@@ -40,7 +40,60 @@
                 class="fas fa-plus-circle"></i>Deposer une annonce</RouterLink>
           </li>
         </ul>
-  
+        <div class="navbar-nav d-lg-block w-100 pr-0">
+          <form @submit.prevent="submitForm">
+          <div class="
+        
+        border-0
+        relative
+        flex
+        h-sz-44
+        w-full
+        items-center
+        rounded-lg
+        bg-neutral-container
+        outline-none
+       pl-lg pr-[var(--sz-48)]
+            undefined
+          ">
+          <input v-model="search_string" type="text" maxlength="500" placeholder="Rechercher sur Echri.store" class="
+            border-0
+            absolute
+            left-none
+            top-none
+            h-full
+            w-full
+            rounded-[inherit]
+            bg-transparent
+            pl-[inherit]
+            pr-[inherit]
+            text-body-1
+            text-on-neutral-container
+            placeholder:text-on-neutral-container
+          
+          " role="combobox" id="76d0f0f2-ad16-45f8-bbda-9e940c94e8ba-input" autocomplete="off" autocapitalize="off" enterkeyhint="done" aria-autocomplete="list" aria-expanded="false" aria-haspopup="listbox" data-test-id="extendable-input" style="">
+          <button class="
+            w-2xl
+            h-2xl
+            rounded-[1.2rem]
+            absolute
+            right-md
+            flex
+            items-center
+            justify-center
+            text-on-main
+            bg-main
+            hover:bg-main-hovered
+          " title="Rechercher" type="submit" aria-label="Rechercher">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Search" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m10.5,3.95c-3.62,0-6.55,2.93-6.55,6.55s2.93,6.55,6.55,6.55,6.55-2.93,6.55-6.55-2.93-6.55-6.55-6.55ZM2,10.5C2,5.81,5.81,2,10.5,2s8.5,3.81,8.5,8.5-3.81,8.5-8.5,8.5S2,15.2,2,10.5Z"></path><path fill-rule="evenodd" d="m15.13,15.13c.38-.38,1-.38,1.38,0l5.21,5.21c.38.38.38,1,0,1.38-.38.38-1,.38-1.38,0l-5.21-5.21c-.38-.38-.38-1,0-1.38Z"></path></svg>
+            </button>
+            <div role="listbox" class="absolute inset-x-none top-[--topPosition]" style="--topPosition: 5.2rem;">
+              <div data-test-id="popover-content" class="relative overflow-hidden rounded-lg bg-surface shadow max-h-[0]" style="--popoverAnimation: 350ms;">
+              </div>
+            </div>
+          </div>
+        </form>
+        </div>
         <div class="collapse S navbar-collapse  w-100 pt-3 pb-2 py-lg-0" id="navigation" v-if="isDeposeAnnoce && !isLogin">
           <ul class="navbar-nav navbar-nav-hover ms-auto">
             <li class="nav-item dropdown dropdown-hover mx-2 text-center nav1 quitter">
@@ -1436,7 +1489,7 @@ import axios from 'axios';
   
   const store = useAuthStore();
   const router = useRouter();
-
+  const search_string = ref('');
   // Getter for checking if the user is logged in
   const userLoggedIn = computed(() => store.isLogin);
 
@@ -1454,7 +1507,27 @@ const get_user_thumbnail = ref('');
 onMounted(() => {
   checkLocalStorage();
 });
+const submitForm = async () => {
+  // try {
+  //   const responsse = await axios.get('/home/filter_listings', {
+  //     params: {
+  //       search_string: search_string.value,
+  //     },
+  //   });
 
+  //   // Handle the response and update results
+  //   // results.value = responsse.data;
+  // } catch (error) {
+  //   console.error('Error fetching results:', error);
+  // }
+  router.push({
+    name: 'recherche',
+    params: { val: search_string.value }
+    // query: {
+    //   search_string: search_string.value,
+    // },
+  });
+};
   const props = defineProps({
     action: {
       type: Object,

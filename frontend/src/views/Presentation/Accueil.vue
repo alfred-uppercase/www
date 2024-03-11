@@ -14,7 +14,7 @@
         <div class="src__CenteredWrapper-sc-1bgl6we-0 iCaNcC">
             <div class="px-lg text-center">
                 <h1 class="mb-lg mt-xl block text-center text-body-2 custom:hidden">Des millions de petites annonces et autant d’occasions de se faire plaisir</h1>
-                <a @click="dpsannonce" class="relative mb-2xl min-h-[8rem] overflow-hidden p-lg flex items-center justify-center rounded-lg bg-main-container before:absolute before:bottom-none before:left-none before:right-none before:top-none before:z-base before:bg-left-bottom before:bg-no-repeat before:bg-[image:var(--leftOrnamentMobile)] before:bg-[length:auto_50%] tiny:before:bg-[length:auto_60%] sm:before:bg-[length:auto_80%] custom:before:bg-[length:auto_60%] lg:before:bg-[image:var(--leftOrnamentDesktop)] lg:before:bg-[length:auto_100%] after:absolute after:bottom-none after:left-none after:right-none after:top-none after:z-base after:bg-right-bottom after:bg-no-repeat after:bg-[image:var(--rightOrnamentMobile)] after:bg-[length:auto_60%] tiny:after:bg-[length:auto_70%] sm:after:bg-[length:auto_80%] lg:after:bg-[image:var(--rightOrnamentDesktop)] lg:after:bg-[length:auto_100%]" style="--leftOrnamentDesktop: url('/_next/static/media/left-ornament-desktop.4281d0cc.svg'); --leftOrnamentMobile: url('/_next/static/media/left-ornament-mobile.0c4bbe50.svg'); --rightOrnamentDesktop: url('/_next/static/media/right-ornament-desktop.cc3ef612.svg'); --rightOrnamentMobile: url('/_next/static/media/right-ornament-mobile.b8d75e7c.svg');">
+                <a @click="dpsannonce" class="relative mb-2xl min-h-[8rem] overflow-hidden p-lg flex items-center justify-center rounded-lg bg-main-container before:absolute before:bottom-none before:left-none before:right-none before:top-none before:z-base before:bg-left-bottom before:bg-no-repeat before:bg-[image:var(--leftOrnamentMobile)] before:bg-[length:auto_50%] tiny:before:bg-[length:auto_60%] sm:before:bg-[length:auto_80%] custom:before:bg-[length:auto_60%] lg:before:bg-[image:var(--leftOrnamentDesktop)] lg:before:bg-[length:auto_100%] after:absolute after:bottom-none after:left-none after:right-none after:top-none after:z-base after:bg-right-bottom after:bg-no-repeat after:bg-[image:var(--rightOrnamentMobile)] after:bg-[length:auto_60%] tiny:after:bg-[length:auto_70%] sm:after:bg-[length:auto_80%] lg:after:bg-[image:var(--rightOrnamentDesktop)] lg:after:bg-[length:auto_100%]" style="--leftOrnamentDesktop: url(''); --leftOrnamentMobile: url(''); --rightOrnamentDesktop: url(''); --rightOrnamentMobile: url('');">
                     <div class="relative z-raised flex flex-col items-center md:flex-row">
                         <p class="mb-md text-headline-1 md:mb-none md:mr-xl lg:mr-lg">C’est le moment de vendre</p>
                         <button @click="dpsannonce" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="AddSquareOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><path d="m12,6.84c.56,0,1.01.45,1.01,1.01v3.14h3.14c.56.02.99.5.96,1.05-.02.52-.44.94-.96.96h-3.14v3.14c0,.56-.45,1.01-1.01,1.01-.56,0-1.01-.45-1.01-1.01h0v-3.14h-3.14c-.56,0-1.01-.45-1.01-1.01,0-.56.45-1.01,1.01-1.01h3.14v-3.14c0-.56.45-1.01,1.01-1.01h0Z"></path><path fill-rule="evenodd" d="m7.16,2c-2.85,0-5.16,2.31-5.16,5.16h0v9.68c0,2.85,2.31,5.16,5.16,5.16h9.68c2.85,0,5.16-2.31,5.16-5.16V7.16c0-2.85-2.31-5.16-5.16-5.16H7.16Zm-3.14,5.16c0-1.73,1.4-3.14,3.14-3.14h9.68c1.73,0,3.14,1.4,3.14,3.14h0v9.68c0,1.73-1.4,3.14-3.14,3.14H7.16c-1.73,0-3.14-1.4-3.14-3.14h0V7.16h0Z"></path></svg>
@@ -38,8 +38,7 @@
                             :slides-per-view="5"
                             :space-between="5"
                             navigation
-                            @swiper="onSwiper"
-                            @slideChange="onSlideChange"
+
                             aria-label="Carrousel du top des catégories"
                             class="indexstyles__Root-sc-10uesfx-1 bQPJuk"
                         >
@@ -92,8 +91,6 @@
                                             :slides-per-view="5"
                                             :space-between="5"
                                             navigation
-                                            @swiper="onSwiper"
-                                            @slideChange="onSlideChange"
                                             aria-label="Carrousel du top des catégories"
                                             class="relative grid grid-flow-col justify-start gap-lg"
                                         >
@@ -138,7 +135,7 @@
                                                         <div class="flex min-w-none flex-col gap-y-sm">
                                                             <div class="flex flex-row items-start gap-x-md">
                                                                 <div class="flex min-w-none items-center gap-x-sm">
-                                                                    <p data-qa-id="aditem_title" data-title="true" title="{{ listing.name }}" class="line-clamp-[--maxLines] text-ellipsis break-words text-body-1 font-bold text-on-surface transition-colors group-hover/adcard:text-main-variant line-clamp-2 break-normal" style="--maxLines: 2;">
+                                                                    <p data-qa-id="aditem_title" data-title="true" :title="listing.name" class="line-clamp-[--maxLines] text-ellipsis break-words text-body-1 font-bold text-on-surface transition-colors group-hover/adcard:text-main-variant line-clamp-2 break-normal" style="--maxLines: 2;">
                                                                         {{ listing.name }}
                                                                     </p>
                                                                 </div>
@@ -147,8 +144,8 @@
                                                             <div class="inline-flex flex-wrap items-baseline">
                                                                 <p class="flex flex-wrap items-center text-callout font-bold !leading-[--font-size-body-2-line-height] text-on-surface" data-test-id="price" aria-label="Prix: À partir de 24 € par nuit">
                                                                     <span class="[&amp;_small-support]:text-caption [&amp;_small-support]:font-regular [&amp;_small-support]:text-support [&amp;_small]:text-caption [&amp;_small]:font-regular" data-qa-id="aditem_price">
-                                                                        <span>
-                                                                            <small>à partir de&nbsp;</small>24&nbsp;€ <small-support>/ nuit</small-support>
+                                                                        <span v-if="cheapestRoom(listing.id)" :key="cheapestRoom(listing.id).id">
+                                                                            <small>à partir de&nbsp;</small>{{ cheapestRoom(listing.id).price }} € <small-support>/ nuit</small-support>
                                                                         </span>
                                                                     </span>
                                                                 </p>
@@ -156,8 +153,8 @@
                                                         </div>
                                                         <div class="mt-sm flex items-end gap-sm">
                                                             <p class="flex flex-wrap overflow-hidden overflow-hidden text-caption text-neutral">
-                                                                <span title="Cannes 06400 Centre-Ville" class="mr-[1.2rem] last:mr-none">Cannes 06400 Centre-Ville</span>
-                                                                <span class="relative inline-block w-full before:absolute before:right-full before:top-none before:hidden before:w-[1.2rem] before:text-center before:font-bold before:content-['·'] tiny:w-auto tiny:before:inline-block" aria-label="Date de dépôt : 01/02/2024." title="01/02/2024">01/02/2024</span>
+                                                                <span :title="listing.address" class="mr-[1.2rem] last:mr-none">{{ listing.address }}</span>
+                                                                <span class="relative inline-block w-full before:absolute before:right-full before:top-none before:hidden before:w-[1.2rem] before:text-center before:font-bold before:content-['·'] tiny:w-auto tiny:before:inline-block" :aria-label="'Date de dépôt : ' + formattedDate(listing.date_added)" :title="formattedDate(listing.date_added)">{{ formattedDate(listing.date_added) }}</span>
                                                             </p>
                                                             <div class="relative inline-block ml-auto">
                                                                 <div data-spark-component="popover-anchor">
@@ -223,22 +220,50 @@ const listings = ref([]);
 
 const categories  = ref([]);
 const subCategories  = ref([]);
+const romspecs  = ref([]);
 
 function dpsannonce() {
   router.push({ name: 'deposer-une-annonce' })
 }
+function formattedDate(timestamp) {
+    const date = new Date(timestamp * 1000);
+  const now = new Date();
 
+  // Comparer la date actuelle avec la date de l'annonce
+  const diffInDays = Math.floor((now - date) / (24 * 60 * 60 * 1000));
+
+  if (diffInDays === 0) {
+    return 'Aujourd\'hui';
+  } else if (diffInDays === 1) {
+    return 'Hier';
+  } else if (diffInDays === 2) {
+    return 'Avant-hier';
+  } else {
+    const options = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    };
+    
+    return date.toLocaleDateString('fr-FR', options);
+  }
+}
 
 onMounted(async () => {
   try {
     const responses = await axios.get('/home/listings');
     listings.value = responses.data.listings;
+
+    for (const list of listings.value) {
+          const romspec = await axios.get(`/api/get_hotel_spec/${list.id}`);
+        //   console.log('Response from Room spec:', romspec.data);
+          romspecs.value[list.id] = romspec.data;
+    }
+
     const response = await axios.get('/api/get_categories');
     categories.value = response.data;
     for (const category of categories.value) {
       const getSubCategory = await axios.get(`/api/get_sub_categories/${category.id}`);
-      console.log('Response from get_sub_categories:', getSubCategory.data);
-
       subCategories.value.push(getSubCategory.data);
     }
   } catch (error) {
@@ -247,11 +272,29 @@ onMounted(async () => {
 
 });
 
+    // Fonction pour trouver la chambre avec le prix le moins cher
+    const cheapestRoom = (listingId) => {
+      const rooms = romspecs.value[listingId];
+      if (rooms && rooms.length > 0) {
+        return rooms.reduce((min, romspec) => (min.price < romspec.price ? min : romspec));
+      }
+      return null;
+    };
+
+    // Vérifie si des spécifications de chambre existent pour une liste donnée
+    function hasRomSpecs(listingId) {
+      return romspecs.value.some(spec => spec.listing_id === listingId);
+    }
+
+    // Récupère les spécifications de chambre pour une liste donnée
+    function getRomSpecs(listingId) {
+      return romspecs.value.filter(spec => spec.listing_id === listingId);
+    }
 const body = document.getElementsByTagName("body")[0];
 //hooks
 const submitForm = async () => {
   try {
-    const responsse = await axios.get('http://localhost/home/filter_listings', {
+    const responsse = await axios.get('/home/filter_listings', {
       params: {
         search_string: search_string.value,
         selected_city_id: selected_city_id.value,

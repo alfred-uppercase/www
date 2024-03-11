@@ -8,7 +8,7 @@
               <a href="/"
                 class="router-link-active router-link-exact-active navbar-brand d-none d-md-block text-dark font-weight-bolder ms-sm-3"
                 rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" aria-current="page">
-                Lebonomar </a>
+                Echri.store </a>
             </div>
             <ul class="navbar-nav d-lg-block  my-4 w-100 pr-0">
               <li class="nav-item"><a href="javascript:;" class="btn btn-sm mb-0 btn-yellow"><i
@@ -126,7 +126,7 @@
               <p class="">
                 Tout droit réservé ©
                 {{ new Date().getFullYear() }}
-                Lebonomar
+                Echri.store
                 <a href="" target="_blank"></a>.
               </p>
             </div>
@@ -166,7 +166,7 @@
       logo: String,
       route: "",
       default: () => ({
-        name: "Lebonomar",
+        name: "Echri.store",
         logo: logoDark,
         route: "/"
       })

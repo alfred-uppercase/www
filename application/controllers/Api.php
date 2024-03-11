@@ -67,6 +67,56 @@ class Api extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($datas));
   }
+  public function pending_email() {
+
+    $email = sanitizer($this->input->post('email'));
+    $verification_code = sanitizer($this->input->post('verification_code'));
+
+    if(empty($email)){
+        $this->session->set_flashdata('error_message', get_phrase('fill_in_the_mail'));
+        redirect(site_url('home/login'), 'refresh');    
+    }
+
+    $this->user_model->check_mail($email, $verification_code);
+    redirect(site_url('home'), 'refresh');
+}
+// public function verify_email() {
+//     $email = sanitizer($this->input->post('email'));
+//     $verification_code = sanitizer($this->input->post('verification_code'));
+
+//     $query = $this->db->get_where('pending_email', array('email' => $email, 'verification_code' => $verification_code, 'is_verified' => 0));
+
+//     if ($query->num_rows() > 0) {
+//         $data = array('is_verified' => 1);
+//         $this->db->where('email', $email);
+//         $this->db->update('pending_email', $data);
+
+//         redirect('home/ok');
+
+//     } else {
+//         $this->session->set_flashdata('error_message', get_phrase('invalid_verification_code'));
+//         redirect('home'); 
+//     }
+// }
+public function verify_email() {
+    $email = sanitizer($this->input->post('email'));
+    $verification_code = sanitizer($this->input->post('verification_code'));
+
+    $query = $this->db->get_where('pending_email', array('email' => $email, 'verification_code' => $verification_code, 'is_verified' => 0));
+
+    if ($query->num_rows() > 0) {
+        $data = array('is_verified' => 1);
+        $this->db->where('email', $email);
+        $this->db->update('pending_email', $data);
+
+        $response = array('success' => true, 'message' => 'Email verified successfully');
+        echo json_encode($response);
+    } else {
+        // Vous pouvez renvoyer une réponse JSON d'erreur ici
+        $response = array('success' => false, 'message' => 'Invalid verification code');
+        echo json_encode($response);
+    }
+}
   public function subscribe()
   {
       // $data['is_new_subscriber'] = true;
@@ -139,7 +189,7 @@ public function register_post() {
     $secteur = sanitizer($this->input->post('secteur'));
 
 
-    if (empty($email) || empty($name) || empty($password) || empty($adresse) || empty($phone)) {
+    if (empty($email) || empty($name) || empty($password)) {
         $this->response(['error_message' => get_phrase('fill_in_all_the_fields')], REST_Controller::HTTP_BAD_REQUEST);
     }
     $existing_user = $this->user_model->check_duplication('on_create', $email);
@@ -495,12 +545,33 @@ function now_open($listing_id = '') {
       $time_config[$day] = sanitizer($this->input->post($day . '_opening')) . '-' . sanitizer($this->input->post($day . '_closing'));
     }
 
-    // if ($_FILES['listing_thumbnail']['name'] == "") {
-    //   $data['listing_thumbnail'] = 'thumbnail.png';
-    // } else {
-    //   $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
-    //   move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+
+    // if ($_FILES['listing_thumbnail']['name'] !== "") {
+    //     $file_ext = pathinfo($_FILES['listing_thumbnail']['name'], PATHINFO_EXTENSION);
+    //     $file_ext = strtolower($file_ext);
+    
+    //     $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+    //     $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
+    //     move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+    // //     if (in_array($file_ext, $allowed_extensions)) {
+    // //         $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.' . $file_ext;
+    // //         move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+    // //     } else {
+    // //         $data['listing_thumbnail'] = 'nope.png';
+    // //     }
+    //      } else {
+    //     $data['listing_thumbnail'] = 'nopejpg.png';
     // }
+    
+    
+    
+
+    if ($_FILES['listing_thumbnail']['name'] == "") {
+      $data['listing_thumbnail'] = 'thumbnail.png';
+    } else {
+      $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
+      move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+    }
 
     // if ($_FILES['listing_cover']['name'] == "") {
     //   $data['listing_cover'] = 'thumbnail.png';
@@ -582,6 +653,16 @@ function now_open($listing_id = '') {
     $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($slug));
+  }
+  function get_hotel_spec($listing_id = ""){
+    $CI =&  get_instance();
+    $CI->load->database();
+    $hotel_rooms = $CI->db->get_where('hotel_room_specification', array('listing_id' => $listing_id))->result_array();
+    // $listing = $CI->db->get_where('listing', array('id' => $listing_id))->row_array();
+    // $slug = slugify($listing['name']);
+    $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($hotel_rooms));
   }
     public function get_data() {
         // Logique pour récupérer les données depuis la base de données

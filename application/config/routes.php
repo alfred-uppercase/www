@@ -75,12 +75,14 @@ $route['api/get_user_detail'] = 'api/get_user_detail';
 $route['api/get_user_detail/(:any)'] = 'api/get_user_detail/$1';
 $route['api/get_amenities'] = 'api/get_amenities';
 $route['api/get_amenities/(:any)'] = 'api/get_amenities/$1';
+$route['api/get_hotel_spec'] = 'api/get_hotel_spec';
+$route['api/get_hotel_spec/(:any)'] = 'api/get_hotel_spec/$1';
 $route['home/listing'] = 'home/listing';
 $route['annonces'] = 'vue';
 $route['annonces/details/(:any)'] = 'vue';
 $route['annonces/(:any)'] = 'vue';
 $route['user'] = 'vue';
-$route['redister'] = 'vue';
+$route['register'] = 'vue';
 $route['deposer-une-annonce'] = 'vue';
 $route['profil'] = 'vue';
 $route['profil/(:any)'] = 'vue';
@@ -125,8 +127,8 @@ $route['message/chat-clear'] = 's/chat/chat_clear_client_cs';
 $route['api/subscribes'] = 'newsletter/subscribe';
 $route['api/add_listing'] = 'newsletter/subscribe';
 $route['api/add_listing'] = 'api/add_listing';
-$route['login/pending_email'] = 'login/pending_email';
-$route['login/verify_email'] = 'login/verify_email';
+$route['api/pending_email'] = 'api/pending_email';
+$route['api/verify_email'] = 'api/verify_email';
 
 
 //custom URL
