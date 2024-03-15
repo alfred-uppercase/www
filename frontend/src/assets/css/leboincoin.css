@@ -31441,7 +31441,7 @@ textarea:focus-visible {
 
 .\!bg-main-container {
     --tw-bg-opacity: 1 !important;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity)) !important
+    background-color: #00878e1a !important
 }
 
 .\!bg-neutral-container {
@@ -31760,12 +31760,12 @@ textarea:focus-visible {
 
 .bg-main {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main)/var(--tw-bg-opacity))
+    background-color: #344767
 }
 
 .bg-main-container {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .bg-main-container-pressed {
@@ -34773,7 +34773,7 @@ textarea:focus-visible {
 .before\:bg-main-container:before {
     content: var(--tw-content);
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .before\:bg-neutral-container:before {
@@ -36160,7 +36160,7 @@ textarea:focus-visible {
 
 .hover\:bg-main-hovered:hover {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-hovered)/var(--tw-bg-opacity))
+    background-color: #344767d4
 }
 
 .hover\:bg-main\/dim-5:hover {
@@ -37109,7 +37109,7 @@ textarea:focus-visible {
 
 .group\/category:hover .group-hover\/category\:bg-main-container {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .group:hover .group-hover\:bg-surface {
@@ -37312,7 +37312,7 @@ textarea:focus-visible {
 
 .aria-pressed\:bg-main-container[aria-pressed=true] {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .aria-pressed\:bg-neutral[aria-pressed=true] {
@@ -46375,7 +46375,7 @@ div[id^=google_ads_iframe_] iframe {
 .before\:bg-main-container:before {
     content: var(--tw-content);
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .before\:bg-neutral-container:before {
@@ -47786,7 +47786,7 @@ div[id^=google_ads_iframe_] iframe {
 
 .hover\:bg-main-container:hover {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .hover\:bg-main-container-hovered:hover {
@@ -47796,7 +47796,7 @@ div[id^=google_ads_iframe_] iframe {
 
 .hover\:bg-main-hovered:hover {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-hovered)/var(--tw-bg-opacity))
+    background-color: #344767d4
 }
 
 .hover\:bg-main\/dim-5:hover {
@@ -48777,7 +48777,7 @@ div[id^=google_ads_iframe_] iframe {
 
 .group\/category:hover .group-hover\/category\:bg-main-container {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .group:hover .group-hover\:bg-surface {
@@ -48990,7 +48990,7 @@ div[id^=google_ads_iframe_] iframe {
 
 .aria-pressed\:bg-main-container[aria-pressed=true] {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--colors-main-container)/var(--tw-bg-opacity))
+    background-color: #00878e1a
 }
 
 .aria-pressed\:bg-neutral[aria-pressed=true] {

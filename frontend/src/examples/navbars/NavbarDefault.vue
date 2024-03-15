@@ -108,55 +108,48 @@
   
         </div>
         <div class="collapse S navbar-collapse  w-100 pt-3 pb-2 py-lg-0" id="navigation" v-if="!isDeposeAnnoce && !isLogin">
-          <ul class="navbar-nav navbar-nav-hover ms-auto">
-            <li class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
-              <i class="far fa-bell"></i>
-              <RouterLink :to="{ name: 'annonces' }" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-                :class="getTextColor()">
-                Mes recherches
+          <div class="navbar-nav navbar-nav-hover ms-auto">
+            <RouterLink
+            :to="{ name: 'annonces' }"
+                class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
+                <i class="far fa-bell"></i>
+
+              <span>Mes recherches</span>
+
               </RouterLink>
-  
-            </li>
-            <li class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
+            <RouterLink
+            :to="{ name: 'annonces' }"
+                class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
               <i class="far fa-heart"></i>
-              <RouterLink :to="{ name: 'annonces' }" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-                :class="getTextColor()">
-                Favoris
+              <span>Favoris</span>
+
               </RouterLink>
-  
-            </li>
-            <li class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
+
+            <RouterLink
+            :to="{ name: 'annonces' }"
+                class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
               <i class="far fa-comment-alt"></i>
-              <RouterLink :to="{ name: 'annonces' }" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-                :class="getTextColor()">
-                Messages
+              <span>Messages</span>
               </RouterLink>
   
-            </li>
             <RouterLink
             v-if="userLoggedIn" 
               :to="{ name: 'RedirectToDashboard' }"
                 class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
-            <li class="">
               <img :src='get_user_thumbnail' class="overflow-hidden leading-none h-[2.4rem] w-[2.4rem] rounded-full">
               
   
                 <span>{{ userData.name }}</span>
-            </li>
           </RouterLink>
           <RouterLink 
           v-else
               :to="{ name: 'signin-basic' }"
                 class="nav-item dropdown dropdown-hover mx-2 text-center nav1">
-            <li class="">
-              <i class="far fa-user"></i>
-
-  
+                <i class="far fa-user"></i>
                 <span>Se Connecter</span>
-            </li>
           </RouterLink>
 
-          </ul>
+        </div>
   
         </div>
       </div>
@@ -170,67 +163,7 @@
                   class="nav-link ps-2 d-flex cursor-pointer align-items-center text-white" v-if="category.parent == '0'">
                   {{ category.name }}
                 </RouterLink>
-  
-                <div class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
-                  aria-labelledby="dropdownMenuPages">
-                  <div class="row d-none d-lg-block container">
-                    <div class="col-12 px-4 py-2">
-                      <div class="row">
-                        <div class="position-relative">
-                          <div class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1">
-                          {{ category.name }}
-                          </div>
-  
-                          <RouterLink v-for="(sub, index) in category.sub" :key="sub.id" :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                            <span>{{ sub.name }}</span>
-                          </RouterLink>
-                          <!-- <RouterLink :to="{ name: 'maison' }" class="dropdown-item border-radius-md">
-                            <span>Maison</span>
-                          </RouterLink>
-                          <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                            <span>Terrain</span>
-                          </RouterLink>
-                          <div class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3">
-                            Account
-                          </div>
-  
-                          <div class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3">
-                            Locations
-                          </div>
-                          <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                            <span>Appartement</span>
-                          </RouterLink>
-                          <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                            <span>Maison</span>
-                          </RouterLink>
-                          <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                            <span>Parking</span>
-                          </RouterLink> -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-lg-none">
-                    <div class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0">
-                      Appartement
-                    </div>
-                    <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                      <span>About Us</span>
-                    </RouterLink>
-                    <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                      <span>Contact Us</span>
-                    </RouterLink>
-                    <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                      <span>Author</span>
-                    </RouterLink>
-                    <div class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3">
-                      Account
-                    </div>
-                    <RouterLink :to="{ name: 'signin-basic' }" class="dropdown-item border-radius-md">
-                      <span>Sign In</span>
-                    </RouterLink>
-                  </div>
-                </div>
+
               </li>
               <!-- <li class="nav-item dropdown dropdown-hover mx-2">
                 <a role="button" class="nav-link ps-2 d-flex cursor-pointer align-items-center text-white" 
@@ -1508,24 +1441,9 @@ onMounted(() => {
   checkLocalStorage();
 });
 const submitForm = async () => {
-  // try {
-  //   const responsse = await axios.get('/home/filter_listings', {
-  //     params: {
-  //       search_string: search_string.value,
-  //     },
-  //   });
-
-  //   // Handle the response and update results
-  //   // results.value = responsse.data;
-  // } catch (error) {
-  //   console.error('Error fetching results:', error);
-  // }
   router.push({
     name: 'recherche',
     params: { val: search_string.value }
-    // query: {
-    //   search_string: search_string.value,
-    // },
   });
 };
   const props = defineProps({
@@ -1653,13 +1571,29 @@ const submitForm = async () => {
     font-size: 32px !important;
     font-family: 'Dancing Script', cursive;
   }
-  
+  .navbar-nav{
+    justify-content: space-between;
+    width: 100%;
+  }
   nav.navbar {
     padding: 0 !important;
     margin: 0 !important;
     background: #fff;
     border-bottom: 1px solid #e2e2e2;
   }
+  a.nav-item.dropdown.dropdown-hover.mx-2.text-center.nav1 {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    justify-content: center;
+    align-items: center;
+}
+a.nav-item.dropdown.dropdown-hover.mx-2.text-center.nav1 i:before {
+    font-size: 19px;
+}
+ul.navbar-nav.d-lg-block.w-100.pr-0 {
+    max-width: 250px;
+}
 /*   
   .navbar .nav-link {
     font-size: 1.08rem !important;

@@ -115,6 +115,7 @@ $route['api/get_listing_by_user_id/(:any)'] = 'api/get_listing_by_user_id/$1';
 $route['api/get_listing_by_user_id_result'] = 'api/get_listing_by_user_id_result';
 $route['api/get_listing_by_user_id_result/(:any)'] = 'api/get_listing_by_user_id_result/$1';
 $route['api/now_open'] = 'api/now_open';
+$route['api/get_listing_by_user_id_dashboard'] = 'api/get_listing_by_user_id_dashboard';
 $route['api/now_open/(:any)'] = 'api/now_open/$1';
 $route['api/get_cities/(:any)'] = 'api/get_cities/$1';
 $route['api/validate_login_api']['POST'] = 'api/validate_login_api';

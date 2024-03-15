@@ -27,11 +27,8 @@ const userData = computed(() => store.userData);
 const login = () => {
   // Logic to redirect to the login page
 };
+const romspecs  = ref([]);
 
-const logout = () => {
-  store.logout(); // Call the logout method from the authStore
-  router.push('/'); // Redirect to the home page or login page after logout
-};
 const get_listing_by_user_id_result = ref({});
 // Function to check if user data is available in localStorage
 const checkLocalStorage = () => {
@@ -43,7 +40,29 @@ const checkLocalStorage = () => {
     router.push('/login');
   }
 };
+function formattedDate(timestamp) {
+    const date = new Date(timestamp * 1000);
+  const now = new Date();
 
+  // Comparer la date actuelle avec la date de l'annonce
+  const diffInDays = Math.floor((now - date) / (24 * 60 * 60 * 1000));
+
+  if (diffInDays === 0) {
+    return 'Aujourd\'hui';
+  } else if (diffInDays === 1) {
+    return 'Hier';
+  } else if (diffInDays === 2) {
+    return 'Avant-hier';
+  } else {
+    const options = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    };
+    
+    return date.toLocaleDateString('fr-FR', options);
+  }
+}
 // Call the function to check localStorage during the component's mount
 onMounted(() => {
   console.log('Component mounted!');
@@ -57,9 +76,14 @@ onMounted(async () => {
         console.error('Error: User ID is undefined');
         return;
       }
+
       const get_listing_by_user_id_results = await axios.get(`/api/get_listing_by_user_id_result/${currentId}`);
       get_listing_by_user_id_result.value = get_listing_by_user_id_results.data;
-
+      for (const list of get_listing_by_user_id_result.value) {
+          const romspec = await axios.get(`/api/get_hotel_spec/${list.id}`);
+        //   console.log('Response from Room spec:', romspec.data);
+          romspecs.value[list.id] = romspec.data;
+    }
     } catch (error) {
       console.error('Error fetching single listing:', error);
     }
@@ -71,7 +95,13 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
   console.log('userLoggedIn ok:', newUserLoggedIn);
   console.log('userData:', newUserData);
 });
-
+const cheapestRoom = (listingId) => {
+      const rooms = romspecs.value[listingId];
+      if (rooms && rooms.length > 0) {
+        return rooms.reduce((min, romspec) => (min.price < romspec.price ? min : romspec));
+      }
+      return null;
+    };
   </script>
 
 <template>
@@ -99,27 +129,89 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
             
             <!-- Liste -->
             <div v-if="get_listing_by_user_id_result">
-            <div v-for="listing in get_listing_by_user_id_result" nbtotalseparators="" data-test-id="listing-mosaic" id="mosaic_with_owner"  :key="listing.id" class="listing-item sc-968a2c9d-2 givLyB">
+              <div v-for="listing in get_listing_by_user_id_result" nbtotalseparators="" data-test-id="listing-mosaic" id="mosaic_with_owner"  :key="listing.id" class="listing-item sc-968a2c9d-2 givLyB">
                 <!-- Contenu de chaque annonce -->
 
-                <div style="grid-area: classified-28;">
-                    <router-link
-                        :key="listing.id"
-                        :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
-                        data-test-id="ad" data-qa-id="aditem_container" class="group/adcard flex h-[inherit] flex-col h-full"
-                        >
-                    
-                        <div class="mb-md flex items-center gap-sm"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Vendeur particulier" fill="currentColor" stroke="none" class="fill-current text-neutral w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><title>Vendeur particulier</title><path fill-rule="evenodd" d="m5.13,19.27c-1.93-1.82-3.13-4.4-3.13-7.27C2,6.48,6.48,2,12,2s10,4.48,10,10c0,2.86-1.2,5.44-3.13,7.27h0s-.2.18-.2.18c-1.77,1.59-4.11,2.56-6.68,2.56s-4.9-.97-6.68-2.55l-.2-.17h0Zm6.87-6.85c1.96,0,3.54-1.59,3.54-3.54s-1.59-3.54-3.54-3.54-3.54,1.59-3.54,3.54,1.59,3.54,3.54,3.54Zm-6.25,4.69c1.67,2.08,4.33,2.92,6.67,2.92s5-1.67,5.83-2.92c-.83-.97-3.58-2.92-6.25-2.92s-5.28,1.94-6.25,2.92Z"></path></svg><span class="line-clamp-1 overflow-hidden text-ellipsis break-all text-body-2 font-bold text-on-surface">cg</span></div><div class="adCard_hkdpr relative flex h-[inherit]" data-test-id="adcard-consumer-goods-list"><div class="adCard_g8ss1 relative before:block" data-test-id="image"><div class="adCard_169u8 relative h-full"><div class=" relative box-border flex h-full items-center justify-center overflow-hidden bg-neutral-container min-h-[auto] min-w-[auto] rounded-md"><div class="_2JtY0"><div class="LazyLoad is-visible"><div class="_29Lk0"><img src="https://img.leboncoin.fr/api/v1/lbcpb1/images/e0/94/49/e09449b780ef9125aea8053b8e35ffe42573cae9.jpg?rule=ad-image" class="_1cnjm absolute inset-none m-auto h-full w-full object-cover" alt=""></div></div></div></div><div class="absolute left-md right-md top-md"></div></div>
-                </div><div class="adCard_ufrgr relative min-w-none flex-1 
-          flex
-          flex-col
-          justify-between
-        "><div class="flex min-w-none flex-col gap-y-sm"><div class="flex flex-row items-start gap-x-md"><div class="flex min-w-none items-center gap-x-sm"><p data-qa-id="aditem_title" data-title="true" :title="listing.name" class="line-clamp-[--maxLines] text-ellipsis break-words text-body-1 font-bold text-on-surface transition-colors group-hover/adcard:text-main-variant line-clamp-2 break-normal" style="--maxLines: 2;">{{ listing.name }}</p></div></div><div class="inline-flex flex-wrap items-baseline"><p class="flex flex-wrap items-center text-callout font-bold !leading-[--font-size-body-2-line-height] text-on-surface" data-test-id="price" aria-label="Prix: 80 €"><span class="[&amp;_small-support]:text-caption [&amp;_small-support]:font-regular [&amp;_small-support]:text-support [&amp;_small]:text-caption [&amp;_small]:font-regular" data-qa-id="aditem_price"><span>80&nbsp;€</span></span></p><div class="adCard_5pnonl font-body-2 text-neutral before:mx-sm before:inline-block before:font-bold before:content-['·'] first:my-sm first:before:hidden">Très bon état</div></div></div><div class="mt-sm flex items-end gap-sm"><p class="flex flex-wrap overflow-hidden overflow-hidden text-caption text-neutral"><span title="Montcy-Notre-Dame 08090" class="mr-[1.2rem] last:mr-none">Montcy-Notre-Dame 08090</span><span class="relative inline-block w-full before:absolute before:right-full before:top-none before:hidden before:w-[1.2rem] before:text-center before:font-bold before:content-['·'] tiny:w-auto tiny:before:inline-block" aria-label="Date de dépôt : aujourd’hui à 18:58." title="aujourd’hui à 18:58">aujourd’hui à 18:58</span></p><div class="relative inline-block ml-auto"><div data-spark-component="popover-anchor"><button class="flex rounded-sm text-neutral hover:text-neutral-hovered" data-test-id="adcard_favorite_button" data-qa-id="listitem_save_ad" title="Ajouter l’annonce aux favoris"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="LikeOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path d="m16.28,3c-1.72,0-3.24.83-4.28,2.11-1.04-1.28-2.57-2.11-4.28-2.11-3.21,0-5.72,2.85-5.72,6.24,0,2.77,1.41,4.75,1.97,5.51,1.87,2.47,4.38,4.11,6.67,5.6h.02c.25.17.49.33.73.49.32.21.73.22,1.06.02.21-.13.43-.26.63-.39h.02c2.39-1.48,5.02-3.1,6.95-5.68.64-.86,1.95-2.83,1.95-5.54,0-3.4-2.51-6.23-5.72-6.23h0Zm-8.57,2.12c1.46,0,2.76.96,3.35,2.39.16.38.52.64.93.64s.77-.25.93-.64c.6-1.44,1.9-2.39,3.36-2.39,1.99,0,3.7,1.79,3.69,4.13,0,2-.98,3.5-1.52,4.24-1.67,2.25-3.98,3.67-6.43,5.19l-.07.04-.21-.13c-2.33-1.52-4.54-2.97-6.18-5.14-.51-.67-1.54-2.18-1.54-4.2,0-2.33,1.7-4.13,3.7-4.13h0Z"></path></svg></button></div></div></div></div>>
-</div></router-link></div>
+                <div class="grid-listing">
+                  <router-link
+                                                    :key="listing.id"
+                                                    :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
+                                                    :id="'listing-banner-image-for-' + listing.code"
+                                                    class="group/adcard flex h-[inherit] flex-col"
+                                                    data-test-id="ad" 
+                                                    data-qa-id="aditem_container"
+                                                >
+                                                    <div class="adCard_c3c39 relative flex h-[inherit]" data-test-id="adcard-consumer-goods-list">
+                                                        <div class="adCard_9vq5pg relative before:block" data-test-id="image">
+                                                            <div class="adCard_10ldc relative h-full">
+                                                                <div style="height: 237px;" class=" relative imgbox box-border flex h-full items-center justify-center overflow-hidden bg-neutral-container min-h-[auto] min-w-[auto] rounded-md">
+                                                                    <div class="_2JtY0">
+                                                                        <div class="LazyLoad is-visible">
+                                                                            <div class="_29Lk0">
+                                                                                <img :src="'/uploads/listing_thumbnails/' + listing.listing_thumbnail" class="_1cnjm absolute inset-none m-auto h-full w-full object-cover" alt="">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="absolute left-md right-md top-md">
 
-
-
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="adCard_cdvao relative min-w-none flex-1 
+                                                        flex
+                                                        flex-col
+                                                        justify-between
+                                                        ">
+                                                        
+                                                        <div class="flex min-w-none flex-col gap-y-sm">
+                                                            <div class="flex flex-row items-start gap-x-md">
+                                                                <div class="flex min-w-none items-center gap-x-sm">
+                                                                    <p data-qa-id="aditem_title" data-title="true" :title="listing.name" class="line-clamp-[--maxLines] text-ellipsis break-words text-body-1 font-bold text-on-surface transition-colors group-hover/adcard:text-main-variant line-clamp-2 break-normal" style="--maxLines: 2;">
+                                                                        {{ listing.name }}
+                                                                    </p>
+                                                                </div>
+                                                                <span data-spark-component="tag" class="box-border inline-flex items-center justify-center gap-sm whitespace-nowrap text-caption font-bold h-sz-20 px-md rounded-full border-sm border-current text-support ml-auto">Pro</span>
+                                                            </div>
+                                                            <div class="inline-flex flex-wrap items-baseline">
+                                                                <p class="flex flex-wrap items-center text-callout font-bold !leading-[--font-size-body-2-line-height] text-on-surface" data-test-id="price" aria-label="Prix: À partir de 24 € par nuit">
+                                                                    <span class="[&amp;_small-support]:text-caption [&amp;_small-support]:font-regular [&amp;_small-support]:text-support [&amp;_small]:text-caption [&amp;_small]:font-regular" data-qa-id="aditem_price">
+                                                                        <span v-if="cheapestRoom(listing.id)" :key="cheapestRoom(listing.id).id">
+                                                                            <small>à partir de&nbsp;</small>{{ cheapestRoom(listing.id).price }} € <small-support>/ nuit</small-support>
+                                                                        </span>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <div v-if="listing.status === 'pending'">
+                                                              <i class="entypo-record" style="color: #FFC107; font-size: 19px;" data-toggle="tooltip" data-placement="top" title="" :data-original-title="listing.status"></i>
+                                                            Status : {{ listing.status }}
+                                                            </div>
+                                                              <div v-else>
+                                                              <i class="entypo-record" style="color: #4CAF50; font-size: 19px;" data-toggle="tooltip" data-placement="top" title="" :data-original-title="listing.status"></i>
+                                                              Status :
+                                                              {{ listing.status }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-sm flex items-end gap-sm">
+                                                            <p class="flex flex-wrap overflow-hidden overflow-hidden text-caption text-neutral">
+                                                                <span :title="listing.address" class="mr-[1.2rem] last:mr-none">{{ listing.address }}</span>
+                                                                <span class="relative inline-block w-full before:absolute before:right-full before:top-none before:hidden before:w-[1.2rem] before:text-center before:font-bold before:content-['·'] tiny:w-auto tiny:before:inline-block" :aria-label="'Date de dépôt : ' + formattedDate(listing.date_added)" :title="formattedDate(listing.date_added)">{{ formattedDate(listing.date_added) }}</span>
+                                                            </p>
+                                                            <div class="relative inline-block ml-auto">
+                                                                <div data-spark-component="popover-anchor">
+                                                                    <button class="flex rounded-sm text-neutral hover:text-neutral-hovered" data-test-id="adcard_favorite_button" data-qa-id="listitem_save_ad" title="Ajouter l’annonce aux favoris">
+                                                                        
+                                                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="LikeOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path d="m16.28,3c-1.72,0-3.24.83-4.28,2.11-1.04-1.28-2.57-2.11-4.28-2.11-3.21,0-5.72,2.85-5.72,6.24,0,2.77,1.41,4.75,1.97,5.51,1.87,2.47,4.38,4.11,6.67,5.6h.02c.25.17.49.33.73.49.32.21.73.22,1.06.02.21-.13.43-.26.63-.39h.02c2.39-1.48,5.02-3.1,6.95-5.68.64-.86,1.95-2.83,1.95-5.54,0-3.4-2.51-6.23-5.72-6.23h0Zm-8.57,2.12c1.46,0,2.76.96,3.35,2.39.16.38.52.64.93.64s.77-.25.93-.64c.6-1.44,1.9-2.39,3.36-2.39,1.99,0,3.7,1.79,3.69,4.13,0,2-.98,3.5-1.52,4.24-1.67,2.25-3.98,3.67-6.43,5.19l-.07.04-.21-.13c-2.33-1.52-4.54-2.97-6.18-5.14-.51-.67-1.54-2.18-1.54-4.2,0-2.33,1.7-4.13,3.7-4.13h0Z"></path></svg>
+                                                                    
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                  </router-link>
                 </div>
+              </div>
             </div>
 
             <div v-else>
@@ -140,3 +232,11 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
     </div>
 </main>
 </template>
+<style>
+.grid-listing{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 30px;
+  margin-top: 50px;
+}
+</style>

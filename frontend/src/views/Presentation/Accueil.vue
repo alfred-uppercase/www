@@ -1,15 +1,65 @@
+
 <template>
-    <section class="relative [&:has(#sl-xl.liberty-filled)]:min-h-[648px] [&:has(#sr-xl.liberty-filled)]:min-h-[648px]">
+  <div class="container containerbanner"
+    style="height:100%;display: flex;justify-content: center;z-index:2;position:relative;">
+    <div class="row justify-content-center">
+      <div class="col-lg-12 text-center mx-auto my-auto">
+        <h1 class="text-dark">
+          {{ bannerTitle }}
+          <!-- <span class="text-white" id="typed"></span> -->
+        </h1>
+        <!-- <div id="typed-strings">
+          <h1> annonces</h1>
+          <h1> hotels</h1>
+          <h1> offres d'emploi</h1>
+        </div> -->
+        <p class="lead mb-4 text-dark opacity-8">
+          {{ slogan }}
+        </p>
+        <form @submit.prevent="submitForm">
+          <div class="row no-gutters custom-search-input-2">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <input class="form-control" type="text" :v-model="search_string" placeholder="Votre recherche...">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <select class="wide" :v-model="selected_city_id" style="display: ;">
+                <option value="">Tous les villes</option>
+                <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-3">
+              <select class="wide" :v-model="selected_category_id" style="display: block;">
+                <option value="">Tous les catégories</option>
+                <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-2" style="padding: 0;">
+              <input class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" type="submit" value="Rechercher">
+            </div>
+          </div>
+        </form>
 
-        <!--Ad gauche-->
-        <div class="w-[calc((100%-(theme(width.page-max)+(var(--spacing-xl)*2)))/2)] absolute inset-y-[0]  z-dropdown left-[0]"><div class="absolute top-[0] w-full bottom-[0]"><div class="justify-end ease sticky top-[110px] flex max-h-full transform overflow-hidden duration-350 py-xl"><div class="flex justify-end"><div aria-label="" id="home-left-atf-60-xl" class="" data-liberty-position-name="home-left-atf-60" data-liberty-breakpoint-name="xl"></div></div></div></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- <listings v-if="showResults" :results="searchResults" /> -->
+  <div class="hero" style="position: absolute;top: 0;">
+    <div class="diagonal-hero-bg">
 
-        <!--Ad droite-->
-        <div class="w-[calc((100%-(theme(width.page-max)+(var(--spacing-xl)*2)))/2)] absolute inset-y-[0]  z-dropdown right-[0]"><div class="absolute top-[0] w-full bottom-[0]"><div class="justify-start ease sticky top-[110px] flex max-h-full transform overflow-hidden duration-350 py-xl"><div class="flex justify-start"><div aria-label="" id="home-right-atf-70-xl" class="" data-liberty-position-name="home-right-atf-70" data-liberty-breakpoint-name="xl"></div></div></div></div></div>
 
-        <!--Titre-->
-        <h1 class="m-none hidden py-xl text-center text-display-3 font-semi-bold custom:block">{{ bannerTitle }}</h1>
+      <div class="stars">
+        <div class="small"></div>
+        <div class="medium"></div>
+        <div class="big"></div>
+      </div>
 
+
+    </div>
+  </div>
         <!--Ajouter annonce-->
         <div class="src__CenteredWrapper-sc-1bgl6we-0 iCaNcC">
             <div class="px-lg text-center">
@@ -25,167 +75,50 @@
             </div>
         </div>
 
-        <!--Top categorie-->
-        <section class="styles_widgets__7jhBb" aria-label="Widgets">
-            <div class="min-h-[13rem] pl-lg custom:min-h-[15rem]">
-                <h2 class="mb-lg text-headline-1 text-on-basic-container">Top catégories</h2>
-
-                <div data-test-id="top-cat-carousel" data-qa-id="top-cat-carousel">
-                    <div edges="end" edgescolor="#fafafa" class="indexstyles__View-sc-10uesfx-0 fACpgy">
-
-
-                        <swiper
-                            :slides-per-view="5"
-                            :space-between="5"
-                            navigation
-
-                            aria-label="Carrousel du top des catégories"
-                            class="indexstyles__Root-sc-10uesfx-1 bQPJuk"
-                        >
-                            <swiper-slide 
-                            v-for="(category, index) in categories" 
-                            :key="category.id"
-                            class="indexstyles__Slide-sc-10uesfx-2 inqJnI">
-                            <router-link 
-                            :key="category.id"
-                            :to="{ name: 'Annonces', params: { id: category.id } }"
-                            class="group relative mr-lg block h-[12rem] w-[12rem] rounded-lg bg-neutral-container tiny:w-[18rem]" title="Ventes immobilières de maison et appartement">
-                                    <!-- <a :href="`/recherche?search_string=&selected_city_id=&selected_category_id=${category.id}`"> -->
-                                            <img alt="Ventes immobilières de maison et appartement" loading="lazy" width="361" height="241" decoding="async" data-nimg="1" class="!h-[12rem] w-[12rem] relative block z-base object-cover rounded-lg opacity-none transition-opacity duration-300 group-hover:opacity-[0.9] tiny:w-[18rem]" :src="`/uploads/category_thumbnails/${category.thumbnail}`" style="color: transparent;">
-                                            <div class="absolute bottom-none left-none right-none pb-md pt-sm z-raised rounded-b-lg bg-[linear-gradient(0deg,rgba(0,0,0,.6)_10%,rgba(250,250,250,0)_100%)] text-center text-body-2-link text-[#FFF] tiny:w-[18rem] custom:text-subhead">
-                                                {{ category.name }}
-                                            </div>
-                                    <!-- </a> -->
-                            </router-link>
-                            </swiper-slide>
-                        </swiper>
-
-                    </div>
-                </div>
+  <div tag="section" class="places-list container-md">
+    <h2 class="heading section-title title-left" dir="auto">Nos principales catégories</h2>
+    <div class="places-grid __9">
+      <ul class="list">
+        <li v-for="(category, index) in categories" :key="category.id" :class="'list-item place-item-' + (index + 1)">
+          <router-link :key="category.id" :to="{ name: 'Annonces', params: { id: category.id } }" class="link">
+            <div class="search-badge">
+              <div class="lazybackground">
+                <img :src="`/uploads/category_thumbnails/${category.thumbnail}`" loading="lazy">
+              </div>
+              <div class="search-badge-text">{{ category.name }}</div>
             </div>
-        </section>
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </div>
 
 
-        <!-- Get specific categorie-->
-        <section data-test-id="discoverySection" class="mx-auto my-none max-w-page-max overflow-hidden pb-none pr-none">
-            <div>
-                <section class="mx-auto my-none max-w-page-max overflow-hidden pb-none pl-lg pr-none pt-xl" data-qa-id="discovery">
-                    <div class="py-xl mr-lg custom:mr-md">
-                        <div class="whitespace-pre-line">
-                            <div class="mb-lg flex items-center justify-between text-on-background md:mb-xl">
-                                <h2 class="text-headline-2">Hôtels</h2>
-                                
-                                <a class="text-body-2" href="/discovery/69">
-                                    <div><span class="hidden items-center justify-between gap-md font-bold md:flex">Voir plus d’annonces
-                                    
-                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ArrowRight" fill="currentColor" stroke="none" class="fill-current text-current u-current-font-size" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m15.46,6.28c-.4.38-.41,1.01-.03,1.4l3.22,3.33H3c-.55,0-1,.44-1,.99s.45.99,1,.99h15.65l-3.22,3.33c-.38.4-.37,1.02.03,1.4.4.38,1.03.37,1.41-.03l4.85-5.01c.37-.38.37-.99,0-1.37l-4.85-5.01c-.38-.4-1.02-.41-1.41-.03Z"></path></svg></span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ArrowVerticalRight" fill="currentColor" stroke="none" class="fill-current text-current u-current-font-size md:hidden" data-spark-component="icon" aria-hidden="true" focusable="false" aria-label="Voir plus d’annonces"><path fill-rule="evenodd" d="m7.3,2.28c-.38.38-.4,1.02-.03,1.41l7.69,8.31-7.69,8.31c-.37.4-.36,1.03.03,1.41.38.38.99.37,1.36-.03l7.87-8.51c.15-.16.27-.34.35-.54.08-.21.12-.43.12-.65s-.04-.44-.12-.65c-.08-.2-.2-.38-.35-.54L8.66,2.31c-.37-.4-.98-.41-1.36-.03Z"></path></svg>
-                                    </div>
-                                </a>
-                            </div>
 
-                            <!--Slider-->
-                            <div>
-                                <div class="relative" data-test-id="sliderWrapper">
-                                    <div class="relative z-base overflow-auto u-no-scrollbar w-full">
-                                        <swiper
-                                            :slides-per-view="5"
-                                            :space-between="5"
-                                            navigation
-                                            aria-label="Carrousel du top des catégories"
-                                            class="relative grid grid-flow-col justify-start gap-lg"
-                                        >
-                                            <swiper-slide 
-                                            v-for="listing in listings" 
-                                            :key="listing.id"
-                                            :data-marker-id="listing.code"
-                                            :id="listing.code"
-                                            class="list-none">
-                                            <div class="h-full !w-[17rem] custom:!w-[19rem]">
-                                                <router-link
-                                                    :key="listing.id"
-                                                    :to="{ name: 'annoncesUnique', params: { id: listing.id } }"
-                                                    :id="'listing-banner-image-for-' + listing.code"
-                                                    class="group/adcard flex h-[inherit] flex-col"
-                                                    data-test-id="ad" 
-                                                    data-qa-id="aditem_container"
-                                                >
-                                                    <div class="adCard_c3c39 relative flex h-[inherit]" data-test-id="adcard-consumer-goods-list">
-                                                        <div class="adCard_9vq5pg relative before:block" data-test-id="image">
-                                                            <div class="adCard_10ldc relative h-full">
-                                                                <div style="height: 237px;" class=" relative imgbox box-border flex h-full items-center justify-center overflow-hidden bg-neutral-container min-h-[auto] min-w-[auto] rounded-md">
-                                                                    <div class="_2JtY0">
-                                                                        <div class="LazyLoad is-visible">
-                                                                            <div class="_29Lk0">
-                                                                                <img :src="'/uploads/listing_thumbnails/' + listing.listing_thumbnail" class="_1cnjm absolute inset-none m-auto h-full w-full object-cover" alt="">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="absolute left-md right-md top-md">
+  <!-- <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6" style="padding-bottom: 0px!important;">
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="adCard_cdvao relative min-w-none flex-1 
-                                                        flex
-                                                        flex-col
-                                                        justify-between
-                                                        ">
-                                                        
-                                                        <div class="flex min-w-none flex-col gap-y-sm">
-                                                            <div class="flex flex-row items-start gap-x-md">
-                                                                <div class="flex min-w-none items-center gap-x-sm">
-                                                                    <p data-qa-id="aditem_title" data-title="true" :title="listing.name" class="line-clamp-[--maxLines] text-ellipsis break-words text-body-1 font-bold text-on-surface transition-colors group-hover/adcard:text-main-variant line-clamp-2 break-normal" style="--maxLines: 2;">
-                                                                        {{ listing.name }}
-                                                                    </p>
-                                                                </div>
-                                                                <span data-spark-component="tag" class="box-border inline-flex items-center justify-center gap-sm whitespace-nowrap text-caption font-bold h-sz-20 px-md rounded-full border-sm border-current text-support ml-auto">Pro</span>
-                                                            </div>
-                                                            <div class="inline-flex flex-wrap items-baseline">
-                                                                <p class="flex flex-wrap items-center text-callout font-bold !leading-[--font-size-body-2-line-height] text-on-surface" data-test-id="price" aria-label="Prix: À partir de 24 € par nuit">
-                                                                    <span class="[&amp;_small-support]:text-caption [&amp;_small-support]:font-regular [&amp;_small-support]:text-support [&amp;_small]:text-caption [&amp;_small]:font-regular" data-qa-id="aditem_price">
-                                                                        <span v-if="cheapestRoom(listing.id)" :key="cheapestRoom(listing.id).id">
-                                                                            <small>à partir de&nbsp;</small>{{ cheapestRoom(listing.id).price }} € <small-support>/ nuit</small-support>
-                                                                        </span>
-                                                                    </span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-sm flex items-end gap-sm">
-                                                            <p class="flex flex-wrap overflow-hidden overflow-hidden text-caption text-neutral">
-                                                                <span :title="listing.address" class="mr-[1.2rem] last:mr-none">{{ listing.address }}</span>
-                                                                <span class="relative inline-block w-full before:absolute before:right-full before:top-none before:hidden before:w-[1.2rem] before:text-center before:font-bold before:content-['·'] tiny:w-auto tiny:before:inline-block" :aria-label="'Date de dépôt : ' + formattedDate(listing.date_added)" :title="formattedDate(listing.date_added)">{{ formattedDate(listing.date_added) }}</span>
-                                                            </p>
-                                                            <div class="relative inline-block ml-auto">
-                                                                <div data-spark-component="popover-anchor">
-                                                                    <button class="flex rounded-sm text-neutral hover:text-neutral-hovered" data-test-id="adcard_favorite_button" data-qa-id="listitem_save_ad" title="Ajouter l’annonce aux favoris">
-                                                                        
-                                                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="LikeOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path d="m16.28,3c-1.72,0-3.24.83-4.28,2.11-1.04-1.28-2.57-2.11-4.28-2.11-3.21,0-5.72,2.85-5.72,6.24,0,2.77,1.41,4.75,1.97,5.51,1.87,2.47,4.38,4.11,6.67,5.6h.02c.25.17.49.33.73.49.32.21.73.22,1.06.02.21-.13.43-.26.63-.39h.02c2.39-1.48,5.02-3.1,6.95-5.68.64-.86,1.95-2.83,1.95-5.54,0-3.4-2.51-6.23-5.72-6.23h0Zm-8.57,2.12c1.46,0,2.76.96,3.35,2.39.16.38.52.64.93.64s.77-.25.93-.64c.6-1.44,1.9-2.39,3.36-2.39,1.99,0,3.7,1.79,3.69,4.13,0,2-.98,3.5-1.52,4.24-1.67,2.25-3.98,3.67-6.43,5.19l-.07.04-.21-.13c-2.33-1.52-4.54-2.97-6.18-5.14-.51-.67-1.54-2.18-1.54-4.2,0-2.33,1.7-4.13,3.7-4.13h0Z"></path></svg>
-                                                                    
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </router-link>
-                                        </div>
-                                            </swiper-slide>
-                                        </swiper>      
-                                    </div>
-                                </div>
-                            </div>
+    <AboutTeam />
+    <Newsletter />
 
-                        </div>
-                    </div>
-                </section>
-            </div>
+  </div> -->
+  <div class='container mt-4 mb-40 dernier-recherche'>
+    <p class="items-list">
+      <span class="titre-1 text-black bold float-start">D'apres vos dernier recherche <i
+          class="fas fa-question-circle text-yellow"></i></span>
+      <span class="float-end"> voir plus annonces <i class="fas fa-plus-circle "></i></span>
+    </p>
 
-        </section>
 
-    </section>
+
+    <div class="row mt-4">
+      <div class="col-3"><img :src="imgDefault" alt=""></div>
+      <div class="col-3"><img :src="imgDefault" alt=""></div>
+      <div class="col-3"><img :src="imgDefault" alt=""></div>
+      <div class="col-3"><img :src="imgDefault" alt=""></div>
+    </div>
+
+  </div>
 </template>
-
 <script setup>
 import { ref, onMounted, onUnmounted, } from "vue";
 import axios from 'axios';
@@ -260,7 +193,7 @@ onMounted(async () => {
           romspecs.value[list.id] = romspec.data;
     }
 
-    const response = await axios.get('/api/get_categories');
+    const response = await axios.get('/api/get_categories_parent');
     categories.value = response.data;
     for (const category of categories.value) {
       const getSubCategory = await axios.get(`/api/get_sub_categories/${category.id}`);
@@ -368,38 +301,43 @@ export default {
     },
   };
 </script>
+
 <style>
-.styles_widgets__7jhBb {
-    margin: 0.8rem auto 0;
-    padding-bottom: 1.6rem;
-    max-width: 1066px;
-    overflow: hidden;
+p.text-headline-1 {
+    font-size: 2.7rem !important;
 }
-.iCaNcC {
-    width: 100%;
-    max-width: 1066px;
-    margin: 0px auto;
+.lead {
+    font-size: 2.25rem !important;
 }
-.adCard_10ldc  {
-    position: absolute;
-    inset: 0;
-    height: auto;
+.iCaNcC{
+  max-width: 1140px!important;
 }
-.adCard_10ldc::before {
-    padding-bottom: 125%;
+.bg-main-container{
+  background-color: #00878e1a!important;
 }
-.adCard_c3c39 {
-          flex-direction: column;
-          border-radius: 0;
-          border: 0;
-          padding: 0;
+h2.heading{
+  font-size: 3.25rem!important;
+
 }
-.adCard_cdvao {
-    margin-left: 0;
-    margin-top: var(--spacing-md);
-    width: 100%;
+h1.text-dark{
+  font-size: 5rem!important;
 }
-.imgbox{
-    height: 237px;
+.containerbanner{
+  min-height: 472px!important;
+}
+.my-auto {
+    margin-top: 13% !important;
+    margin-bottom: auto !important;
+}
+.form-control, .custom-search-input-2 select, .search-badge-text{
+  font-size: 1.5rem!important;
+}
+.custom-search-input-2 input[type=submit]{
+  font-size: 1.675rem!important;
+  color: #fff!important;
+  text-transform: initial!important;
+}
+a:hover{
+  color: #344767!important;
 }
 </style>

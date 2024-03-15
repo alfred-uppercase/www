@@ -6,7 +6,6 @@ import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup, LPolyline, LPolygon, LRectangle, } from "@vue-leaflet/vue-leaflet";
 import FIlters from '/views/Presentation/annonces/filter.vue';
 const title = ref('');
-const listings = ref([]);
 const get_country = ref([]);
 const get_phrase_show_on_map = ref('');
 const get_phrase_watch_details = ref('');
@@ -44,20 +43,13 @@ return str.charAt(0).toUpperCase() + str.slice(1);
 };
 const id = ref(null);
 const romspecs = ref([]);
-
+const listings = ref([]);
+const searchQuery = route.currentRoute.value.query.q;
 id.value = route.params.val;
 onMounted(async () => {
-
   const currentId = id.value;
-    // if (!currentId) {
-    //   console.error('Error: Annonce ID is undefined');
-    //   return;
-    // }else{
-    //   console.log("Dadadadada", currentId);
-    // }
 try {
-
-  const response = await axios.get(`/recherche?search_string=${currentId}&selected_city_id=&selected_category_id=`);
+  const response = await axios.get(`/recherchevvvv?search_string=${searchQuery}&selected_city_id=&selected_category_id=`);
   console.log('Response from listings seul:', response.data);
   title.value = response.data.title;
   listings.value = response.data.listings;
@@ -241,10 +233,12 @@ return '4.5'; // Sample rating
     </div>
 
     <!--Count-->
-    <div class="flex items-center mb-lg md:mb-xl"><h2 class="text-subhead-expanded text-neutral">3 930 190 annonces</h2></div>
+    <div class="flex items-center mb-lg md:mb-xl">
+      <h2 class="text-subhead-expanded text-neutral">{{ listings.length }} annonces pour {{ listings.search_string }}</h2>
+    </div>
 
     <!--Listing count-->
-    <div class="styles_Listing__isoog styles_listing--generic__AhPAo">
+    <div v-if="listings.length > '0'" class="styles_Listing__isoog styles_listing--generic__AhPAo">
       <div class="styles_classifiedColumn__Vz9uL">
         <div class="mb-lg">
           <div layout="[object Object],[object Object]" nbtotalseparators="21" data-test-id="listing-mosaic" id="mosaic_with_owner" class="sc-968a2c9d-2 givLyB">
@@ -334,6 +328,16 @@ return '4.5'; // Sample rating
       <div class="styles_sideColumn__Om95h">
         <div class="apn-sk skyscraper sticky top-[110px] block pt-xl">
           Pub ici
+        </div>
+      </div>
+    </div>
+
+    <div class="styles_Listing__isoog styles_listing--generic__AhPAo">
+      <div class="styles_classifiedColumn__Vz9uL">
+        <div class="mb-lg">
+          <div layout="[object Object],[object Object]" nbtotalseparators="21" data-test-id="listing-mosaic" id="mosaic_with_owner" class="sc-968a2c9d-2 givLyB">
+            Aucun résultat trouvé pour la recherche : {{ listings.search_string }}
+          </div>
         </div>
       </div>
     </div>

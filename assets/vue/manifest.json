@@ -1,6 +1,6 @@
 {
   "main.js": {
-    "file": "assets/main.3bb92242.js",
+    "file": "assets/main.03a6fc3d.js",
     "src": "main.js",
     "isEntry": true,
     "dynamicImports": [
@@ -8,20 +8,13 @@
       "../node_modules/leaflet/dist/images/marker-icon.png",
       "../node_modules/leaflet/dist/images/marker-shadow.png",
       "../node_modules/leaflet/dist/leaflet-src.esm.js",
-      "_leaflet-src.7e6ed917.js"
+      "_leaflet-src.31c15995.js"
     ],
     "css": [
-      "assets/main.d876ddad.css"
+      "assets/main.3c56c36d.css"
     ],
     "assets": [
       "assets/logo-ct-dark.7a12dae2.png",
-      "assets/illustration-signin.4fb4c335.jpg",
-      "assets/bruce-mars.f4e2d5ca.jpg",
-      "assets/testimonial-6-2.04ddfb8e.jpg",
-      "assets/testimonial-6-3.4714eae5.jpg",
-      "assets/blog-9-4.b058d197.jpg",
-      "assets/blog2.fe63ab0e.jpg",
-      "assets/city-profile.7a169449.jpg",
       "assets/team-1.c59024a1.jpg",
       "assets/team-2.f56f4d18.jpg",
       "assets/team-3.a7ecd7c8.jpg",
@@ -53,8 +46,8 @@
     "src": "../node_modules/leaflet/dist/leaflet-src.esm.js",
     "isDynamicEntry": true
   },
-  "_leaflet-src.7e6ed917.js": {
-    "file": "assets/leaflet-src.7e6ed917.js",
+  "_leaflet-src.31c15995.js": {
+    "file": "assets/leaflet-src.31c15995.js",
     "isDynamicEntry": true,
     "imports": [
       "main.js"

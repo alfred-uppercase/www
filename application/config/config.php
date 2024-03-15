@@ -253,7 +253,7 @@ $config['log_path'] = '';
 |
 */
 $config['log_file_extension'] = '';
-
+$config['upload_path'] = './uploads/';
 /*
 |--------------------------------------------------------------------------
 | Log File Permissions

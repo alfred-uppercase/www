@@ -19,6 +19,7 @@ class Api extends CI_Controller {
     $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
     $this->output->set_header('Pragma: no-cache');
     $this->load->helper("file");
+    $this->load->library('upload');
   }
   public function validate_login($from = "") {
     if(!$this->crud_model->check_rechaptcha()  && get_settings('recaptcha_status') == 1){
@@ -183,6 +184,7 @@ public function register_post() {
     $address = sanitizer($this->input->post('address'));
     $phone = sanitizer($this->input->post('phone'));
     $siret = sanitizer($this->input->post('siret'));
+    $pays = sanitizer($this->input->post('pays'));
     $nomdesociete = sanitizer($this->input->post('nomdesociete'));
     $adresse = sanitizer($this->input->post('adresse'));
     $codepostal = sanitizer($this->input->post('codepostal'));
@@ -199,7 +201,7 @@ public function register_post() {
 
     // $user_id = $this->user_model->add_user($email, $name, $password, $address, $phone, $lastname, $civilite, $siret, $nomdesociete, $adresse, $codepostal, $secteur);
     // $user_id = $this->user_model->add_user('sign_up');
-    $user_id = $this->user_model->add_user($siret, $nomdesociete, $adresse, $codepostal, $secteur);
+    $user_id = $this->user_model->add_user($siret, $nomdesociete, $pays, $adresse, $codepostal, $secteur);
     $this->response(['message' => 'User registered successfully', 'user_id' => $user_id], REST_Controller::HTTP_OK);
 }
 // public function validate_login_api() {
@@ -374,6 +376,14 @@ $this->output
 }
 public function get_listing_by_user_id_result($user_id = ""){
     $this->db->where('user_id', $user_id);
+    // $this->db->where('status', 'active');
+    $conts = $this->db->get('listing')->result_array();
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($conts));
+}
+public function get_listing_by_user_id_dashboard($user_id = ""){
+    $this->db->where('user_id', $user_id);
     $this->db->where('status', 'active');
     $conts = $this->db->get('listing')->result_array();
     $this->output
@@ -417,7 +427,7 @@ function now_open($listing_id = '') {
     } else {
       $data['user_id'] = $this->session->userdata('user_id');
     }
-    $data['name'] = sanitizer($this->input->post('title'));
+    $data['name'] = sanitizer($this->input->post('name'));
     $data['description'] = sanitizer($this->input->post('description'));
 
 
@@ -498,14 +508,19 @@ function now_open($listing_id = '') {
       $data['amenities'] = json_encode(array());
     }
 
-    if (!empty($this->input->post('categories'))) {
-    //   $data['categories'] = sanitizer($this->input->post('categories'));
-    // $categoriesJson = sanitizer($this->input->post('categories'));
-
-    $data['categories'] = json_encode(sanitizer($this->input->post('categories')));
+    $categories = sanitizer($this->input->post('categories'));
+    if (!empty($categories)) {
+        // Si sanitizer() retourne une chaîne de caractères, convertissez-la en tableau
+        if (!is_array($categories)) {
+            $categories = explode(',', $categories); // ou toute autre méthode appropriée
+        }
+        // Convertir chaque élément du tableau en chaîne de caractères
+        $categories = array_map('strval', $categories);
+        $data['categories'] = json_encode($categories);
     } else {
-      $data['categories'] = json_encode(array());
+        $data['categories'] = json_encode(array());
     }
+    
 
     $data['reference'] = sanitizer($this->input->post('reference'));
     $data['marque'] = sanitizer($this->input->post('marque'));
@@ -564,9 +579,33 @@ function now_open($listing_id = '') {
     // }
     
     
-    
+    // if (empty($_FILES['listing_thumbnail']['name'])) {
+    //     $data['listing_thumbnail'] = 'thumbnaild.png';
+    //   } else {
+    //     $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
+    //     move_uploaded_file($_FILES['listing_thumbnail']['tmp_name'], 'uploads/listing_thumbnails/' . $data['listing_thumbnail']);
+    // }
 
-    if ($_FILES['listing_thumbnail']['name'] == "") {
+
+    // if (!empty($_FILES['listing_thumbnail']['name'])) {
+    //     $config['upload_path'] = './uploads/listing_thumbnails/';
+    //     $config['allowed_types'] = 'gif|jpg|jpeg|png';
+    //     $config['max_size'] = 1024 * 10; // 10MB maximum
+    
+    //     $this->upload->initialize($config);
+    
+    //     if ($this->upload->do_upload('listing_thumbnail')) {
+    //         $upload_data = $this->upload->data();
+    //         $data['listing_thumbnail'] = $upload_data['file_name'];
+    //     } else {
+    //         // Gérer les erreurs de téléchargement
+    //     }
+    // } else {
+    //     $data['listing_thumbnail'] = 'thumbnailccc.png';
+    // }
+      
+
+    if ($_FILES['listing_thumbnail']['tmp_name'] == "") {
       $data['listing_thumbnail'] = 'thumbnail.png';
     } else {
       $data['listing_thumbnail'] = md5(rand(10000000, 20000000)) . '.jpg';
@@ -580,14 +619,14 @@ function now_open($listing_id = '') {
     //   move_uploaded_file($_FILES['listing_cover']['tmp_name'], 'uploads/listing_cover_photo/' . $data['listing_cover']);
     // }
 
-    // foreach ($_FILES['listing_images']['tmp_name'] as $listing_image) {
-    //   if ($listing_image != "") {
-    //     $random_identifier = md5(rand(10000000, 20000000)) . '.jpg';
-    //     move_uploaded_file($listing_image, 'uploads/listing_images/' . $random_identifier);
-    //     array_push($photo_gallery, $random_identifier);
-    //   }
-    // }
-    // $data['photos'] = json_encode($photo_gallery);
+    foreach ($_FILES['listing_images']['tmp_name'] as $listing_image) {
+      if ($listing_image != "") {
+        $random_identifier = md5(rand(10000000, 20000000)) . '.jpg';
+        move_uploaded_file($listing_image, 'uploads/listing_images/' . $random_identifier);
+        array_push($photo_gallery, $random_identifier);
+      }
+    }
+    $data['photos'] = json_encode($photo_gallery);
     $data['code'] = md5(rand(10000000, 20000000));
 
     if (strtolower($this->session->userdata('role')) == 'admin') {
@@ -608,7 +647,7 @@ function now_open($listing_id = '') {
       $this->db->insert('time_configuration', $time_config);
 
       // Add listing inner details data
-      $this->add_listing_type_wise_details(sanitizer($this->input->post('listing_type')), $listing_id);
+    //   $this->add_listing_type_wise_details(sanitizer($this->input->post('listing_type')), $listing_id);
       $this->session->set_flashdata('flash_message', get_phrase('listing_added_successfully'));
     } else {
         $this->db->insert('listing', $data);
@@ -623,6 +662,18 @@ function now_open($listing_id = '') {
     }
   }
 
+  function get_listings($listing_id = 0)
+  {
+    if (strtolower($this->session->userdata('role')) != 'admin') {
+      $this->db->where('user_id', $this->session->userdata('user_id'));
+    }
+    if ($listing_id > 0) {
+      $this->db->where('id', $listing_id);
+    } else {
+      $this->db->order_by('date_added', 'desc');
+    }
+    return $this->db->get('listing');
+  }
 
   function get_cities()
   {

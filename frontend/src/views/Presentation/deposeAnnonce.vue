@@ -35,7 +35,7 @@
                       <input id="subject" name="subject"
                         class="border-gray relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                         required="" aria-invalid="false" type="text" maxlength="200" data-qa-id="input_subject_research"
-                        v-model="name">
+                        v-model="titreAnnonce">
                     </div>
                     <button data-spark-component="button" v-if="!isTitreAnnonce"
                       class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold  mt-lg btn btn-theme mx-3"
@@ -128,7 +128,7 @@
                           style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0px; width: 24px; height: 24px;"><label
                           class="grow cursor-pointer" for="offre" id="radix-:rq:">Offre</label>
                       </div>
-                      <p class="ml-2xl text-caption text-neutral">Vous vendez un bien immobilier.</p>
+                      <p class="ml-2xl text-caption text-neutral">Vous vendez un bien.</p>
                     </div>
                     <div class="mb-md flex grow flex-col">
                       <div class="flex items-start gap-md text-body-1">
@@ -138,7 +138,7 @@
                           style="transform: translateX(-100%); position: absolute; opacity: 0; margin: 0px; width: 24px; height: 24px;">
                         <label class="grow cursor-pointer" for="demande">Demande</label>
                       </div>
-                      <p class="ml-2xl text-caption text-neutral">Vous recherchez un bien immobilier.</p>
+                      <p class="ml-2xl text-caption text-neutral">Vous recherchez un bien.</p>
                     </div>
                   </div>
                 </div>
@@ -1453,13 +1453,21 @@
                         </div>
                       </div>
                       <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2">
-                        <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                        <div data-spark-component="form-field" class="relative "><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:ri:" for="building_year">Etat   </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="etat" id="etat" name="etat"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text"></div>
+                            <div class="relative inline-flex w-full">
+                              <select v-model="etat" name="etat" id="etat"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="État neuf">État neuf</option>
+                                <option class="mb-4 mt-1" value="Très bon état">Très bon état</option>
+                                <option class="mb-4 mt-1" value="Bon état">Bon état</option>
+                                <option class="mb-4 mt-1" value="État satisfaisant">État satisfaisant</option>
+                                <option class="mb-4 mt-1" value="Pour pièces">Pour pièces</option>
+                              </select>
+                            </div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1493,9 +1501,16 @@
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                             id="radix-:rs:" for="nb_bathrooms">Type Reseaux</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input  v-model="reseau" id="reseau" name="reseau"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text"></div>
+                            <div class="relative inline-flex w-full">
+                              <select v-model="reseau" name="reseau" id="reseau"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="2G">2G</option>
+                                <option class="mb-4 mt-1" value="3G">3G</option>
+                                <option class="mb-4 mt-1" value="4G">4G</option>
+                                <option class="mb-4 mt-1" value="5G">5G</option>
+                              </select>
+                            </div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1509,12 +1524,22 @@
                       <div class="max-w-none lg:max-w-[50%] block lg:min-w-[50%]">
                         <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ro:" for="rooms">Mémoire </label>
+                            id="radix-:ro:" for="rooms">Capacité de stockage </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
-                              <input v-model="memoire" id="memoire" name="memoire"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" >
+                              <select v-model="memoire" name="memoire" id="memoire"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="8 Go">8 Go</option>
+                                <option class="mb-4 mt-1" value="16 Go">16 Go</option>
+                                <option class="mb-4 mt-1" value="32 Go">32Go</option>
+                                <option class="mb-4 mt-1" value="64 Go">64 Go</option>
+                                <option class="mb-4 mt-1" value="128 Go">128 Go</option>
+                                <option class="mb-4 mt-1" value="256 Go">256 Go</option>
+                                <option class="mb-4 mt-1" value="512 Go">512 Go</option>
+                                <option class="mb-4 mt-1" value="+ de 512 Go">+ de 512 Go</option>
+                              </select>
+
                             </div>
                           </div>
                           <div class="flex justify-between gap-md">
@@ -1525,11 +1550,20 @@
                       <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2" data-rhf-name="nb_bathrooms">
                         <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rs:" for="nb_bathrooms">RAM</label>
+                            id="radix-:rs:" for="nb_bathrooms">Memoire Ram</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="ram" id="ram" name="ram"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" ></div>
+                            <div class="relative inline-flex w-full">
+                              <select v-model="ram" name="ram" id="ram"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="4 Go">4 Go</option>
+                                <option class="mb-4 mt-1" value="8 Go">8 Go</option>
+                                <option class="mb-4 mt-1" value="16 Go">16 Go</option>
+                                <option class="mb-4 mt-1" value="32 Go">32Go</option>
+                                <option class="mb-4 mt-1" value="64 Go">64 Go</option>
+                                <option class="mb-4 mt-1" value="128 Go">128 Go</option>
+                              </select>
+                            </div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
@@ -1542,12 +1576,16 @@
                       <div class="max-w-none lg:max-w-[50%] block lg:min-w-[50%]">
                         <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ro:" for="rooms">SIM </label>
+                            id="radix-:ro:" for="rooms">Nombre de sim </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
                             <div class="relative inline-flex w-full">
-                              <input v-model="sim" id="sim" name="sim"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" >
+                              <select v-model="sim" name="sim" id="sim"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="1 Sim">1 Sim</option>
+                                <option class="mb-4 mt-1" value="2 Sim">2 Sim</option>
+                                <option class="mb-4 mt-1" value="3 Sim">3 Sim</option>
+                              </select>
                             </div>
                           </div>
                           <div class="flex justify-between gap-md">
@@ -1584,18 +1622,41 @@
                 </div>
               </div>
               <div v-if="isImageImobl">
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Photo à la une !</h3>
-                <div style="position: relative;">
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Photo à la une !</h3>
+                <!-- <div style="position: relative;">
                   <DropZone
                   :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
+                </div> -->
+
+                <!-- Champ de fichier pour le thumbnail -->
+                <div class="large-12 medium-12 small-12 cell">
+                  <label class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter une photo à la une
+                    <input type="file" id="listing_thumbnail" ref="listing_thumbnail" v-on:change="handleThumbnailUpload()"/>
+                  </label>
                 </div>
+                <div class="large-12 medium-12 small-12 cell">
+                  <div v-if='listing_thumbnail' class="file-listing">{{ listing_thumbnail.name }}</div>
+                </div>
+
+
+
                 <!-- <input type="file" @change="handleFileUpload( $event )"/> -->
                 <!-- <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> -->
 
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Galerie</h3>
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Galerie</h3>
                 <div style="position: relative;">
-                  <DropZone method="POST" v-model="listing_images" :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="false"
-                    :multipleUpload="true" :parallelUpload="3" />
+                  <div class="large-12 medium-12 small-12 cell">
+                  <label>
+                    <input type="file"  id="listing_images" ref="listing_images" multiple v-on:change="handleFilesUpload()"/>
+                  </label>
+                  </div>
+                  <div class="large-12 medium-12 small-12 cell">
+                    <div v-for="(file, key) in listing_images" class="file-listing">{{ file.name }} <span class="remove-file" v-on:click="removeFile( key )">Supprimer</span></div>
+                  </div>
+                  <br>
+                  <div class="large-12 medium-12 small-12 cell addimage">
+                    <button v-on:click="addFiles()" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter un image</button>
+                  </div>
                 </div>
                 <div
                   class="flex justify-between fixed z-sticky bottom-[0] left-[0] right-[0] shadow bg-surface px-xl py-md sm:z-base sm:relative sm:mt-2xl sm:shadow-none sm:p-none">
@@ -1621,11 +1682,11 @@
                   <div class="max-w-none lg:max-w-full block" data-rhf-name="subject">
                     <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                         data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                        id="radix-:r22:" for="subject">Titre de l'annonce<span
+                        id="radix-:r22:" for="titreAnnonce">Titre de l'annonce<span
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><input id="subject" name="subject"
+                        <div class="relative inline-flex w-full"><input id="titreAnnonce" name="titreAnnonce"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                             required="" aria-describedby="subject-helper-text-0" aria-invalid="false" type="text"
                             inputmode="text" maxlength="200" v-model="titreAnnonce"></div>
@@ -1647,7 +1708,7 @@
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><textarea rows="8" name="body" id="body" required=""
+                        <div class="relative inline-flex w-full"><textarea v-model="description" rows="8" name="body" id="body" required=""
                             maxlength="4000" aria-describedby="body-helper-text-0"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline min-h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg py-[var(--sz-10)] resize-y"
                             aria-invalid="false" data-spark-component="textarea"></textarea></div>
@@ -2803,7 +2864,7 @@ export default {
       isSugsestionCat: true,
       typeCategorie: '',
       user_id:null,
-      name:'',
+      titreAnnonce:'',
       description:'',
       country_id:'',
       city_id:'',
@@ -2846,12 +2907,11 @@ export default {
       listing_type:'',
       social:'',
       date_added:'',
-      listing_thumbnail:'',
+      listing_thumbnail:null,
       listing_cover:'',
       listing_images:[],
       photos:'',
       code:'',
-      titreAnnonce:'',
     };
   },
   
@@ -2864,33 +2924,40 @@ export default {
     this.user_id = this.userData ? this.userData.user_id : null;
   },
   methods: {
-    async handleSuccess(file, response) {
-    // La fonction appelée lorsqu'un téléchargement réussit
-    console.log('Upload success:', response);
+    handleThumbnailUpload() {
+        this.listing_thumbnail = this.$refs.listing_thumbnail.files[0];
+      },
+    addFiles(){
+        this.$refs.listing_images.click();
+      },
 
-    this.listing_thumbnail = response.data.url;
+    // async handleSuccess(file, response) {
+    // // La fonction appelée lorsqu'un téléchargement réussit
+    // console.log('Upload success:', response);
 
-    console.log('Enrol Thumbnail:', this.listing_thumbnail);
+    // this.listing_thumbnail = response.data.url;
 
-    await this.postAnnonce();
-  },
+    // console.log('Enrol Thumbnail:', this.listing_thumbnail);
+
+    // await this.postAnnonce();
+  // },
     // handleFileUpload( event ){
     //   console.log('File selected:', event.target.files[0]);
     // this.listing_thumbnail = event.target.files[0];
   // },
-    async postAnnonce() {
+    postAnnonce() {
       // Check if user_id is available
       if (!this.user_id) {
         // Handle the case when user_id is not available
         console.error("User ID is not available");
         return;
       }
-      const combinedCategoryIds = [this.categorie, this.subcategorie];
+      const combinedCategoryIds = [this.categorie.toString(), this.subcategorie.toString()];
       console.log('Enrol Data:', this.listing_thumbnail, this.listing_images, this.combinedCategoryIds, this.user_id,this.reference,this.couleur, this.memoire, this.ram, this.description, this.name, this.sim);
 
-      const listingData = new URLSearchParams();
+      const listingData = new FormData();
       listingData.append('user_id', this.user_id);
-      listingData.append('name', this.name);
+      listingData.append('name', this.titreAnnonce);
       listingData.append('description', this.description);
       listingData.append('country_id', this.country_id);
       listingData.append('city_id', this.city_id);
@@ -2928,19 +2995,21 @@ export default {
       for (let i = 0; i < this.listing_images.length; i++) {
         listingData.append('listing_images[]', this.listing_images[i]);
       }
-      listingData.append('photos', this.photos);
+      // listingData.append('photos', this.photos);
       listingData.append('code', this.code);
 
       // Make API request
       axios.post('/api/add_listing', listingData, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'multipart/form-data'
       },
     })
         .then(response => {
           // Handle successful response
           this.msg = 'Listing add successfull';
           this.classAlert = 'success';
+          response.data.files;
         })
         .catch(error => {
           // Handle error response
@@ -2955,6 +3024,27 @@ export default {
         });
 
     },
+
+    // handleThumbnailUpload(event) {
+    //   const files = event.target.files;
+    //   if (files.length > 0) {
+    //     this.listing_thumbnail = files[0];
+    //     console.log('Thumbnail file:', this.listing_thumbnail);
+    //   }
+    // },
+
+
+      handleFilesUpload(){
+      let uploadedFiles = this.$refs.listing_images.files;
+      for( var i = 0; i < uploadedFiles.length; i++ ){
+        this.listing_images.push( uploadedFiles[i] );
+      }
+    },
+
+    removeFile( key ){
+      this.listing_images.splice( key, 1 );
+    },
+
     valideTitreAnnonce() {
       this.isTitreAnnonce = true
     },
@@ -3034,4 +3124,25 @@ function sigin() {
 }
 
 </script>
-  
+<style>
+  input[type="file"]{
+    position: absolute;
+    top: -500px;
+  }
+  div.file-listing{
+    width: 200px;
+  }
+  span.remove-file{
+    color: red;
+    cursor: pointer;
+    float: right;
+  }
+  .large-12.medium-12.small-12.cell.addimage {
+    font-size: 15px;
+    text-align: center;
+}
+.read-only\:bg-on-surface\/dim-5:read-only {
+    width: 100%;
+    background-color: rgb(255 255 255 / 8%);
+}
+</style>

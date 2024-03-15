@@ -617,9 +617,9 @@ class Home extends CI_Controller
         $selected_city_id = $_GET['selected_city_id'];
         $selected_category_id = $_GET['selected_category_id'];
 
-        if ($search_string == "" && $selected_city_id == "" && $selected_category_id == "") {
-            redirect('home/listings', 'refresh');
-        }
+        // if ($search_string == "" && $selected_city_id == "" && $selected_category_id == "") {
+        //     redirect('home/listings', 'refresh');
+        // }
 
         $all_listings = $this->frontend_model->search_listing_all_rows($search_string, $selected_city_id, $selected_category_id);
         $listings = $this->frontend_model->search_listing($search_string, $selected_city_id, $selected_category_id, $page_number);

@@ -8,7 +8,7 @@ import UserDashboard from '../views/LandingPages/dashboard/Dashboard.vue';
 import MesAnnonces from '../views/LandingPages/dashboard/MesAnnonces.vue';
 import MesTransactions from '../views/LandingPages/dashboard/MesTransactions.vue';
 import MesReservations from '../views/LandingPages/dashboard/MesReservations.vue';
-import RegisterCompany from "../views/LandingPages/SignIn/SignInCompany.vue";
+import RegisterCompany from "../views/LandingPages/SignIn/RegisterCompany.vue";
 import Profil from '../views/LandingPages/dashboard/Profil.vue';
 import ParametresCompte from '../views/LandingPages/dashboard/ParametreCompte.vue';
 import ProfilPublic from '../views/LandingPages/dashboard/ProfilPublic.vue';

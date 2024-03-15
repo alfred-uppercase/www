@@ -5,6 +5,7 @@
     <meta name="base-url" content="<?= base_url() ?>">
 
     <title>Echri.store</title>
+    <meta name="google-adsense-account" content="ca-pub-5421772910528539">
     <link rel="icon" href="<?= base_url('assets/images/logo.png') ?>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.1/css/all.min.css" rel="stylesheet" type="text/css">
     <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> -->
