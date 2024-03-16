@@ -1,0 +1,34 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "",
+                    ""
+                ]
+            },
+            "properties": {
+                "id": "6c2368532ae70cc89fe41e4441c44956",
+                "index": 0,
+                "isActive": true,
+                "logo": "c64204c9742dda0dd28a531daa76966c.jpg",
+                "image": "c64204c9742dda0dd28a531daa76966c.jpg",
+                "link": "http://localhost/annonce/131",
+                "url": "",
+                "name": "Annonce",
+                "category": "",
+                "email": "",
+                "stars": "0.0",
+                "phone": "",
+                "address": "",
+                "about": "about",
+                "tags": [
+                    ""
+                ]
+            }
+        }
+    ]
+}

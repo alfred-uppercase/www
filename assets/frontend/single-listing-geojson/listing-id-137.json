@@ -1,0 +1,34 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "",
+                    ""
+                ]
+            },
+            "properties": {
+                "id": "fe723191cbf632f4e5ff22b95b8aff0e",
+                "index": 0,
+                "isActive": true,
+                "logo": "d7182c1b70623afa04ed30a9faced4fd.jpg",
+                "image": "d7182c1b70623afa04ed30a9faced4fd.jpg",
+                "link": "http://localhost/peugeot-206-2012/137",
+                "url": "",
+                "name": "Peugeot 206 2012",
+                "category": "",
+                "email": "",
+                "stars": "0.0",
+                "phone": "",
+                "address": "",
+                "about": "about",
+                "tags": [
+                    ""
+                ]
+            }
+        }
+    ]
+}

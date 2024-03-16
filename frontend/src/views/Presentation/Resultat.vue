@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router';
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup, LPolyline, LPolygon, LRectangle, } from "@vue-leaflet/vue-leaflet";
 import FIlters from '/views/Presentation/annonces/filter.vue';
-const title = ref('');
+const search_string = ref('');
 const get_country = ref([]);
 const get_phrase_show_on_map = ref('');
 const get_phrase_watch_details = ref('');
@@ -44,14 +44,14 @@ return str.charAt(0).toUpperCase() + str.slice(1);
 const id = ref(null);
 const romspecs = ref([]);
 const listings = ref([]);
-const searchQuery = route.currentRoute.value.query.q;
+const searchQuery = route.query.q;
 id.value = route.params.val;
 onMounted(async () => {
   const currentId = id.value;
 try {
-  const response = await axios.get(`/recherchevvvv?search_string=${searchQuery}&selected_city_id=&selected_category_id=`);
-  console.log('Response from listings seul:', response.data);
-  title.value = response.data.title;
+  const response = await axios.get(`/search?search_string=${currentId}&selected_city_id=&selected_category_id=`);
+  // console.log('Response from listings seul:', response.data);
+  search_string.value = response.data.search_string;
   listings.value = response.data.listings;
   for (const list of listings.value) {
           const romspec = await axios.get(`/api/get_hotel_spec/${list.id}`);
@@ -216,7 +216,7 @@ return '4.5'; // Sample rating
   </div>
 
   <!--Listings-->
-  <div class="max-w-page-max mx-auto my-none px-md box-content md:pt-md">
+  <div class="mb-lg md:mb-xl">
     <!--Titre-->
     <div>
       <div class="inline-block w-full p-none align-top sm:w-[55%]">
@@ -234,7 +234,7 @@ return '4.5'; // Sample rating
 
     <!--Count-->
     <div class="flex items-center mb-lg md:mb-xl">
-      <h2 class="text-subhead-expanded text-neutral">{{ listings.length }} annonces pour {{ listings.search_string }}</h2>
+      <h2 class="text-subhead-expanded text-neutral">{{ listings.length }} annonces pour : <strong> {{ search_string }} </strong></h2>
     </div>
 
     <!--Listing count-->
@@ -243,9 +243,9 @@ return '4.5'; // Sample rating
         <div class="mb-lg">
           <div layout="[object Object],[object Object]" nbtotalseparators="21" data-test-id="listing-mosaic" id="mosaic_with_owner" class="sc-968a2c9d-2 givLyB">
             <div 
-                                            v-for="listing in listings" 
+                                            v-for="(listing, index) in listings"
                                             :key="listing.id"
-                                            style="grid-area: classified-1;"
+                                            :style="{ 'grid-area': 'classified-' + (index + 1) }"
                                             :data-marker-id="listing.code"
                                             :id="listing.code"
                                             class="list-none">
@@ -258,14 +258,14 @@ return '4.5'; // Sample rating
                                                     data-test-id="ad" 
                                                     data-qa-id="aditem_container"
                                                 >
-                                                    <div class="adCard_c3c39 relative flex h-[inherit]" data-test-id="adcard-consumer-goods-list">
+                                                    <div class="adCard_c3c39 relative flex flex-col h-[inherit]" data-test-id="adcard-consumer-goods-list">
                                                         <div class="adCard_9vq5pg relative before:block" data-test-id="image">
                                                             <div class="adCard_10ldc relative h-full">
                                                                 <div style="height: 237px;" class=" relative imgbox box-border flex h-full items-center justify-center overflow-hidden bg-neutral-container min-h-[auto] min-w-[auto] rounded-md">
                                                                     <div class="_2JtY0">
                                                                         <div class="LazyLoad is-visible">
                                                                             <div class="_29Lk0">
-                                                                                <img :src="'/uploads/listing_thumbnails/' + listing.listing_thumbnail" class="_1cnjm absolute inset-none m-auto h-full w-full object-cover" alt="">
+                                                                                <img :src="'/uploads/listing_thumbnails/' + listing.listing_thumbnail" class="_1cnjm m-auto h-full w-full object-cover" alt="">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -332,11 +332,11 @@ return '4.5'; // Sample rating
       </div>
     </div>
 
-    <div class="styles_Listing__isoog styles_listing--generic__AhPAo">
+    <div v-if="listings.length == '0'" class="styles_Listing__isoog styles_listing--generic__AhPAo">
       <div class="styles_classifiedColumn__Vz9uL">
         <div class="mb-lg">
           <div layout="[object Object],[object Object]" nbtotalseparators="21" data-test-id="listing-mosaic" id="mosaic_with_owner" class="sc-968a2c9d-2 givLyB">
-            Aucun résultat trouvé pour la recherche : {{ listings.search_string }}
+            Aucun résultat trouvé pour la recherche : {{ search_string }}
           </div>
         </div>
       </div>

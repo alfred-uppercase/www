@@ -1441,9 +1441,24 @@ onMounted(() => {
   checkLocalStorage();
 });
 const submitForm = async () => {
+  // try {
+  //   const responsse = await axios.get('/home/filter_listings', {
+  //     params: {
+  //       search_string: search_string.value,
+  //     },
+  //   });
+
+  //   // Handle the response and update results
+  //   // results.value = responsse.data;
+  // } catch (error) {
+  //   console.error('Error fetching results:', error);
+  // }
   router.push({
     name: 'recherche',
     params: { val: search_string.value }
+    // query: {
+    //   search_string: search_string.value,
+    // },
   });
 };
   const props = defineProps({

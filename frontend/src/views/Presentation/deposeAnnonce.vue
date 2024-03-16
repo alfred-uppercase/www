@@ -98,7 +98,7 @@
 
                 <select v-model="categorie" name="" id="" @change="getSubCategorie($event)"
                   class="mr-10-p border-gray relative ring-1 ring-inset peer box-border w-50 appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
-                  <option value="0">Choisissez</option>
+                  <option value="0" selected>Choisissez</option>
                   <option v-for="(category, index) in categories" :key="category.id" :value="category.id"
                     class="mb-4 mt-1"> {{
                       category.name }}</option>
@@ -106,7 +106,7 @@
 
                 <select v-model="subcategorie" name="" id="" v-if="isSubCategorie" @change="valideSubCategorie($event)"
                   class="border-gray relative ring-1 ring-inset peer box-border w-45 appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
-                  <option value="0">Choisissez sous categorie</option>
+                  <option value="0" selected="selected">Choisissez sous categorie</option>
                   <option v-for="(sub, index) in subCategories" :key="sub.id" :value="sub.id"> {{
                     sub.name }}</option>
                 </select>
@@ -180,12 +180,12 @@
                               class="text-caption text-on-surface/dim-3">*</span></label><input type="hidden"
                             id="radix-:r2:" name="real_estate_type" aria-required="true" required="" value="1">
                           <div class="flex flex-wrap">
-                            <button type="button" v-for="(subCat, index) in subCategories" :key="subCat.id"
+                            <button type="button" 
                               class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
-                              tabindex="0" :value="subCat.id" name="real_estate_type" @click="checkBienSub(subCat.id)">
+                              tabindex="0" name="real_estate_type" @click="checkBienSub(1)">
                               <div
-                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200 border-main"
-                                :class="[subCat.id == SubcategerieCheck ? 'text-main' : '']">
+                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200"
+                                :class="{ 'text-main border-main': SubcategerieCheck === 1 }">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="House"
                                   fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24"
                                   data-spark-component="icon" aria-hidden="true" focusable="false">
@@ -193,10 +193,87 @@
                                     d="m5.2,12.7c-.1,0-.2-.1-.4-.1-.5,0-1,.4-1.1.8v5.6c0,2.2,1.8,4,4,4h8.6c2.2,0,4-1.8,4-4v-5.4c-.1-.5-.6-.8-1.1-.8-.1,0-.3,0-.4.1-.4.2-.8.6-.8,1.1v5c0,.9-.8,1.7-1.7,1.7H7.7c-.9,0-1.7-.8-1.7-1.7v-5.1c0-.6-.3-1-.8-1.2Zm9.1,5.7c.6-.5,1-1.3,1-2.2v-1.9c0-1.6-1.3-2.9-2.8-2.9h-.9c-1.6,0-2.8,1.3-2.8,2.9v1.9c0,.9.4,1.7,1,2.2.5.4,1.1.7,1.8.7h.9c.7-.1,1.3-.3,1.8-.7Zm.5-16.2c-1.6-1.6-4.1-1.6-5.6,0L.9,10.6c-.4.4-.4,1.2,0,1.6.2.2.5.3.8.3s.6-.1.8-.3L10.8,3.8c.7-.7,1.7-.7,2.4,0l8.3,8.4c.2.2.5.3.8.3s.6-.1.8-.3c.4-.4.4-1.2,0-1.6L14.8,2.2Zm-2.3,11.5h-.9c-.3,0-.5.2-.5.6v1.9c0,.3.2.6.5.6h.9c.3,0,.5-.2.5-.6v-1.9c0-.3-.2-.6-.5-.6Z">
                                   </path>
                                 </svg>
-                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">{{
-                                  subCat.name }}
+                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">Maison
                                 </div>
-                              </div><svg v-if="subCat.id == SubcategerieCheck" viewBox="0 0 24 24"
+                              </div><svg v-if="SubcategerieCheck == '1'" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
+                                stroke="none"
+                                class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
+                                data-spark-component="icon" aria-hidden="true" focusable="false">
+                                <path fill-rule="evenodd"
+                                  d="m22,12c0,5.52-4.48,10-10,10S2,17.52,2,12,6.48,2,12,2s10,4.48,10,10Zm-4.16-2.87c.36-.42.3-1.05-.12-1.41-.42-.36-1.05-.3-1.41.12l-5.64,6.66-2.24-2.55c-.36-.41-1-.46-1.41-.09-.41.36-.46,1-.09,1.41l2.46,2.8c.16.19.36.34.59.44.23.1.47.15.72.15.24,0,.48-.06.7-.16.22-.1.42-.26.58-.44l5.86-6.91Z">
+                                </path>
+                              </svg>
+                            </button>
+                            <button type="button" 
+                              class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
+                              tabindex="0"  name="real_estate_type" @click="checkBienSub(2)">
+                              <div
+                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200"
+                                :class="{ 'text-main border-main': SubcategerieCheck === 2 }">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Apartment" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path d="m5.25,11.32h4.96c.69,0,1.25-.56,1.25-1.25s-.56-1.25-1.25-1.25h-4.96c-.69,0-1.25.56-1.25,1.25s.56,1.25,1.25,1.25Zm0-3.85h4.96c.69,0,1.25-.56,1.25-1.25s-.56-1.25-1.25-1.25h-4.96c-.69,0-1.25.56-1.25,1.25s.56,1.25,1.25,1.25Zm6.21,6.46c0-.69-.56-1.25-1.25-1.25h-4.96c-.69,0-1.25.56-1.25,1.25s.56,1.25,1.25,1.25h4.96c.69,0,1.25-.56,1.25-1.25Z"></path><path d="m22.76,9.92h-7.01V1.25c0-.69-.56-1.25-1.25-1.25H1.25C.56,0,0,.56,0,1.25v21.5c0,.69.56,1.25,1.25,1.25h13.24c.69,0,1.25-.56,1.25-1.25v-10.32h5.76v10.32c0,.69.56,1.25,1.25,1.25s1.25-.56,1.25-1.25v-11.57c0-.69-.56-1.25-1.25-1.25h.01Zm-14.89,8.27c-.69,0-1.25.56-1.25,1.25v2.05H2.51V2.51h10.72v19h-4.11v-2.05c0-.69-.56-1.25-1.25-1.25h0Z"></path></svg>
+                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">
+                                  Appartement
+                                </div>
+                              </div><svg v-if="SubcategerieCheck == '2'" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
+                                stroke="none"
+                                class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
+                                data-spark-component="icon" aria-hidden="true" focusable="false">
+                                <path fill-rule="evenodd"
+                                  d="m22,12c0,5.52-4.48,10-10,10S2,17.52,2,12,6.48,2,12,2s10,4.48,10,10Zm-4.16-2.87c.36-.42.3-1.05-.12-1.41-.42-.36-1.05-.3-1.41.12l-5.64,6.66-2.24-2.55c-.36-.41-1-.46-1.41-.09-.41.36-.46,1-.09,1.41l2.46,2.8c.16.19.36.34.59.44.23.1.47.15.72.15.24,0,.48-.06.7-.16.22-.1.42-.26.58-.44l5.86-6.91Z">
+                                </path>
+                              </svg>
+                            </button>
+                            <button type="button" 
+                              class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
+                              tabindex="0" name="real_estate_type" @click="checkBienSub(3)">
+                              <div
+                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200"
+                                :class="{ 'text-main border-main': SubcategerieCheck === 3 }">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Land" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m21.11,20.46c.42,0,.77-.34.77-.75s-.34-.75-.77-.75h-1.76v-.65c0-.42-.34-.75-.77-.75s-.77.34-.77.75v.65h-1.76v-.65c0-.42-.34-.75-.77-.75s-.77.34-.77.75v.65h-1.55s.02-.07.02-.11v-1.88c.54-.09,1.08-.26,1.57-.5.55-.27,1.05-.63,1.48-1.05.43.1.87.15,1.31.15,1.5,0,2.94-.59,4-1.63,1.06-1.04,1.66-2.46,1.66-3.93s-.6-2.89-1.66-3.93c-.88-.86-2.02-1.41-3.24-1.58-.35-1.15-1.03-2.18-1.97-2.97-1.17-.98-2.65-1.52-4.19-1.52s-3.02.54-4.19,1.52c-.94.79-1.62,1.83-1.97,2.99-1.17.18-2.27.72-3.12,1.56-1.06,1.04-1.66,2.46-1.66,3.93s.6,2.89,1.66,3.93c1.06,1.04,2.5,1.63,4,1.63.44,0,.88-.05,1.31-.15.43.43.93.78,1.48,1.05.42.21.87.36,1.33.46v1.92s.02.07.02.11h-1.35v-.65c0-.42-.34-.75-.77-.75s-.77.34-.77.75v.65h-1.76v-.65c0-.42-.34-.75-.77-.75s-.77.34-.77.75v.65h-1.76c-.42,0-.77.34-.77.75s.34.75.77.75h1.76v1.72h-1.76c-.42,0-.77.34-.77.75s.34.75.77.75h1.91c.14.19.36.32.61.32s.47-.13.61-.32h2.07c.14.19.36.32.61.32s.47-.13.61-.32h2.07c.14.19.36.32.61.32s.47-.13.61-.32h2.07c.14.19.36.32.61.32s.47-.13.61-.32h2.07c.14.19.36.32.61.32s.47-.13.61-.32h1.91c.42,0,.77-.34.77-.75s-.34-.75-.77-.75h-1.76v-1.72h1.82Zm-6.59,0v1.72h-1.76v-1.72h1.76Zm-4.07-5.91c-.48-.24-.9-.59-1.23-1.01-.3-.4-.84-.54-1.3-.35-.39.16-.81.24-1.23.23h-.01c-.92,0-1.8-.36-2.46-1-.65-.64-1.02-1.5-1.02-2.41s.37-1.77,1.02-2.41c.65-.64,1.53-1,2.46-1,.54,0,1-.39,1.09-.91.15-.98.66-1.88,1.43-2.52.77-.65,1.75-1,2.76-1s1.99.36,2.76,1c.77.65,1.27,1.54,1.43,2.52.08.53.54.91,1.09.91h.12c.92,0,1.8.36,2.46,1,.65.64,1.02,1.5,1.02,2.41s-.37,1.77-1.02,2.41c-.65.64-1.53,1-2.46,1h-.01c-.42,0-.84-.07-1.23-.23-.46-.19-1-.04-1.3.35-.32.43-.74.77-1.23,1.01-.19.09-.39.15-.59.21v-2.06l1.96-1.92c.43-.42.43-1.1,0-1.52-.43-.42-1.12-.42-1.55,0l-1.51,1.48-1.51-1.48c-.43-.42-1.12-.42-1.55,0-.43.42-.43,1.1,0,1.52l1.96,1.92v1.98c-.11-.04-.23-.07-.34-.12h-.01Zm.77,5.91v1.72h-1.76v-1.72h1.76Zm-5.05,0h1.76v1.72h-1.76v-1.72Zm11.64,1.72h-1.76v-1.72h1.76v1.72Z"></path></svg>
+                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">Terrain
+                                </div>
+                              </div><svg v-if="SubcategerieCheck == '3'" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
+                                stroke="none"
+                                class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
+                                data-spark-component="icon" aria-hidden="true" focusable="false">
+                                <path fill-rule="evenodd"
+                                  d="m22,12c0,5.52-4.48,10-10,10S2,17.52,2,12,6.48,2,12,2s10,4.48,10,10Zm-4.16-2.87c.36-.42.3-1.05-.12-1.41-.42-.36-1.05-.3-1.41.12l-5.64,6.66-2.24-2.55c-.36-.41-1-.46-1.41-.09-.41.36-.46,1-.09,1.41l2.46,2.8c.16.19.36.34.59.44.23.1.47.15.72.15.24,0,.48-.06.7-.16.22-.1.42-.26.58-.44l5.86-6.91Z">
+                                </path>
+                              </svg>
+                            </button>
+                            <button type="button" 
+                              class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
+                              tabindex="0" name="real_estate_type" @click="checkBienSub(4)">
+                              <div
+                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200"
+                                :class="{ 'text-main border-main': SubcategerieCheck === 4 }">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Parking" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m11.3.9c.4-.4,1.1-.4,1.5,0l9.7,9c.3.3.5.6.6.9s.2.7.2,1.1v8.8c0,.7-.3,1.4-.8,1.9s-1.2.8-1.9.8H3.4c-.7,0-1.4-.3-1.9-.8-.5-.5-.8-1.2-.8-1.9v-8.8c0-.4.1-.7.2-1.1.1-.3.4-.7.6-.9L11.3.9ZM3.1,11.6l-.1.1v9c0,.1,0,.2.1.3.1.1.2.1.3.1h2.9v-7.3c0-.6.5-1.1,1.1-1.1h9.2c.3,0,.6.1.8.3.2.2.3.5.3.8v7.3h3c.1,0,.2,0,.3-.1s.1-.2.1-.3v-9c0-.1-.1-.1-.1-.1L12,3.3,3.1,11.6Zm12.4,9.5v-6.1h-6.9v6.1h6.9Zm1.2-8.9H7.5c-.6,0-1.1-.5-1.1-1.1s.5-1.1,1.1-1.1h9.2c.6,0,1.1.5,1.1,1.1s-.5,1.1-1.1,1.1Z"></path></svg>
+                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">Parking
+                                </div>
+                              </div><svg v-if="SubcategerieCheck == '4'" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
+                                stroke="none"
+                                class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
+                                data-spark-component="icon" aria-hidden="true" focusable="false">
+                                <path fill-rule="evenodd"
+                                  d="m22,12c0,5.52-4.48,10-10,10S2,17.52,2,12,6.48,2,12,2s10,4.48,10,10Zm-4.16-2.87c.36-.42.3-1.05-.12-1.41-.42-.36-1.05-.3-1.41.12l-5.64,6.66-2.24-2.55c-.36-.41-1-.46-1.41-.09-.41.36-.46,1-.09,1.41l2.46,2.8c.16.19.36.34.59.44.23.1.47.15.72.15.24,0,.48-.06.7-.16.22-.1.42-.26.58-.44l5.86-6.91Z">
+                                </path>
+                              </svg>
+                            </button>
+                            <button type="button" 
+                              class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
+                              tabindex="0" name="real_estate_type" @click="checkBienSub(5)">
+                              <div
+                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200"
+                                :class="{ 'text-main border-main': SubcategerieCheck === 5 }
+                                ">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="BoxOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m14.07,18.52h3.47c.54,0,.97-.43.97-.98s-.43-.98-.97-.98h-3.47c-.54,0-.97.43-.97.98s.43.98.97.98Z"></path><path fill-rule="evenodd" d="m21.98,8.5c0-.07-.02-.12-.04-.18-.02-.07-.02-.13-.05-.19v-.03l-2.01-4.01c-.31-.62-.79-1.15-1.38-1.52-.59-.37-1.27-.57-1.97-.57H7.44c-.68.02-1.35.22-1.92.59-.57.37-1.03.88-1.34,1.48l-2.07,4.01s0,.02,0,.03c-.02.06-.03.12-.05.18-.02.07-.03.12-.04.19v11.14c0,.62.25,1.23.69,1.67.44.45,1.04.69,1.67.69h15.27c.62,0,1.22-.25,1.67-.69.44-.44.69-1.04.69-1.67v-11.14h-.02Zm-4.51-4.28c.28.18.52.43.67.73l1.31,2.6h-6.46v-3.61h3.55c.33,0,.67.09.95.27h0Zm-11.55.74v-.02c.15-.29.37-.54.65-.72.27-.18.59-.28.91-.28h3.53v3.6h-6.43l1.34-2.58Zm14.12,14.67c0,.11-.04.22-.12.29-.08.07-.18.12-.29.12H4.36c-.11,0-.22-.04-.29-.12-.07-.08-.12-.18-.12-.29v-10.13h16.09v10.13Z"></path></svg>
+                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">Autre
+                                </div>
+                              </div><svg v-if="SubcategerieCheck == '5'" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
                                 stroke="none"
                                 class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
@@ -211,38 +288,142 @@
                         </div>
                       </div>
                     </div>
-                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="building_year">
+                    <!--Nature du bien Maison-->
+                    <div v-if="SubcategerieCheck === 1" class="max-w-none lg:max-w-[50%] block" data-rhf-name="Nature">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="building_year">Nature du bien</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="naturebien" name="naturebien" id="naturebien"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="Maison individuelle">Maison individuelle</option>
+                            <option value="Maison de ville">Maison de ville</option>
+                            <option value="Maison collective">Maison collective</option>
+                            <option value="Maison de plein-pied">Maison de plein-pied</option>
+                            <option value="Ferme">Ferme</option>
+                            <option value="Maison mitoyenne">Maison mitoyenne</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Autres">Autres</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Nature du bien appartement-->
+                    <div v-if="SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="Nature">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="building_year">Nature du bien</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="naturebien" name="naturebien" id="naturebien"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="Appartement mansardé">Appartement mansardé</option>
+                            <option value="RDC surélevé">RDC surélevé</option>
+                            <option value="Loft">Loft</option>
+                            <option value="Duplex">Duplex</option>
+                            <option value="Penthous">Penthous</option>
+                            <option value="Souplex">Souplex</option>
+                            <option value="Autres">Autres</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Nature du bien Terrain-->
+                    <div v-if="SubcategerieCheck === 3" class="max-w-none lg:max-w-[50%] block" data-rhf-name="naturebien">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="naturebien">Nature du bien</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="naturebien" name="naturebien" id="naturebien"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="Terrain constructible">Terrain constructible</option>
+                            <option value="Jardin">Jardin</option>
+                            <option value="Champs agricole">Champs agricole</option>
+                            <option value="Autres">Autres</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Nature du bien Parking-->
+                    <div v-if="SubcategerieCheck === 4" class="max-w-none lg:max-w-[50%] block" data-rhf-name="naturebien">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="naturebien">Nature du bien</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="naturebien" name="naturebien" id="naturebien"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="Garage">Garage</option>
+                            <option value="Une place de parking">Une place de parking</option>
+                            <option value="Autres">Autres</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Caractéristique-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="carateristique">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="carateristique">Caractéristique</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="carateristique" name="carateristique" id="carateristique"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="Chauffage au sol">Chauffage au sol</option>
+                            <option value="Accès PMR">Accès PMR</option>
+                            <option value="Construction ancienne">Construction ancienne</option>
+                            <option value="Construction récente">Construction récente</option>
+                            <option value="Sous-sol">Sous-sol</option>
+                            <option value="Grenier">Grenier</option>
+                            <option value="Deuxième toilètte">Deuxième toilètte</option>
+                            <option value="Vendu loué">Vendu loué</option>
+                            <option value="Bâtiment classé">Bâtiment classé</option>
+                            <option value="Avec dépendances">Avec dépendances</option>
+                            <option value="Cuisine équipée">Cuisine équipée</option>
+                            <option value="Baignoire">Baignoire</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Année-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="building_year">
                       <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                           id="radix-:ri:" for="building_year">Année de construction</label>
                         <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
                             class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
                             aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
-                          <select name=" " id=""
+                          <select name="building_year" id="building_year" v-model="building_year"
                             class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
-                            <option value="">2000</option>
-                            <option value="">2001</option>
-                            <option value="">2002</option>
-                            <option value="">2003</option>
-                            <option value="">2004</option>
-                            <option value="">2005</option>
-                            <option value="">2006</option>
-                            <option value="">2007</option>
-                            <option value="">2002</option>
-                            <option value="">2009</option>
+                            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
                           </select>
                         </div>
                         <div class="flex justify-between gap-md"></div>
                       </div>
                     </div>
-                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="square">
+                    <!--Sperficie-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="surface">
                       <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                          id="radix-:rk:" for="square">Superficie </label>
+                          id="radix-:rk:" for="surface">Surface habitable </label>
                         <div class="relative inline-flex w-full after:hidden after:hidden">
-                          <div class="relative inline-flex w-full"><input id="square" name="square"
+                          <div class="relative inline-flex w-full">
+                            <input id="surface" name="surface"
+                            v-model="surface"
                               class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg"
-                              aria-invalid="false" type="text" inputmode="numeric" maxlength="6" value=""></div>
+                              aria-invalid="false" type="text" inputmode="numeric" maxlength="6" ></div>
                           <div class="rounded-r-lg border-1">
                             <div
                               class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface ml-[-1px] !rounded-l-none rounded-r-lg">
@@ -254,14 +435,38 @@
                         </div>
                       </div>
                     </div>
-                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="rooms">
+                    <!--Total surface-->
+                    <div v-if="SubcategerieCheck === 3 || SubcategerieCheck === 1" class="max-w-none lg:max-w-[50%] block" data-rhf-name="surfacetotal">
+                      <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:rk:" for="surfacetotal">Surface totale du terrain </label>
+                        <div class="relative inline-flex w-full after:hidden after:hidden">
+                          <div class="relative inline-flex w-full">
+                            <input id="surfacetotal" name="surfacetotal"
+                            v-model="surfacetotal"
+                              class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg"
+                              aria-invalid="false" type="text" inputmode="numeric" maxlength="6" ></div>
+                          <div class="rounded-r-lg border-1">
+                            <div
+                              class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface ml-[-1px] !rounded-l-none rounded-r-lg">
+                              m²</div>
+                          </div>
+                        </div>
+                        <div class="flex justify-between gap-md">
+                          <div class="flex flex-col"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--Nombre de piece-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="rooms">
                       <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                           id="radix-:ro:" for="rooms">Nombre de pièces</label>
                         <div class="relative inline-flex w-full after:hidden after:hidden">
-                          <div class="relative inline-flex w-full"><input id="rooms" name="rooms"
+                          <div class="relative inline-flex w-full">
+                            <input id="rooms" name="rooms" v-model="rooms"
                               class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg"
-                              aria-invalid="false" type="text" inputmode="numeric"  value=""></div>
+                              aria-invalid="false" type="text" inputmode="numeric"></div>
                           <div class="rounded-r-lg border-1">
                             <div
                               class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface ml-[-1px] !rounded-l-none rounded-r-lg">
@@ -273,20 +478,215 @@
                         </div>
                       </div>
                     </div>
-                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="bedrooms">
+                    <!--Nombre de Chambre-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="roomschambres">
                       <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                          id="radix-:rq:" for="bedrooms">Specification</label>
+                          id="radix-:ro:" for="roomschambres">Nombre de chambres</label>
                         <div class="relative inline-flex w-full after:hidden after:hidden">
-                          <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                          <div class="relative inline-flex w-full">
+                            <input id="roomschambres" name="roomschambres" v-model="roomschambres"
+                              class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg"
+                              aria-invalid="false" type="text" inputmode="numeric"></div>
+                          <div class="rounded-r-lg border-1">
+                            <div
+                              class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface ml-[-1px] !rounded-l-none rounded-r-lg">
+                              chambre(s)</div>
+                          </div>
+                        </div>
+                        <div class="flex justify-between gap-md">
+                          <div class="flex flex-col"></div>
+                        </div>
+                      </div>
+                    </div>                 
+                    <!--Salle de bain-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="salledebain">
+                      <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:rq:" for="salledebain">Nombre de salle de bain</label>
+                        <div class="relative inline-flex w-full after:hidden after:hidden">
+                          <div class="relative inline-flex w-full"><input id="salledebain" name="salledebain"
+                            v-model="salledebain"
                               class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                              aria-invalid="false" type="text" inputmode="numeric"  value=""></div>
+                              aria-invalid="false" type="text" inputmode="numeric"></div>
+                        </div>
+                        <div class="flex justify-between gap-md">
+                          <div class="flex flex-col"></div>
+                        </div>
+                      </div>
+                    </div>                    
+                    <!--Niveaux-->
+                    <div v-if="SubcategerieCheck === 1" class="max-w-none lg:max-w-[50%] block" data-rhf-name="nombredeniveaux">
+                      <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:rq:" for="nombredeniveaux">Nombre de niveaux</label>
+                        <div class="relative inline-flex w-full after:hidden after:hidden">
+                          <div class="relative inline-flex w-full"><input id="nombredeniveaux" name="nombredeniveaux"
+                            v-model="nombredeniveaux"
+                              class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
+                              aria-invalid="false" type="text" inputmode="numeric" ></div>
                         </div>
                         <div class="flex justify-between gap-md">
                           <div class="flex flex-col"></div>
                         </div>
                       </div>
                     </div>
+                    <!--Nombre detage-->
+                    <div v-if="SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="nombredetage">
+                      <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:rq:" for="nombredetage">Nombre d’étages dans l’immeuble</label>
+                        <div class="relative inline-flex w-full after:hidden after:hidden">
+                          <div class="relative inline-flex w-full"><input id="nombredetage" name="nombredetage"
+                            v-model="nombredetage"
+                              class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
+                              aria-invalid="false" type="text" inputmode="numeric" ></div>
+                        </div>
+                        <div class="flex justify-between gap-md">
+                          <div class="flex flex-col"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--Étage de votre bien-->
+                    <div v-if="SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="etagedevotrebien">
+                      <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:rq:" for="etagedevotrebien">Étage de votre bien</label>
+                        <div class="relative inline-flex w-full after:hidden after:hidden">
+                          <div class="relative inline-flex w-full"><input id="etagedevotrebien" name="etagedevotrebien"
+                            v-model="etagedevotrebien"
+                              class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
+                              aria-invalid="false" type="text" inputmode="numeric" ></div>
+                        </div>
+                        <div class="flex justify-between gap-md">
+                          <div class="flex flex-col"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--Places de parking-->
+                    <div v-if="SubcategerieCheck === 5 || SubcategerieCheck === 4 || SubcategerieCheck === 1 || SubcategerieCheck === 2" class="max-w-none lg:max-w-[50%] block" data-rhf-name="parking">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="parking">Places de parking</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="parking" name="parking" id="parking"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6 ou plus">6 ou plus</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Exterieur-->
+                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="exterieur">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="exterieur">Exterieur</label>
+                        <div class=" css-b62m3t-container"><span id="react-select-2-live-region"
+                            class="css-7pg0cj-a11yText"></span><span aria-live="polite" aria-atomic="false"
+                            aria-relevant="additions text" class="css-7pg0cj-a11yText"></span>
+                          <select v-model="exterieur" name="exterieur" id="exterieur"
+                            class="border-gray relative ring-1 ring-inset peer box-border w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                            <option value="Balcon">Balcon</option>
+                            <option value="Terasse">Terasse</option>
+                            <option value="Jardin">Jardin</option>
+                          </select>
+                        </div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Classe énergie-->
+                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="classeenergie">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="classeenergie">Classe énergie </label>
+                          <div><input type="hidden" id="radix-:ras:" name="energy_rate" aria-required="false" value="">
+                            <button @click="selectValueEnergie('A')" type="button" id="radix-:ras:a" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#369932] hover:text-background
+                          false"
+                          :class="{ 'bg-[#369932]': classeenergie === 'A' }"
+                          >A</button><button @click="selectValueEnergie('B')" type="button" id="radix-:ras:b" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#3acc31] hover:text-background
+                          false"
+                          :class="{ 'bg-[#3acc31]': classeenergie === 'B' }"
+                          >B</button><button @click="selectValueEnergie('C')" type="button" id="radix-:ras:c" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#cdfd32] hover:text-overlay
+                          false"
+                          :class="{ 'bg-[#cdfd32]': classeenergie === 'C' }"
+                          >C</button><button @click="selectValueEnergie('D')" type="button" id="radix-:ras:d" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#fbea49] hover:text-overlay
+                          false"
+                          :class="{ 'bg-[#fbea49]': classeenergie === 'D' }"
+                          >D</button><button @click="selectValueEnergie('E')" type="button" id="radix-:ras:e" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#fccb2f] hover:text-overlay
+                          false"
+                          :class="{ 'bg-[#fccb2f]': classeenergie === 'E' }"
+                          >E</button><button @click="selectValueEnergie('F')" type="button" id="radix-:ras:f" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#fb9c34] hover:text-background
+                          false"
+                          :class="{ 'bg-[#fb9c34]': classeenergie === 'F' }"
+                          >F</button><button @click="selectValueEnergie('G')" type="button" id="radix-:ras:g" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#fa1c1f] hover:text-background
+                          false"
+                          :class="{ 'bg-[#fa1c1f]': classeenergie === 'G' }"
+                          >G</button><button @click="selectValueEnergie('Vierge')" type="button" id="radix-:ras:v" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-outline hover:text-overlay
+                          false"
+                          :class="{ 'bg-outline': classeenergie === 'Vierge' }"
+                          >Vierge</button></div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--GES-->
+                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="ges">
+                      <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+                          data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                          id="radix-:ri:" for="ges">GES </label>
+                          <div><input type="hidden" id="selectedValue" name="ges" aria-required="false" value="" aria-describedby="radix-:rb3:">
+                          <button @click="selectValueGes('A')" type="button" id="radix-:rb1:a" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#f6edfe] hover:text-overlay 
+                          false"
+                          :class="{ 'bg-[#f6edfe]': ges === 'A' }"
+                          >A</button><button @click="selectValueGes('B')" type="button" id="radix-:rb1:b" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#e3c7fa] hover:text-overlay
+                          false"
+                          :class="{ 'bg-[#e3c7fa]': ges === 'B' }"
+                          >B</button><button @click="selectValueGes('C')" type="button" id="radix-:rb1:c" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#d2adf1] hover:text-overlay
+                          false"
+                          :class="{ 'bg-[#d2adf1]': ges === 'C' }"
+                          >C</button><button @click="selectValueGes('D')" type="button" id="radix-:rb1:d" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#c99aef] hover:text-background
+                          false"
+                          :class="{ 'bg-[#c99aef]': ges === 'D' }"
+                          >D</button><button @click="selectValueGes('E')" type="button" id="radix-:rb1:e" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#b77be9] hover:text-background
+                          false"
+                          :class="{ 'bg-[#b77be9]': ges === 'E' }"
+                          >E</button><button @click="selectValueGes('F')" type="button" id="radix-:rb1:f" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#a659e9] hover:text-background
+                          false"
+                          :class="{ 'bg-[#a659e9]': ges === 'F' }"
+                          >F</button><button @click="selectValueGes('G')" type="button" id="radix-:rb1:g" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-[#8835d9] hover:text-background
+                          false"
+                          :class="{ 'bg-[#8835d9]': ges === 'G' }"
+                          >G</button><button @click="selectValueGes('Vierge')" type="button" id="radix-:rb1:v" class="rounded-full border-sm border-solid border-outline px-lg py-sm mr-md duration-200 mb-sm sm:mb-none 
+                          hover:bg-outline hover:text-overlay
+                          false"
+                          :class="{ 'bg-outline': ges === 'Vierge' }"
+                          >Vierge</button></div>
+                        <div class="flex justify-between gap-md"></div>
+                      </div>
+                    </div>
+                    <!--Electricité-->
                     <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="building_year">
                       <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
@@ -303,6 +703,7 @@
                         <div class="flex justify-between gap-md"></div>
                       </div>
                     </div>
+                    <!--Conditions de paiement-->
                     <div class="max-w-none lg:max-w-[100%] block" data-rhf-name="building_year">
                       <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
@@ -324,6 +725,7 @@
                         <div class="flex justify-between gap-md"></div>
                       </div>
                     </div>
+                    <!--Papiers-->
                     <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="building_year">
                       <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
@@ -342,9 +744,8 @@
                         <div class="flex justify-between gap-md"></div>
                       </div>
                     </div>
-
-
-                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="nb_bathrooms">
+                    <!--Etage-->
+                    <!-- <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="nb_bathrooms">
                       <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
                           id="radix-:rs:" for="nb_bathrooms">Nombre Etage(s)</label>
@@ -357,15 +758,18 @@
                           <div class="flex flex-col"></div>
                         </div>
                       </div>
-                    </div>
-                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="nb_bathrooms">
+                    </div> -->
+                    <!--Prix-->
+                    <div class="max-w-none lg:max-w-[50%] block" data-rhf-name="prix">
                       <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                           data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                          id="radix-:rs:" for="nb_bathrooms">Prix</label>
+                          id="radix-:rs:" for="prix">Prix</label>
                         <div class="relative inline-flex w-full after:hidden after:hidden">
-                          <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                          <div class="relative inline-flex w-full">
+                            <input id="prix" name="prix"
+                            v-model="prix"
                               class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                              aria-invalid="false" type="text" inputmode="numeric" maxlength="30" value=""></div>
+                              aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
                         </div>
                         <div class="flex justify-between gap-md">
                           <div class="flex flex-col"></div>
@@ -386,13 +790,41 @@
                 </div>
               </div>
               <div v-if="isImageImobl">
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
-                <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" 
-                  url="/uploads/listing_images" 
-                  :uploadOnDrop="true"
-                    :multipleUpload="true" 
-                    :parallelUpload="3" />
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Photo à la une !</h3>
+                <!-- <div style="position: relative;">
+                  <DropZone
+                  :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
+                </div> -->
+
+                <!-- Champ de fichier pour le thumbnail -->
+                <div class="large-12 medium-12 small-12 cell">
+                  <label class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter une photo à la une
+                    <input type="file" id="listing_thumbnail" ref="listing_thumbnail" v-on:change="handleThumbnailUpload()"/>
+                  </label>
+                </div>
+                <div class="large-12 medium-12 small-12 cell">
+                  <div v-if='listing_thumbnail' class="file-listing">{{ listing_thumbnail.name }}</div>
+                </div>
+
+
+
+                <!-- <input type="file" @change="handleFileUpload( $event )"/> -->
+                <!-- <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> -->
+
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Galerie</h3>
+                <div style="position: relative;">
+                  <div class="large-12 medium-12 small-12 cell">
+                  <label>
+                    <input type="file"  id="listing_images" ref="listing_images" multiple v-on:change="handleFilesUpload()"/>
+                  </label>
+                  </div>
+                  <div class="large-12 medium-12 small-12 cell">
+                    <div v-for="(file, key) in listing_images" class="file-listing">{{ file.name }} <span class="remove-file" v-on:click="removeFile( key )">Supprimer</span></div>
+                  </div>
+                  <br>
+                  <div class="large-12 medium-12 small-12 cell addimage">
+                    <button @click.prevent="addFiles()" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter un image</button>
+                  </div>
                 </div>
                 <div
                   class="flex justify-between fixed z-sticky bottom-[0] left-[0] right-[0] shadow bg-surface px-xl py-md sm:z-base sm:relative sm:mt-2xl sm:shadow-none sm:p-none">
@@ -405,7 +837,7 @@
 
                   <button data-spark-component="button"
                     class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme"
-                    aria-busy="false" aria-live="off" type="submit" data-test-id="submit-next"
+                    aria-busy="false" aria-live="off" type="submit" 
                     @click="UploadImgImobli">Continuer</button>
                 </div>
               </div>
@@ -444,7 +876,9 @@
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><textarea rows="8" name="body" id="body" required=""
+                        <div class="relative inline-flex w-full"><textarea 
+                          v-model="description"
+                          rows="8" name="body" id="body" required=""
                             maxlength="4000" aria-describedby="body-helper-text-0"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline min-h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg py-[var(--sz-10)] resize-y"
                             aria-invalid="false" data-spark-component="textarea"></textarea></div>
@@ -823,59 +1257,11 @@
 
                     <div class="max-w-none lg:max-w-full block" data-rhf-name="real_estate_type">
                       <div class="inline-block">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:r3:" for="real_estate_type">Choisissez votre type de bien<span
-                              data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
-                              class="text-caption text-on-surface/dim-3">*</span></label><input type="hidden"
-                            id="radix-:r2:" name="real_estate_type" aria-required="true" required="" value="1">
-                          <div class="flex flex-wrap">
-                            <button type="button" v-for="(subCat, index) in subCategories" :key="subCat.id"
-                              class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
-                              tabindex="0" :value="subCat.id" name="real_estate_type" @click="checkBienSub(subCat.id)">
-                              <div
-                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200 border-main"
-                                :class="[subCat.id == SubcategerieCheck ? 'text-main' : '']">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="House"
-                                  fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24"
-                                  data-spark-component="icon" aria-hidden="true" focusable="false">
-                                  <path fill-rule="evenodd"
-                                    d="m5.2,12.7c-.1,0-.2-.1-.4-.1-.5,0-1,.4-1.1.8v5.6c0,2.2,1.8,4,4,4h8.6c2.2,0,4-1.8,4-4v-5.4c-.1-.5-.6-.8-1.1-.8-.1,0-.3,0-.4.1-.4.2-.8.6-.8,1.1v5c0,.9-.8,1.7-1.7,1.7H7.7c-.9,0-1.7-.8-1.7-1.7v-5.1c0-.6-.3-1-.8-1.2Zm9.1,5.7c.6-.5,1-1.3,1-2.2v-1.9c0-1.6-1.3-2.9-2.8-2.9h-.9c-1.6,0-2.8,1.3-2.8,2.9v1.9c0,.9.4,1.7,1,2.2.5.4,1.1.7,1.8.7h.9c.7-.1,1.3-.3,1.8-.7Zm.5-16.2c-1.6-1.6-4.1-1.6-5.6,0L.9,10.6c-.4.4-.4,1.2,0,1.6.2.2.5.3.8.3s.6-.1.8-.3L10.8,3.8c.7-.7,1.7-.7,2.4,0l8.3,8.4c.2.2.5.3.8.3s.6-.1.8-.3c.4-.4.4-1.2,0-1.6L14.8,2.2Zm-2.3,11.5h-.9c-.3,0-.5.2-.5.6v1.9c0,.3.2.6.5.6h.9c.3,0,.5-.2.5-.6v-1.9c0-.3-.2-.6-.5-.6Z">
-                                  </path>
-                                </svg>
-                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">{{
-                                  subCat.name }}
-                                </div>
-                              </div><svg v-if="subCat.id == SubcategerieCheck" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
-                                stroke="none"
-                                class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
-                                data-spark-component="icon" aria-hidden="true" focusable="false">
-                                <path fill-rule="evenodd"
-                                  d="m22,12c0,5.52-4.48,10-10,10S2,17.52,2,12,6.48,2,12,2s10,4.48,10,10Zm-4.16-2.87c.36-.42.3-1.05-.12-1.41-.42-.36-1.05-.3-1.41.12l-5.64,6.66-2.24-2.55c-.36-.41-1-.46-1.41-.09-.41.36-.46,1-.09,1.41l2.46,2.8c.16.19.36.34.59.44.23.1.47.15.72.15.24,0,.48-.06.7-.16.22-.1.42-.26.58-.44l5.86-6.91Z">
-                                </path>
-                              </svg>
-                            </button>
 
-                          </div>
-                        </div>
                       </div>
                     </div>
                     <div class="flex flex-col md-flex-row">
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rq:" for="bedrooms">Modèle:</label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="modele" id="modele" name="modele"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric"></div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
+                      <!--Marques-->
                       <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2 ">
                         <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
@@ -890,146 +1276,264 @@
                           </div>
                         </div>
                       </div>
-                      
-
-                    </div>
-                    <div class="flex flex-col md-flex-row">
-                     
+                      <!--Modele-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="bedrooms">Modèle </label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <input v-model="modele" id="modele" name="modele"
+                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
+                                aria-invalid="false" type="text" inputmode="numeric"></div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>  
+                      <!--Année modele-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="anneemodele">Année Modèle </label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <input v-model="anneemodele" id="anneemodele" name="anneemodele"
+                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
+                                aria-invalid="false" type="text"></div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Carburant-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="carburant">Carburant </label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="carburant" name="carburant" id="carburant"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="Essence">Essence</option>
+                                <option class="mb-4 mt-1" value="Diesel">Diesel</option>
+                                <option class="mb-4 mt-1" value="Hybrid">Hybrid</option>
+                                <option class="mb-4 mt-1" value="Electronique">Electronique</option>
+                                <option class="mb-4 mt-1" value="GPL">GPL</option>
+                                <option class="mb-4 mt-1" value="Gaz naturel (CBG)">Gaz naturel (CBG)</option>
+                                <option class="mb-4 mt-1" value="Autre">Autre</option>
+                              </select>  
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Boite vitesse-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="typeboite">Boîte de vitesse *</label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="typeboite" name="typeboite" id="typeboite"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="Manuelle">Manuelle</option>
+                                <option class="mb-4 mt-1" value="Automatique">Automatique</option>
+                              </select>  
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Type vehicule-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="typevehicule">Type de véhicule</label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="typevehicule" name="typevehicule" id="typevehicule"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="4x4, SUV & Crossover">4x4, SUV & Crossover</option>
+                                <option class="mb-4 mt-1" value="Citadine">Citadine</option>
+                                <option class="mb-4 mt-1" value="Berline">Berline</option>
+                                <option class="mb-4 mt-1" value="Break">Break</option>
+                                <option class="mb-4 mt-1" value="Cabriolet">Cabriolet</option>
+                                <option class="mb-4 mt-1" value="Coupé">Coupé</option>
+                                <option class="mb-4 mt-1" value="Monospace & minibus">Monospace & minibus</option>
+                                <option class="mb-4 mt-1" value="Voiture société, commerciale">Voiture société, commerciale</option>
+                                <option class="mb-4 mt-1" value="Autre">Autre</option>
+                              </select>  
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Nombre de portes-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="nombreporte">Nombre de portes</label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="nombreporte" name="nombreporte" id="nombreporte"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="2">2</option>
+                                <option class="mb-4 mt-1" value="3">3</option>
+                                <option class="mb-4 mt-1" value="4">4</option>
+                                <option class="mb-4 mt-1" value="5">5</option>
+                                <option class="mb-4 mt-1" value="6 ou plus">6 ou plus</option>
+                              </select>  
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Nombre de place-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="nombreplace">Nombre de place(s)</label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="nombreplace" name="nombreplace" id="nombreplace"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="1">1</option>
+                                <option class="mb-4 mt-1" value="2">2</option>
+                                <option class="mb-4 mt-1" value="3">3</option>
+                                <option class="mb-4 mt-1" value="4">4</option>
+                                <option class="mb-4 mt-1" value="5">5</option>
+                                <option class="mb-4 mt-1" value="6">6</option>
+                                <option class="mb-4 mt-1" value="7 ou plus">7 ou plus</option>
+                              </select>  
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>            
+                      <!--Puissance Fiscale-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="puissancefiscal">Puissance fiscale</label>
+                            <div class="relative inline-flex w-full after:hidden after:hidden">
+                              <div class="relative inline-flex w-full">
+                                <input id="puissancefiscal" name="puissancefiscal" v-model="puissancefiscal" class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg" aria-describedby="horse_power-helper-text-0" aria-invalid="false" type="text" inputmode="numeric" maxlength="5">
+                              </div>
+                              <div class="rounded-r-lg">
+                                <div class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface whitespace-nowrap ml-[-1px] !rounded-l-none rounded-r-lg">
+                                  Cv</div>
+                          </div>
+                        </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Puissance Din-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="puissancedin">Puissance Din</label>
+                            <div class="relative inline-flex w-full after:hidden after:hidden">
+                              <div class="relative inline-flex w-full">
+                                <input id="puissancedin" name="puissancedin" v-model="puissancedin" class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg" aria-describedby="horse_power-helper-text-0" aria-invalid="false" type="text" inputmode="numeric" maxlength="10">
+                              </div>
+                              <div class="rounded-r-lg">
+                                <div class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface whitespace-nowrap ml-[-1px] !rounded-l-none rounded-r-lg">
+                                  Ch</div>
+                          </div>
+                        </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Kilometrage-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="kilometrage">Kilométrage</label>
+                            <div class="relative inline-flex w-full after:hidden after:hidden">
+                              <div class="relative inline-flex w-full">
+                                <input id="kilometrage" name="kilometrage" v-model="kilometrage" class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg" aria-describedby="horse_power-helper-text-0" aria-invalid="false" type="text" inputmode="numeric" maxlength="12">
+                              </div>
+                              <div class="rounded-r-lg">
+                                <div class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface whitespace-nowrap ml-[-1px] !rounded-l-none rounded-r-lg">
+                                  Km</div>
+                          </div>
+                        </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Couleur-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="couleur">Couleur </label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="couleur" name="couleur" id="couleur"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="Argent">Argent</option>
+                                <option class="mb-4 mt-1" value="Beige">Beige</option>
+                                <option class="mb-4 mt-1" value="Blanc">Blanc</option>
+                                <option class="mb-4 mt-1" value="Bleu">Bleu</option>
+                                <option class="mb-4 mt-1" value="Bordeaux">Bordeaux</option>
+                                <option class="mb-4 mt-1" value="Doré">Doré</option>
+                                <option class="mb-4 mt-1" value="Gris">Gris</option>
+                                <option class="mb-4 mt-1" value="Ivoire">Ivoire</option>
+                                <option class="mb-4 mt-1" value="Jaune">Jaune</option>
+                                <option class="mb-4 mt-1" value="Maron">Maron</option>
+                                <option class="mb-4 mt-1" value="Noire">Noire</option>
+                                <option class="mb-4 mt-1" value="Orange">Orange</option>
+                                <option class="mb-4 mt-1" value="Rose">Rose</option>
+                                <option class="mb-4 mt-1" value="Rouge">Rouge</option>
+                                <option class="mb-4 mt-1" value="Vert">Vert</option>
+                                <option class="mb-4 mt-1" value="Violet">Violet</option>
+                                <option class="mb-4 mt-1" value="Autre">Autre</option>
+                              </select>  
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Prix-->
                       <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block" >
                         <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rs:" for="nb_bathrooms">Prix</label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="prix" id="prix" name="prix"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="max-w-none lg:max-w-[50%] block lg:min-w-[50%] mx-2">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rq:" for="bedrooms">Année</label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="annee" id="annee" name="annee"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text"></div>
-                          </div>
+                            id="radix-:rs:" for="prix">Prix</label>
+                            <div class="relative inline-flex w-full after:hidden after:hidden"><div class="relative inline-flex w-full">
+                              <input v-model="prix" id="prix" name="prix" class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-none pl-lg pr-lg" required="" aria-invalid="false" type="text" inputmode="decimal" maxlength="8"></div><div class="rounded-r-lg"><div class="overflow-hidden border-sm shrink-0 h-full focus-visible:relative focus-visible:z-raised flex items-center px-lg border-outline bg-surface text-on-surface ml-[-1px] !rounded-l-none rounded-r-lg">€</div></div></div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="flex flex-col md-flex-row">
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
-                        <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ri:" for="building_year">Couleur </label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="couleur" id="couleur" name="couleur"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text"></div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2">
-                        <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ri:" for="building_year">Kilométrage  </label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="kilometrage" id="kilometrage" name="kilometrage"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text"></div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <!-- <div class="flex flex-col md-flex-row">
 
-                      
-
-                      <div class="max-w-none lg:max-w-[50%] block lg:min-w-[50%] block">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rk:" for="square">Carte graphique: </label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full">
-                              <input id="bedrooms" name="bedrooms"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value="">
-                            </div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2" data-rhf-name="nb_bathrooms">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rs:" for="nb_bathrooms">Reférence carte graphique integrée </label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text"></div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
-                    <div class="flex flex-col md-flex-row">
-                      
-                      <div class="max-w-none lg:max-w-[50%] block lg:min-w-[50%]">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ro:" for="rooms">Type Boite </label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full">
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input"  v-model="typeboite" type="radio" name="typeboite" id="typeboite1"
-                                  value="Manuelle">
-                                <label class="form-check-label" for="typeboite1">Manuelle</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" v-model="typeboite" type="radio" name="typeboite" id="typeboite2"
-                                  value="Automatique">
-                                <label class="form-check-label" for="typeboite2">Automatique</label>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2" data-rhf-name="nb_bathrooms">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rs:" for="nb_bathrooms">Energie</label>
-                          <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input v-model="energie" id="energie" name="energie"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" ></div>
-                          </div>
-                          <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                   <div
                     class="flex justify-between fixed z-sticky bottom-[0] left-[0] right-[0] shadow bg-surface px-xl py-md sm:z-base sm:relative sm:mt-2xl sm:shadow-none sm:p-none">
@@ -1044,10 +1548,41 @@
                 </div>
               </div>
               <div v-if="isImageImobl">
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
-                <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
-                    :multipleUpload="true" :parallelUpload="3" />
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Photo à la une !</h3>
+                <!-- <div style="position: relative;">
+                  <DropZone
+                  :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
+                </div> -->
+
+                <!-- Champ de fichier pour le thumbnail -->
+                <div class="large-12 medium-12 small-12 cell">
+                  <label class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter une photo à la une
+                    <input type="file" id="listing_thumbnail" ref="listing_thumbnail" v-on:change="handleThumbnailUpload()"/>
+                  </label>
+                </div>
+                <div class="large-12 medium-12 small-12 cell">
+                  <div v-if='listing_thumbnail' class="file-listing">{{ listing_thumbnail.name }}</div>
+                </div>
+
+
+
+                <!-- <input type="file" @change="handleFileUpload( $event )"/> -->
+                <!-- <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> -->
+
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Galerie</h3>
+                <div style="position: relative;">
+                  <div class="large-12 medium-12 small-12 cell">
+                  <label>
+                    <input type="file"  id="listing_images" ref="listing_images" multiple v-on:change="handleFilesUpload()"/>
+                  </label>
+                  </div>
+                  <div class="large-12 medium-12 small-12 cell">
+                    <div v-for="(file, key) in listing_images" class="file-listing">{{ file.name }} <span class="remove-file" v-on:click="removeFile( key )">Supprimer</span></div>
+                  </div>
+                  <br>
+                  <div class="large-12 medium-12 small-12 cell addimage">
+                    <button @click.prevent="addFiles()" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter un image</button>
+                  </div>
                 </div>
                 <div
                   class="flex justify-between fixed z-sticky bottom-[0] left-[0] right-[0] shadow bg-surface px-xl py-md sm:z-base sm:relative sm:mt-2xl sm:shadow-none sm:p-none">
@@ -1655,7 +2190,7 @@
                   </div>
                   <br>
                   <div class="large-12 medium-12 small-12 cell addimage">
-                    <button v-on:click="addFiles()" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter un image</button>
+                    <button @click.prevent="addFiles()" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter un image</button>
                   </div>
                 </div>
                 <div
@@ -2864,6 +3399,7 @@ export default {
       isSugsestionCat: true,
       typeCategorie: '',
       user_id:null,
+      years:[],
       titreAnnonce:'',
       description:'',
       country_id:'',
@@ -2896,7 +3432,7 @@ export default {
       disquesize:'',
       kilometrage:'',
       typeboite:'',
-      energie:'',
+      carburant:'',
       video_provider:'',
       video_url:'',
       seo_meta_tags:'',
@@ -2904,6 +3440,14 @@ export default {
       website:'',
       email:'',
       phone:'',
+      anneemodele: '',
+      typevehicule: '',
+      boitevitesse: '',
+      nombreplace: '',
+      nombreporte: '',
+      puissancefiscal: '',
+      puissancedin: '',
+      kilometrage: '',
       listing_type:'',
       social:'',
       date_added:'',
@@ -2912,6 +3456,21 @@ export default {
       listing_images:[],
       photos:'',
       code:'',
+      classeenergie:'',
+      ges:'',
+      naturebien: '',
+      carateristique: '',
+      surface: '',
+      surfacetotal: '',
+      rooms: '',
+      roomschambres: '',
+      nombredeniveaux: '',
+      salledebain: '',
+      building_year: '',
+      parking: '',
+      exterieur: '',
+      nombredetage: '',
+      etagedevotrebien: '',
     };
   },
   
@@ -2923,7 +3482,21 @@ export default {
     this.CategoryStore.getCategories();
     this.user_id = this.userData ? this.userData.user_id : null;
   },
+  created() {
+    const currentYear = new Date().getFullYear();
+    for (let year = 2024; year >= 1950; year--) {
+      this.years.push(year);
+    }
+  },
   methods: {
+    selectValueGes(value) {
+      this.ges = value;
+      console.log('Valeur de ges mise à jour :', this.ges);
+    },
+    selectValueEnergie(value) {
+      this.classeenergie = value;
+      console.log('Valeur de classeenergie mise à jour :', this.classeenergie);
+    },
     handleThumbnailUpload() {
         this.listing_thumbnail = this.$refs.listing_thumbnail.files[0];
       },
@@ -2963,6 +3536,30 @@ export default {
       listingData.append('city_id', this.city_id);
       listingData.append('state_id', this.state_id);
       listingData.append('address', this.address);
+      listingData.append('energie', this.carburant);
+      listingData.append('naturebien', this.naturebien);
+      listingData.append('carateristique', this.carateristique);
+      listingData.append('surface', this.surface);
+      listingData.append('surfacetotal', this.surfacetotal);
+      listingData.append('rooms', this.rooms);
+      listingData.append('roomschambres', this.roomschambres);
+      listingData.append('nombredeniveaux', this.nombredeniveaux);
+      listingData.append('salledebain', this.salledebain);
+      listingData.append('building_year', this.building_year);
+      listingData.append('parking', this.parking);
+      listingData.append('exterieur', this.exterieur);
+      listingData.append('classeenergie', this.classeenergie);
+      listingData.append('ges', this.ges);
+      listingData.append('nombredetage', this.nombredetage);
+      listingData.append('etagedevotrebien', this.etagedevotrebien);
+      listingData.append('anneemodele', this.anneemodele);
+      listingData.append('typevehicule', this.typevehicule);
+      listingData.append('boitevitesse', this.boitevitesse);
+      listingData.append('nombreplace', this.nombreplace);
+      listingData.append('nombreporte', this.nombreporte);
+      listingData.append('puissancefiscal', this.puissancefiscal);
+      listingData.append('puissancedin', this.puissancedin);
+      listingData.append('kilometrage', this.kilometrage);
       listingData.append('latitude', this.latitude);
       listingData.append('longitude', this.longitude);
       listingData.append('google_analytics_id', this.google_analytics_id);
@@ -3092,9 +3689,9 @@ export default {
       this.isImageImobl = true
       this.isDescrImobl = false
     },
-    checkBienSub(sub) {
-      console.log('sub', sub);
-      this.SubcategerieCheck = sub
+    checkBienSub(index) {
+      console.log('sub', );
+      this.SubcategerieCheck = index
       console.log('check', this.SubcategerieCheck);
 
     },
@@ -3143,6 +3740,6 @@ function sigin() {
 }
 .read-only\:bg-on-surface\/dim-5:read-only {
     width: 100%;
-    background-color: rgb(255 255 255 / 8%);
+    background-color: #fff;
 }
 </style>
