@@ -1,0 +1,34 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "",
+                    ""
+                ]
+            },
+            "properties": {
+                "id": "2143e3841a66ac7e3300e8560e94fa1e",
+                "index": 0,
+                "isActive": true,
+                "logo": "18aefb6ef4e8966224f1d25e25ec01dc.jpg",
+                "image": "18aefb6ef4e8966224f1d25e25ec01dc.jpg",
+                "link": "http://localhost/vetement-ok/145",
+                "url": "",
+                "name": "Vetement ok",
+                "category": "",
+                "email": "",
+                "stars": "0.0",
+                "phone": "",
+                "address": "",
+                "about": "about",
+                "tags": [
+                    ""
+                ]
+            }
+        }
+    ]
+}

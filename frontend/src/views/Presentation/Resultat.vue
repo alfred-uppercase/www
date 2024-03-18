@@ -351,12 +351,12 @@ return '4.5'; // Sample rating
       <h1>{{ title }}</h1>
       <div class="container-fluid margin_60_35" style="transform: none;">
   <div class="row justify-content-md-center" style="transform: none;">
-    <FIlters />
+    <!-- <FIlters />
     <div class="col-lg-6 col-md-12 order-lg-1 order-2" id="listings">
       <div layout="[object Object],[object Object]" nbtotalseparators="21" data-test-id="listing-mosaic" id="mosaic_with_owner" class="sc-968a2c9d-2 givLyB">
 
         </div>
-    <!-- <div
+    <div
     v-for="listing in listings" :key="listing.id"
       class="strip map_view featured-tag-border "
       :data-marker-id="listing.code"
@@ -457,8 +457,8 @@ return '4.5'; // Sample rating
         </ul>
         </div>
       </div>
-    </div> -->
-  </div>
+    </div> 
+  </div> -->
   <div class="col-lg-3 order-lg-2 order-1">
       <!-- <div class="stiky-map mb-5 mb-lg-0"></div> -->
       <!-- <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
@@ -468,7 +468,7 @@ return '4.5'; // Sample rating
         name="OpenStreetMap"
       ></l-tile-layer>
     </l-map> -->
-    <l-map ref="map" :zoom="zoom" :center="[47.41322, -1.219482]">
+    <!-- <l-map ref="map" :zoom="zoom" :center="[47.41322, -1.219482]">
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       layer-type="base"
@@ -520,7 +520,7 @@ return '4.5'; // Sample rating
           lol
         </l-popup>
       </l-rectangle>
-  </l-map>
+  </l-map> -->
   </div>
         </div>
     </div>

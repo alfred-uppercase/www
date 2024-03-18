@@ -2291,124 +2291,160 @@
 
 
                     <div class="max-w-none lg:max-w-full block" data-rhf-name="real_estate_type">
-                      <div class="inline-block">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
-                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:r3:" for="real_estate_type">Choisissez votre type de bien<span
-                              data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
-                              class="text-caption text-on-surface/dim-3">*</span></label><input type="hidden"
-                            id="radix-:r2:" name="real_estate_type" aria-required="true" required="" value="1">
-                          <div class="flex flex-wrap">
-                            <button type="button" v-for="(subCat, index) in subCategories" :key="subCat.id"
-                              class=" flex flex-col items-center flex-shrink-0 min-w-none h-[8rem] w-[8rem] mb-md cursor-pointer relative mr-lg last:mr-none"
-                              tabindex="0" :value="subCat.id" name="real_estate_type" @click="checkBienSub(subCat.id)">
-                              <div
-                                class="flex flex-col items-center justify-center flex-shrink min-w-none h-[8rem] w-[8rem] p-sm border-sm rounded-sm duration-200 border-main"
-                                :class="[subCat.id == SubcategerieCheck ? 'text-main' : '']">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="House"
-                                  fill="currentColor" stroke="none" class="fill-current text-current w-sz-24 h-sz-24"
-                                  data-spark-component="icon" aria-hidden="true" focusable="false">
-                                  <path fill-rule="evenodd"
-                                    d="m5.2,12.7c-.1,0-.2-.1-.4-.1-.5,0-1,.4-1.1.8v5.6c0,2.2,1.8,4,4,4h8.6c2.2,0,4-1.8,4-4v-5.4c-.1-.5-.6-.8-1.1-.8-.1,0-.3,0-.4.1-.4.2-.8.6-.8,1.1v5c0,.9-.8,1.7-1.7,1.7H7.7c-.9,0-1.7-.8-1.7-1.7v-5.1c0-.6-.3-1-.8-1.2Zm9.1,5.7c.6-.5,1-1.3,1-2.2v-1.9c0-1.6-1.3-2.9-2.8-2.9h-.9c-1.6,0-2.8,1.3-2.8,2.9v1.9c0,.9.4,1.7,1,2.2.5.4,1.1.7,1.8.7h.9c.7-.1,1.3-.3,1.8-.7Zm.5-16.2c-1.6-1.6-4.1-1.6-5.6,0L.9,10.6c-.4.4-.4,1.2,0,1.6.2.2.5.3.8.3s.6-.1.8-.3L10.8,3.8c.7-.7,1.7-.7,2.4,0l8.3,8.4c.2.2.5.3.8.3s.6-.1.8-.3c.4-.4.4-1.2,0-1.6L14.8,2.2Zm-2.3,11.5h-.9c-.3,0-.5.2-.5.6v1.9c0,.3.2.6.5.6h.9c.3,0,.5-.2.5-.6v-1.9c0-.3-.2-.6-.5-.6Z">
-                                  </path>
-                                </svg>
-                                <div class="mt-sm w-full overflow-hidden text-ellipsis whitespace-nowrap text-center">{{
-                                  subCat.name }}
-                                </div>
-                              </div><svg v-if="subCat.id == SubcategerieCheck" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg" data-title="ValidFill" fill="currentColor"
-                                stroke="none"
-                                class="fill-current text-main w-sz-24 h-sz-24 absolute bottom-[-1rem] rounded-full bg-surface"
-                                data-spark-component="icon" aria-hidden="true" focusable="false">
-                                <path fill-rule="evenodd"
-                                  d="m22,12c0,5.52-4.48,10-10,10S2,17.52,2,12,6.48,2,12,2s10,4.48,10,10Zm-4.16-2.87c.36-.42.3-1.05-.12-1.41-.42-.36-1.05-.3-1.41.12l-5.64,6.66-2.24-2.55c-.36-.41-1-.46-1.41-.09-.41.36-.46,1-.09,1.41l2.46,2.8c.16.19.36.34.59.44.23.1.47.15.72.15.24,0,.48-.06.7-.16.22-.1.42-.26.58-.44l5.86-6.91Z">
-                                </path>
-                              </svg>
-                            </button>
-
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     <div class="flex flex-col md-flex-row">
+                      <!--Univers-->
                       <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
                         <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rq:" for="bedrooms">Gros / Détail :</label>
+                            id="radix-:rq:" for="univers">Univers *</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric"  value=""></div>
+                            <div class="relative inline-flex w-full">
+                              <select v-model="univers" name="univers" id="univers"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option class="mb-4 mt-1" value="Femme">Femme</option>
+                                <option class="mb-4 mt-1" value="Homme">Homme</option>
+                                <option class="mb-4 mt-1" value="Maternité">Maternité</option>
+                                <option class="mb-4 mt-1" value="Enfant">Enfant</option>
+                              </select>
+                            </div>
                           </div>
                           <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
+                            <div class="flex flex-col">
+                              <span id="radix-:r1bu:" data-spark-component="form-field-helper-message" class="text-on-surface/dim-1 text-caption">Si vous déposez des annonces de soutien-gorge, chaussettes, gants renseignez la taille de vos vêtements dans le titre et dans le texte de votre annonce.</span><span id="radix-:r1bv:" data-spark-component="form-field-helper-message" class="text-on-surface/dim-1 text-caption">Nous vous conseillons également, pour tout type de vêtements, d'y ajouter la marque et la matière.</span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2 ">
-                        <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+
+                      <!--Taille-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ri:" for="building_year">Location / Vente </label>
+                            id="radix-:rq:" for="taille">Taille *</label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                            <div class="relative inline-flex w-full">
+                              <select v-model="taille" name="taille" id="taille"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option class="mb-4 mt-1" value="Taille unique">Taille unique</option>
+                                <option class="mb-4 mt-1" value="30 - XXXS">30 - XXXS</option>
+                                <option class="mb-4 mt-1" value="32 - XXS">32 - XXS</option>
+                                <option class="mb-4 mt-1" value="34 - XS">34 - XS</option>
+                                <option class="mb-4 mt-1" value="36 - S">36 - S</option>
+                                <option class="mb-4 mt-1" value="38 - M">38 - M</option>
+                                <option class="mb-4 mt-1" value="40 - L">40 - L</option>
+                                <option class="mb-4 mt-1" value="42 - XL">42 - XL</option>
+                                <option class="mb-4 mt-1" value="44 - XXL">44 - XXL</option>
+                                <option class="mb-4 mt-1" value="46 - XXXL">46 - XXXL</option>
+                                <option class="mb-4 mt-1" value="48 - 4XL">48 - 4XL</option>
+                                <option class="mb-4 mt-1" value="50 - 5XL">50 - 5XL</option>
+                                <option class="mb-4 mt-1" value="52 - 6XL">52 - 6XL</option>
+                                <option class="mb-4 mt-1" value="54 - 7XL">54 - 7XL</option>
+                                <option class="mb-4 mt-1" value="56 - 8XL et Plus">56 - 8XL et Plus</option>
+                              </select>
+                            </div>
                           </div>
                           <div class="flex justify-between gap-md">
-                            <div class="flex flex-col"></div>
+                            <div class="flex flex-col">
+                            </div>
                           </div>
                         </div>
                       </div>
                       
+                      <!--Type de vetement-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                            data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
+                            id="radix-:rq:" for="typedevetement">Type *</label>
+                          <div class="relative inline-flex w-full after:hidden after:hidden">
+                            <div class="relative inline-flex w-full">
+                              <select v-model="typedevetement" name="typedevetement" id="typedevetement"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option class="mb-4 mt-1" value="Taille unique">Taille unique</option>
+                                <option class="mb-4 mt-1" value="Robes / jupes">Robes / jupes</option>
+                                <option class="mb-4 mt-1" value="Manteaux & Vestes">Manteaux & Vestes</option>
+                                <option class="mb-4 mt-1" value="Hauts / T-Shirts / Polos">Hauts / T-Shirts / Polos</option>
+                                <option class="mb-4 mt-1" value="Pantalons">Pantalons</option>
+                                <option class="mb-4 mt-1" value="Pulls / Gilets / Mailles">Pulls / Gilets / Mailles</option>
+                                <option class="mb-4 mt-1" value="Jeans">Jeans</option>
+                                <option class="mb-4 mt-1" value="Chemises / Chemisiers">Chemises / Chemisiers</option>
+                                <option class="mb-4 mt-1" value="Costumes / Tailleurs">Costumes / Tailleurs</option>
+                                <option class="mb-4 mt-1" value="Shorts / Pantacourts / Bermudas">Shorts / Pantacourts / Bermudas</option>
+                                <option class="mb-4 mt-1" value="Sports / Danse">Sports / Danse</option>
+                                <option class="mb-4 mt-1" value="Maillots de bain & vêtements de plage">Maillots de bain & vêtements de plage</option>
+                                <option class="mb-4 mt-1" value="Lingerie">Lingerie</option>
+                                <option class="mb-4 mt-1" value="Sous-vêtements & vêtements de nuit">Sous-vêtements & vêtements de nuit</option>
+                                <option class="mb-4 mt-1" value="Déguisement">Déguisement</option>
+                                <option class="mb-4 mt-1" value="Autres">Autres</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="flex justify-between gap-md">
+                            <div class="flex flex-col">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                    </div>
-                    <div class="flex flex-col md-flex-row">
-                     
+                      <!--Marque-->
                       <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block" >
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm">
+                          <label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rs:" for="nb_bathrooms">Etat </label>
+                            id="radix-:rs:" for="marque">Marque </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="nb_bathrooms" name="nb_bathrooms"
+                            <div class="relative inline-flex w-full">
+                              <input v-model="marque" id="marque" name="marque"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30" value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
                           </div>
                         </div>
                       </div>
-                      <div class="max-w-none lg:max-w-[50%] block lg:min-w-[50%] mx-2">
-                        <div data-spark-component="form-field" class="flex flex-col gap-sm"><label
+
+                      <!--Couleur-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block" >
+                        <div data-spark-component="form-field" class="flex flex-col gap-sm">
+                          <label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:rq:" for="bedrooms">Taille </label>
+                            id="radix-:rs:" for="couleur">Couleur </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
+                            <div class="relative inline-flex w-full">
+                              <input v-model="couleur" id="couleur" name="couleur"
                                 class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                                aria-invalid="false" type="text" inputmode="numeric" maxlength="30"></div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="flex flex-col md-flex-row">
-                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block">
-                        <div data-spark-component="form-field" class="relative flex flex-col gap-sm"><label
+
+                      <!--Etat-->
+                      <div class="max-w-none lg:max-w-[50%] lg:min-w-[50%] block mx-2">
+                        <div data-spark-component="form-field" class="relative "><label
                             data-spark-component="form-field-label" class="text-body-1 flex items-center gap-sm"
-                            id="radix-:ri:" for="building_year">prix </label>
+                            id="radix-:ri:" for="building_year">Etat   </label>
                           <div class="relative inline-flex w-full after:hidden after:hidden">
-                            <div class="relative inline-flex w-full"><input id="bedrooms" name="bedrooms"
-                                class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
-                                aria-invalid="false" type="text" value=""></div>
+                            <div class="relative inline-flex w-full">
+                              <select v-model="etat" name="etat" id="etat"
+                                class="mr-10-p border-gray relative ring-1 ring-inset peer box-border appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
+                                <option value="0">Choisissez</option>
+                                <option class="mb-4 mt-1" value="Neuf avec étiquette">Neuf avec étiquette</option>
+                                <option class="mb-4 mt-1" value="Neuf sans étiquette">Neuf sans étiquette</option>
+                                <option class="mb-4 mt-1" value="Très bon état">Très bon état</option>
+                                <option class="mb-4 mt-1" value="Bon état">Bon état</option>
+                                <option class="mb-4 mt-1" value="État satisfaisant">État satisfaisant</option>
+                              </select>
+                            </div>
                           </div>
                           <div class="flex justify-between gap-md">
                             <div class="flex flex-col"></div>
                           </div>
                         </div>
                       </div>
-                      
                     </div>
                   </div>
                   <div
@@ -2424,10 +2460,41 @@
                 </div>
               </div>
               <div v-if="isImageImobl">
-                <h3 class="mb-xl text-headline-2 font-semi-bold">Ajouter des photos</h3>
-                <div style=" border: 1px solid red; position: relative;">
-                  <DropZone :maxFiles="Number(10000000000)" url="/uploads/listing_images" :uploadOnDrop="true"
-                    :multipleUpload="true" :parallelUpload="3" />
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Photo à la une !</h3>
+                <!-- <div style="position: relative;">
+                  <DropZone
+                  :uploadOnDrop="false" :multipleUpload="false" @vdropzone-success="handleSuccess" />
+                </div> -->
+
+                <!-- Champ de fichier pour le thumbnail -->
+                <div class="large-12 medium-12 small-12 cell">
+                  <label class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter une photo à la une
+                    <input type="file" id="listing_thumbnail" ref="listing_thumbnail" v-on:change="handleThumbnailUpload()"/>
+                  </label>
+                </div>
+                <div class="large-12 medium-12 small-12 cell">
+                  <div v-if='listing_thumbnail' class="file-listing">{{ listing_thumbnail.name }}</div>
+                </div>
+
+
+
+                <!-- <input type="file" @change="handleFileUpload( $event )"/> -->
+                <!-- <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/> -->
+
+                <h3 class="mt-xl text-headline-2 font-semi-bold">Galerie</h3>
+                <div style="position: relative;">
+                  <div class="large-12 medium-12 small-12 cell">
+                  <label>
+                    <input type="file"  id="listing_images" ref="listing_images" multiple v-on:change="handleFilesUpload()"/>
+                  </label>
+                  </div>
+                  <div class="large-12 medium-12 small-12 cell">
+                    <div v-for="(file, key) in listing_images" class="file-listing">{{ file.name }} <span class="remove-file" v-on:click="removeFile( key )">Supprimer</span></div>
+                  </div>
+                  <br>
+                  <div class="large-12 medium-12 small-12 cell addimage">
+                    <button @click.prevent="addFiles()" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter un image</button>
+                  </div>
                 </div>
                 <div
                   class="flex justify-between fixed z-sticky bottom-[0] left-[0] right-[0] shadow bg-surface px-xl py-md sm:z-base sm:relative sm:mt-2xl sm:shadow-none sm:p-none">
@@ -2479,7 +2546,9 @@
                           data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                           class="text-caption text-on-surface/dim-3">*</span></label>
                       <div class="relative inline-flex w-full after:hidden after:hidden">
-                        <div class="relative inline-flex w-full"><textarea rows="8" name="body" id="body" required=""
+                        <div class="relative inline-flex w-full"><textarea 
+                          v-model="description"
+                          rows="8" name="body" id="body" required=""
                             maxlength="4000" aria-describedby="body-helper-text-0"
                             class="relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline min-h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg py-[var(--sz-10)] resize-y"
                             aria-invalid="false" data-spark-component="textarea"></textarea></div>
@@ -3471,6 +3540,9 @@ export default {
       exterieur: '',
       nombredetage: '',
       etagedevotrebien: '',
+      univers:'',
+      taille:'',
+      typedevetement:'',
     };
   },
   
@@ -3534,9 +3606,13 @@ export default {
       listingData.append('description', this.description);
       listingData.append('country_id', this.country_id);
       listingData.append('city_id', this.city_id);
+      listingData.append('typedebien', this.SubcategerieCheck);
       listingData.append('state_id', this.state_id);
       listingData.append('address', this.address);
       listingData.append('energie', this.carburant);
+      listingData.append('univers', this.univers);
+      listingData.append('taille', this.taille);
+      listingData.append('typedevetement', this.typedevetement);
       listingData.append('naturebien', this.naturebien);
       listingData.append('carateristique', this.carateristique);
       listingData.append('surface', this.surface);

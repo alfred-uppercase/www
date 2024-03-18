@@ -1382,7 +1382,7 @@
       await this.CategoryStore.getCategories();
       this.categories.forEach( async(element) => {
        await this.CategoryStore.getsubCategories(element.id)
-      console.log('sub ',this.subCategories);
+      // console.log('sub ',this.subCategories);
        
         element.sub=this.subCategories
         this.categories_avec_Sub.push(element)
@@ -1561,21 +1561,16 @@ const submitForm = async () => {
 
   onMounted(async () => {
     try {
-      // Use the outer id variable, not the one defined in onMounted
       const currentId = userData.value.user_id;
       if (!currentId) {
-        console.error('Error: User ID is undefined');
         return;
       }
   
       const get_user_thumbnails = await axios.get(`/api/get_user_thumbnail/${userData.value.user_id}`);
-      console.log('User thumbail:', get_user_thumbnails.data)
       get_user_thumbnail.value = get_user_thumbnails.data;
-  checkLocalStorage();
-
-
+      checkLocalStorage();
     } catch (error) {
-      console.error('Error fetching single listing:', error);
+      // console.error('Error fetching single listing:', error);
     }
   });
   </script>

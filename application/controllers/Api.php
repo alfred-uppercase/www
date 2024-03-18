@@ -493,7 +493,7 @@ function now_open($listing_id = '') {
       $data['is_featured'] = $this->input->post('is_featured');
     }
 
-    $data['country_id'] = sanitizer($this->input->post('country_id'));
+    $data['country_id'] = 'Algerie';
     $data['city_id'] = sanitizer($this->input->post('city_id'));
     $data['state_id'] = sanitizer($this->input->post('state_id'));
     $data['address'] = sanitizer($this->input->post('address'));
@@ -544,6 +544,10 @@ function now_open($listing_id = '') {
     $data['salledebain'] = sanitizer($this->input->post('salledebain'));
     $data['building_year'] = sanitizer($this->input->post('building_year'));
     $data['parking'] = sanitizer($this->input->post('parking'));
+    $data['univers'] = sanitizer($this->input->post('univers'));
+    $data['taille'] = sanitizer($this->input->post('taille'));
+    $data['typedebien'] = sanitizer($this->input->post('typedebien'));
+    $data['typedevetement'] = sanitizer($this->input->post('typedevetement'));
     $data['exterieur'] = sanitizer($this->input->post('exterieur'));
     $data['classeenergie'] = sanitizer($this->input->post('classeenergie'));
     $data['ges'] = sanitizer($this->input->post('ges'));

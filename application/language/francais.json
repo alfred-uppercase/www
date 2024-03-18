@@ -255,5 +255,6 @@
     "": "",
     "show_on_map": "Show on map",
     "watch_details": "Watch details",
-    "this_listing_is_verified": "This listing is verified"
+    "this_listing_is_verified": "This listing is verified",
+    "listings_deleted_successfully": "Listings deleted successfully"
 }
