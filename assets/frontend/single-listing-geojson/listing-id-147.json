@@ -1,0 +1,34 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "",
+                    ""
+                ]
+            },
+            "properties": {
+                "id": "05e225f577bc73f1ca809ea06fb5b6d7",
+                "index": 0,
+                "isActive": true,
+                "logo": "5f54415a491d838e22520cee4c979829.jpg",
+                "image": "5f54415a491d838e22520cee4c979829.jpg",
+                "link": "http://localhost/une-jupe-jeans/147",
+                "url": "",
+                "name": "Une jupe jeans",
+                "category": "",
+                "email": "",
+                "stars": "0.0",
+                "phone": "",
+                "address": "",
+                "about": "about",
+                "tags": [
+                    ""
+                ]
+            }
+        }
+    ]
+}

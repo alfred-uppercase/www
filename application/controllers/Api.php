@@ -264,8 +264,8 @@ public function validate_login_api() {
     } else {
         $response = array(
             'status' => 'error',
-            'message' => 'Invalid credentials P',
-            'credentials' => $credential
+            'message' => 'Invalid',
+            // 'credentials' => $credential
         );
         $this->response($response, REST_Controller::HTTP_UNAUTHORIZED);
     }
@@ -416,6 +416,91 @@ function now_open($listing_id = '') {
       }
     }
   }
+
+  function edit_user($user_id) {
+    $data = array();
+
+    $email = $this->input->post('email');
+    if (isset($email)){
+        $data['email'] = sanitizer($email);
+    }
+    
+    $name = $this->input->post('name');
+    if (isset($name)){
+        $data['name'] = sanitizer($name);
+    }
+    
+    $address = $this->input->post('address');
+    if (isset($address)){
+        $data['address'] = sanitizer($address);
+    }
+
+    $about = $this->input->post('about');
+    if (isset($address)){
+        $data['about'] = sanitizer($about);
+    }
+
+    $phone = $this->input->post('phone');
+    if (isset($phone)){
+        $data['phone'] = sanitizer($phone);
+    }
+    $meta_pixel = $this->input->post('meta_pixel');
+    if (isset($meta_pixel)){
+        $data['meta_pixel'] = sanitizer($meta_pixel);
+    }
+
+    $website = $this->input->post('website');
+    if (isset($website)){
+        $data['website'] = sanitizer($website);
+    }
+    $about = $this->input->post('about');
+
+    if (isset($about)){
+        $data['about'] = sanitizer($about);
+    }
+
+    $social_links = array(
+        'facebook' => sanitizer($this->input->post('facebook')),
+        'twitter' => sanitizer($this->input->post('twitter')),
+        'linkedin' => sanitizer($this->input->post('linkedin')),
+    );
+    $data['social'] = json_encode($social_links);
+
+    $validity = $this->check_duplications('on_update', $data['email'], $user_id);
+
+    if($validity){
+        $this->db->where('id', $user_id);
+        $this->db->update('user', $data);
+        if (isset($_FILES['user_image']) && $_FILES['user_image']['name'] != "") {
+            move_uploaded_file($_FILES['user_image']['tmp_name'], 'uploads/user_image/'.$user_id.'.jpg');
+        }
+        $this->session->set_flashdata('flash_message', get_phrase('user_updated_successfully'));
+    } else {
+        $this->session->set_flashdata('error_message', get_phrase('this_email_id_has_been_taken'));
+    }
+    return;
+}
+public function check_duplications($action = "", $email = "", $user_id = "") {
+    $duplicate_email_check = $this->db->get_where('user', array('email' => $email));
+
+    if ($action == 'on_create') {
+        if ($duplicate_email_check->num_rows() > 0) {
+            return false;
+        }else {
+            return true;
+        }
+    }elseif ($action == 'on_update') {
+        if ($duplicate_email_check->num_rows() > 0) {
+            if ($duplicate_email_check->row()->id == $user_id) {
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return true;
+        }
+    }
+}
 
 
   function add_listing()

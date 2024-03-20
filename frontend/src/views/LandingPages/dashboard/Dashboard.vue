@@ -100,7 +100,7 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
 
         <div class="mt-xl"><div class="my-xl"></div></div>
         <!-- Add profile pic -->
-        <div class="relative mb-xl w-full items-center justify-between rounded-lg border-sm border-solid border-neutral/dim-4 bg-support-container p-xl pt-3xl sm:flex" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r6:" data-state="closed"><button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-32 h-sz-32 rounded-lg text-neutral hover:bg-neutral/dim-5 enabled:active:bg-neutral/dim-5 focus-visible:bg-neutral/dim-5 px-none text-body-1 absolute right-md top-md" aria-busy="false" aria-live="off" aria-label="Fermer l'avertissement sur la photo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Close" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m21.6,19.67l-7.68-7.68,7.57-7.59c.53-.53.53-1.4,0-1.93-.53-.53-1.4-.53-1.93,0l-7.57,7.58L4.33,2.4c-.53-.53-1.4-.53-1.93,0-.53.53-.53,1.4,0,1.93l7.66,7.66-7.66,7.65c-.53.53-.53,1.4,0,1.93.53.53,1.4.53,1.93,0l7.66-7.66,7.68,7.68c.53.53,1.4.53,1.93,0,.53-.53.53-1.4,0-1.93h0Z"></path></svg></button><div class="basis-3/4"><div class="flex items-center"><h2 class="mr-md text-headline-2">Photo de profil</h2><span data-spark-component="tag" class="box-border inline-flex items-center justify-center gap-sm whitespace-nowrap text-caption font-bold h-sz-20 px-md rounded-full border-sm border-current text-basic"> nouveau</span></div><p class="mb-xl mt-sm text-body-1 md:mb-none">Pour une expérience plus agréable entre membres avec qui vous allez faire de bonnes affaires !</p></div><button data-bs-toggle="modal" data-bs-target="#addProfil" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter ma photo de profil</button></div>
+        <div v-if="get_user_thumbnail === '/uploads/user_image/user.png'" class="relative mb-xl w-full items-center justify-between rounded-lg border-sm border-solid border-neutral/dim-4 bg-support-container p-xl pt-3xl sm:flex" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r6:" data-state="closed"><button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-32 h-sz-32 rounded-lg text-neutral hover:bg-neutral/dim-5 enabled:active:bg-neutral/dim-5 focus-visible:bg-neutral/dim-5 px-none text-body-1 absolute right-md top-md" aria-busy="false" aria-live="off" aria-label="Fermer l'avertissement sur la photo"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="Close" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m21.6,19.67l-7.68-7.68,7.57-7.59c.53-.53.53-1.4,0-1.93-.53-.53-1.4-.53-1.93,0l-7.57,7.58L4.33,2.4c-.53-.53-1.4-.53-1.93,0-.53.53-.53,1.4,0,1.93l7.66,7.66-7.66,7.65c-.53.53-.53,1.4,0,1.93.53.53,1.4.53,1.93,0l7.66-7.66,7.68,7.68c.53.53,1.4.53,1.93,0,.53-.53.53-1.4,0-1.93h0Z"></path></svg></button><div class="basis-3/4"><div class="flex items-center"><h2 class="mr-md text-headline-2">Photo de profil</h2><span data-spark-component="tag" class="box-border inline-flex items-center justify-center gap-sm whitespace-nowrap text-caption font-bold h-sz-20 px-md rounded-full border-sm border-current text-basic"> nouveau</span></div><p class="mb-xl mt-sm text-body-1 md:mb-none">Pour une expérience plus agréable entre membres avec qui vous allez faire de bonnes affaires !</p></div><button data-bs-toggle="modal" data-bs-target="#addProfil" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter ma photo de profil</button></div>
           <!-- Les sections -->
         <div class="grid gap-xl md:grid-cols-2 lg:grid-cols-3">
           <!--Annonces-->
@@ -155,6 +155,7 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
           aria-hidden="true"
         >
           <div class="modal-dialog">
+            <form @submit.prevent="addPicture()">
             <div class="modal-content">
               <div class="modal-header">
                 <MaterialButton
@@ -167,7 +168,19 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
               <div class="modal-body">
                 <div class="mb-xl flex justify-center [&amp;>*]:h-sz-160 [&amp;>*]:w-sz-160 [&amp;>*]:rounded-full"><img :src="get_user_thumbnail" class="_1cnjm" alt="ma photo de profil"></div>
               
-                <div class="[&amp;>*]:mb-md"><h2 class="text-headline-1">Photo de profil</h2><p class="text-body-1">Nous sommes ravis de vous rencontrer pour de vrai !</p><p class="text-caption text-neutral">Votre photo ne doit pas être contraire aux bonnes mœurs ou à l'ordre public, ni porter atteinte aux droits de tiers.</p><div class="_3jQr3"><p class="text-neutral">Nous acceptons les formats : jpg, jpeg, png • Poids max : </p></div></div>
+                <div class="[&amp;>*]:mb-md">
+                  
+                  <h2 class="text-headline-1">Photo de profil</h2>
+                <!-- Champ de fichier pour le thumbnail -->
+                <div class="large-12 medium-12 small-12 cell">
+                  <label class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused btn btn-theme">Ajouter une photo à la une
+                    <input type="file" id="listing_thumbnail" ref="listing_thumbnail" v-on:change="handleThumbnailUpload()"/>
+                  </label>
+                </div>
+                <div class="large-12 medium-12 small-12 cell">
+                  <div v-if='listing_thumbnail' class="file-listing">{{ listing_thumbnail.name }}</div>
+                </div>
+                  <p class="text-body-1">Nous sommes ravis de vous rencontrer pour de vrai !</p><p class="text-caption text-neutral">Votre photo ne doit pas être contraire aux bonnes mœurs ou à l'ordre public, ni porter atteinte aux droits de tiers.</p><div class="_3jQr3"><p class="text-neutral">Nous acceptons les formats : jpg, jpeg, png • Poids max : </p></div></div>
               </div>
               <div class="modal-footer justify-content-between">
                 <MaterialButton
@@ -176,13 +189,98 @@ watch([userLoggedIn, userData], ([newUserLoggedIn, newUserData]) => {
                   data-bs-dismiss="modal">
                   Ferme
                 </MaterialButton>
-                <button data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter une photo</button>
+                <button type="submit" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset min-w-sz-44 h-sz-44 rounded-lg bg-main text-on-main hover:bg-main-hovered enabled:active:bg-main-pressed focus-visible:bg-main-focused" aria-busy="false" aria-live="off">Ajouter une photo</button>
               </div>
             </div>
+          </form>
           </div>
         </div>
 </template>
-  
-<!-- <script setup> -->
+<script>
+import { mapState } from 'pinia'
+import { useAuthStore } from '@/stores/authStore';
 
-<!-- </script> -->
+export default {
+  data() {
+    return {
+      listing_thumbnail:null,
+      user_id:null,
+      email:null,
+    };
+  },
+  computed: {
+    ...mapState(useAuthStore, ['isLogin','userData']),
+  },
+  mounted() {
+    this.user_id = this.userData ? this.userData.user_id : null;
+    this.email = this.userData ? this.userData.email : null;
+  },
+  methods: {
+    handleThumbnailUpload() {
+        this.listing_thumbnail = this.$refs.listing_thumbnail.files[0];
+      },
+    addFiles(){
+        this.$refs.listing_images.click();
+      },
+      addPicture() {
+      if (!this.user_id) {
+        console.error("User ID is not available");
+        return;
+      }
+      const listingData = new FormData();
+      listingData.append('user_image', this.listing_thumbnail);
+      listingData.append('email', this.email);
+
+      axios.post('/api/edit_user/' + this.user_id, listingData, {
+      headers: {
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'multipart/form-data'
+      },
+    })
+        .then(response => {
+          // Handle successful response
+          this.msg = 'Listing add successfull';
+          this.classAlert = 'success';
+          response.data.files;
+        })
+        .catch(error => {
+          // Handle error response
+          if (error.response.status === 400) {
+            this.msg = 'Please fill in all the fieldsd';
+          } else if (error.response.status === 500) {
+            this.msg = 'Internal Server Error. Please try again later.';
+          } else {
+            this.msg = 'An unexpected error occurred.';
+          }
+          this.classAlert = 'error';
+        });
+
+    },
+  }
+}
+</script>
+<style>
+  input[type="file"]{
+    position: absolute;
+    top: -500px;
+  }
+  div.file-listing{
+    width: 200px;
+  }
+  span.remove-file{
+    color: red;
+    cursor: pointer;
+    float: right;
+  }
+  .large-12.medium-12.small-12.cell.addimage {
+    font-size: 15px;
+    text-align: center;
+}
+.read-only\:bg-on-surface\/dim-5:read-only {
+    width: 100%;
+    background-color: #fff;
+}
+img.h-full.w-full.rounded-full, ._1cnjm{
+  object-fit: cover;
+}
+</style>

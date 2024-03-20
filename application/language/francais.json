@@ -256,5 +256,19 @@
     "show_on_map": "Show on map",
     "watch_details": "Watch details",
     "this_listing_is_verified": "This listing is verified",
-    "listings_deleted_successfully": "Listings deleted successfully"
+    "listings_deleted_successfully": "Listings deleted successfully",
+    "general_user_list": "General user list",
+    "photo": "Photo",
+    "name": "Name",
+    "solcial_links": "Solcial links",
+    "update_user": "Update user",
+    "user_add_form": "User add form",
+    "facebook_link": "Facebook link",
+    "write_down_facebook_url": "Write down facebook url",
+    "twitter_link": "Twitter link",
+    "write_down_twitter_url": "Write down twitter url",
+    "linkedin_link": "Linkedin link",
+    "write_down_linkedin_url": "Write down linkedin url",
+    "user_image": "User image",
+    "user_updated_successfully": "User updated successfully"
 }
