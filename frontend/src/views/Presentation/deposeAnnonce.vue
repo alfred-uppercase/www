@@ -47,7 +47,7 @@
               </div>
               <div class="w-full pt-xl md:mt-xl md:border-t-sm md:border-neutral-container"
                 v-if="isLogin && isTitreAnnonce">
-                <div data-spark-component="form-field" class="flex flex-col gap-sm" v-if="isSugsestionCat">
+                <!-- <div data-spark-component="form-field" class="flex flex-col gap-sm" v-if="isSugsestionCat">
                   <label data-spark-component="form-field-label" class="text-body-1 mb-lg flex items-center gap-sm"
                     id="radix-:r5:" for="radix-:r4:">Choisissez une catégorie suggérée</label>
                   <div role="radiogroup" aria-required="false" aria-orientation="vertical" dir="ltr"
@@ -91,12 +91,15 @@
 
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <p class="mb-sm mt-xl text-body-1">Ou choisissez une autre catégorie<span
                     data-spark-component="label-required-indicator" role="presentation" aria-hidden="true"
                     class="ml-sm text-caption text-on-surface/dim-3">*</span></p>
-
-                <select v-model="categorie" name="" id="" @change="getSubCategorie($event)"
+                  <!-- <select>
+                    <option>Select</option>
+                    <option>1</option>
+                  </select> -->
+                <select v-model="categorie" @change="getSubCategorie($event)"
                   class="mr-10-p border-gray relative ring-1 ring-inset peer box-border w-50 appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
                   <option value="0" selected>Choisissez</option>
                   <option v-for="(category, index) in categories" :key="category.id" :value="category.id"
@@ -104,7 +107,7 @@
                       category.name }}</option>
                 </select>
 
-                <select v-model="subcategorie" name="" id="" v-if="isSubCategorie" @change="valideSubCategorie($event)"
+                <select v-model="subcategorie" v-if="isSubCategorie" @change="valideSubCategorie($event)"
                   class="border-gray relative ring-1 ring-inset peer box-border w-45 appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral focus:ring-2 autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:border-on-surface/dim-3 read-only:bg-on-surface/dim-5 h-sz-44 ring-outline hover:ring-outline-high focus:ring-outline-high disabled:ring-outline rounded-l-lg rounded-r-lg pl-lg pr-lg">
                   <option value="0" selected="selected">Choisissez sous categorie</option>
                   <option v-for="(sub, index) in subCategories" :key="sub.id" :value="sub.id"> {{

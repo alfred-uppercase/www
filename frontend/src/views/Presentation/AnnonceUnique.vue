@@ -397,6 +397,7 @@
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-title="ClockOutline" fill="currentColor" stroke="none" class="fill-current text-current w-sz-16 h-sz-16 mr-sm" data-spark-component="icon" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="m12,3.97C7.56,3.97,3.97,7.56,3.97,12s3.6,8.03,8.03,8.03,8.03-3.6,8.03-8.03S16.44,3.97,12,3.97ZM2,12C2,6.48,6.48,2,12,2s10,4.48,10,10-4.48,10-10,10S2,17.52,2,12Z"></path><path fill-rule="evenodd" d="m12,7.55c.54,0,.98.44.98.98v3.1l3.29,3.83c.35.41.31,1.03-.11,1.39-.41.35-1.03.31-1.39-.11l-3.52-4.11c-.15-.18-.24-.41-.24-.64v-3.47c0-.54.44-.98.98-.98Z"></path></svg>Répond généralement dans les 3 heures</span>
                   </div>
                 </div>
+                <datepicker></datepicker>
                 <div class="mx-lg my-xl flex flex-col gap-md">
 
                   <div v-if="userLoggedIn"  class="mt-xl">
@@ -406,7 +407,7 @@
                       </div>
                     </div>
                     <div class="mb-md flex-1 last:mb-none" data-pub-id="clicknumero">
-                      <div data-tip="" data-place="bottom" data-for="tooltip-no-salesmen" class="">
+                      <div  v-if="get_users.phone" data-tip="" data-place="bottom" data-for="tooltip-no-salesmen" class="">
                         <button v-if="showNumber" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset bg-transparent border-sm border-current min-w-sz-44 h-sz-44 rounded-lg hover:bg-support/dim-5 enabled:active:bg-support/dim-5 focus-visible:bg-support/dim-5 text-support w-full" aria-busy="false" aria-live="off" :title="get_users.phone">{{ get_users.phone }}</button>
                         <button v-else @click="afficherNumero" data-spark-component="button" class="u-shadow-border-transition box-border inline-flex items-center justify-center gap-md whitespace-nowrap px-lg text-body-1 font-bold focus-visible:outline-none focus-visible:u-ring [&amp;:not(:focus-visible)]:ring-inset bg-transparent border-sm border-current min-w-sz-44 h-sz-44 rounded-lg hover:bg-support/dim-5 enabled:active:bg-support/dim-5 focus-visible:bg-support/dim-5 text-support w-full" aria-busy="false" aria-live="off" title="voir le numéro">Voir le numéro</button>
                         
@@ -462,6 +463,7 @@ import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
+
 
 // import Social from '/views/Presentation/annonces/social.vue';
 const route = useRoute();
@@ -599,11 +601,14 @@ const cheapestRoom = (listingId) => {
 import Lightgallery from 'lightgallery/vue';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgVideo from 'lightgallery/plugins/video';
+import Datepicker from 'vuejs3-datepicker';
+
 
 export default {
   name: 'App',
   components: {
     Lightgallery,
+    Datepicker,
   },
   data: () => ({
     plugins: [lgZoom, lgVideo],
@@ -616,6 +621,7 @@ export default {
     onBeforeSlide: () => {
       console.log('calling before slide');
     },
+
   },
 };
 </script> 

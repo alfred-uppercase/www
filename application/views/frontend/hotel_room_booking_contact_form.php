@@ -7,7 +7,7 @@
 	<input class="form-control date-range-picker" type="text" name="dates" placeholder="<?php echo get_phrase('when'); ?>.." autocomplete="off" required>
 	<i class="icon_calendar"></i>
 </div>
-
+ 
 <div class="panel-dropdown">
 	<a href="#"><?php echo get_phrase('guests'); ?> <span class="qtyTotal">1</span></a>
 	<div class="panel-dropdown-content right">

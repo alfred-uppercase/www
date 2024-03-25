@@ -120,11 +120,12 @@ class Home extends CI_Controller
         $page_data['title']         = get_phrase('listings');
         $page_data['listings']      = $listings;
         $page_data['geo_json']      = $geo_json;
-        // $this->load->view('frontend/index', $page_data);
-        $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($page_data));
+        $this->load->view('frontend/index', $page_data);
+        // $this->output
+        // ->set_content_type('application/json')
+        // ->set_output(json_encode($page_data));
     }
+    
 
     function make_geo_json_for_map($listings = array(), $param2 = "", $listing_id = "")
     {

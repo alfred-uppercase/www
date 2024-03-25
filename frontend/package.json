@@ -25,10 +25,12 @@
     "vue": "3.2.36",
     "vue-clipboard3": "2.0.0",
     "vue-count-to": "1.0.13",
+    "vue-datepicker-ui": "^3.1.1",
     "vue-prism-editor": "2.0.0-alpha.2",
     "vue-router": "4.0.15",
     "vue3-dropzone": "^2.2.1",
-    "vue3-tel-input": "^1.0.4"
+    "vue3-tel-input": "^1.0.4",
+    "vuejs3-datepicker": "^1.1.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "1.1.0",
