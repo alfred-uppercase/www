@@ -285,12 +285,10 @@
     </div>
   </template>
      
-  <script>
+<script>
   import axios from 'axios';
   import Alert from "@/views/LandingPages/Signin/Alert.vue";
   import { ref } from 'vue'
-//   import { VueTelInput } from 'vue3-tel-input'
-//   import 'vue3-tel-input/dist/vue3-tel-input.css'
   import { useRouter } from 'vue-router';
   export default {
     name: 'LoginPage',

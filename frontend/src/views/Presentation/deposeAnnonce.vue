@@ -32,6 +32,7 @@
                       role="presentation" aria-hidden="true" class="text-caption text-on-surface/dim-3">*</span></label>
                   <div class="flex flex-col md-flex-row">
                     <div class="flex flex-col gap-sm md:mr-md md:min-w-[50%] md:max-w-[50%]">
+                      <!-- <Calendar v-model="date" dateFormat="dd/mm/yy" /> -->
                       <input id="subject" name="subject"
                         class="border-gray relative border-sm peer w-full appearance-none outline-none bg-surface text-ellipsis text-body-1 text-on-surface caret-neutral autofill:shadow-surface autofill:shadow-[inset_0_0_0px_1000px] disabled:cursor-not-allowed disabled:bg-on-surface/dim-5 disabled:text-on-surface/dim-3 read-only:cursor-default read-only:bg-on-surface/dim-5 focus:ring-1 focus:ring-inset disabled:border-outline h-sz-44 border-outline hover:border-outline-high focus:ring-outline-high focus:border-outline-high rounded-l-lg rounded-r-lg pl-lg pr-lg"
                         required="" aria-invalid="false" type="text" maxlength="200" data-qa-id="input_subject_research"
